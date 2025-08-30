@@ -1,0 +1,42 @@
+{
+  "languages": {
+    "TypeScript": {
+      "code_actions_on_format": {
+        "source.organizeImports": true,
+        "source.fixAll.eslint": true
+      }
+    },
+    "JavaScript": {
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      }
+    },
+    "TSX": {
+      "code_actions_on_format": {
+        "source.organizeImports": true
+      }
+    }
+  },
+  "lsp": {
+    "eslint": {
+      "settings": {
+        "codeActionOnSave": {
+          "rules": ["import/order"]
+        }
+      }
+    },
+    "cspell": {
+      "initialization_options": {
+        "dictionaryDefinitions": [
+          {
+            "name": "workspace",
+            "path": "./cspell-dict.txt",
+            "description": "Custom Workspace Dictionary",
+            "addWords": true,
+            "scope": "workspace"
+          }
+        ]
+      }
+    }
+  }
+}

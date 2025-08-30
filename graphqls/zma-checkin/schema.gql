@@ -1,0 +1,42 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""
+Checkin Output
+"""
+type CheckinServiceCheckinGqlOutput {
+  checkinMethod: String!
+  checkinTime: DateTime!
+  createdAt: DateTime!
+  gpsVerification: GpsVerificationGqlOutput
+  id: String!
+  imageVerification: String
+  isDeleted: Boolean!
+  qrCode: String
+  tenantId: String!
+  updatedAt: DateTime!
+  userId: String!
+  wifiVerification: WiFiVerificationGqlOutput
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type GpsVerificationGqlOutput {
+  latitude: Float!
+  longitude: Float!
+}
+
+type Query {
+  checkinServiceCheckinById(id: String!): CheckinServiceCheckinGqlOutput!
+}
+
+type WiFiVerificationGqlOutput {
+  bssid: String!
+  ssid: String!
+}

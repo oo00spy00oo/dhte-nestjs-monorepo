@@ -1,0 +1,141 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input EventServiceEventGqlInput {
+  bannerFile: String
+  content: String!
+  description: String!
+  endDate: DateTime!
+  location: String!
+  mediaFiles: [String!]
+  name: String!
+  organizerEmail: String!
+  organizerName: String!
+  startDate: DateTime!
+  thumbnailFile: String
+  timeline: [EventTimeLineGqlInput!]
+}
+
+type EventServiceEventGqlOutput {
+  bannerFile: String
+  content: String
+  createdAt: DateTime
+  description: String!
+  endDate: DateTime!
+  id: String!
+  isDeleted: Boolean!
+  isEnabled: Boolean!
+  location: String!
+  mediaFiles: [String!]
+  name: String!
+  organizerEmail: String!
+  organizerName: String!
+  startDate: DateTime!
+  status: String!
+  tenantId: String
+  thumbnailFile: String
+  timeline: [EventTimeLineGqlOutput!]
+  updatedAt: DateTime
+}
+
+type EventServiceEventRegistrationGqlOutput {
+  checkinId: String
+  createdAt: DateTime
+  eventId: String!
+  id: String!
+  isCheckedin: Boolean!
+  qrCode: String!
+  tenantId: String
+  updatedAt: DateTime
+  userId: String!
+}
+
+input EventServiceSearchEventGqlInput {
+  id: String
+  name: String
+}
+
+input EventTimeLineGqlInput {
+  description: String!
+  time: DateTime!
+}
+
+type EventTimeLineGqlOutput {
+  description: String!
+  time: DateTime!
+}
+
+type Mutation {
+  eventServiceCreateEvent(input: EventServiceEventGqlInput!): Boolean!
+  eventServiceDeleteEvents(ids: [String!]!): Boolean!
+  eventServiceDisableEvents(ids: [String!]!): Boolean!
+  eventServiceEnableEvents(ids: [String!]!): Boolean!
+  eventServiceQrCodeCheckin(qrCode: String!): Boolean!
+  eventServiceRegisterEvent(eventId: String!): Boolean!
+  eventServiceUpdateEvent(id: String!, input: EventServiceEventGqlInput!): Boolean!
+}
+
+input Pagination {
+  """
+  Maximum number of items to return (1-100)
+  """
+  limit: Int = 10
+
+  """
+  Number of items to skip (offset)
+  """
+  skip: Int = 0
+
+  """
+  Multiple sort fields for complex sorting
+  """
+  sort: [SortField!]
+}
+
+type Query {
+  eventServiceAllEvents(
+    input: EventServiceSearchEventGqlInput
+    pagination: Pagination!
+  ): [EventServiceEventGqlOutput!]!
+  eventServiceAllRegistrations(
+    id: String!
+    pagination: Pagination!
+  ): [EventServiceEventRegistrationGqlOutput!]!
+  eventServiceDisabledEvents(pagination: Pagination!): [EventServiceEventGqlOutput!]!
+  eventServiceEnabledEvents(pagination: Pagination!): [EventServiceEventGqlOutput!]!
+  eventServiceEndedEvents(pagination: Pagination!): [EventServiceEventGqlOutput!]!
+  eventServiceEventById(id: String!): EventServiceEventGqlOutput!
+  eventServiceIncomingEvents(pagination: Pagination!): [EventServiceEventGqlOutput!]!
+  eventServiceMyRegistration(id: String!): EventServiceEventRegistrationGqlOutput!
+  eventServiceOngoingEvents(pagination: Pagination!): [EventServiceEventGqlOutput!]!
+  eventServicePublicEvents(pagination: Pagination!): [EventServiceEventGqlOutput!]!
+  eventServiceSearchEvents(input: String!, pagination: Pagination!): [EventServiceEventGqlOutput!]!
+}
+
+"""
+Sort direction for ordering query results
+"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input SortField {
+  """
+  Sort direction for this field
+  """
+  direction: SortDirection! = ASC
+
+  """
+  Field name to sort by
+  """
+  field: String!
+}

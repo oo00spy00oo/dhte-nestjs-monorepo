@@ -1,0 +1,124 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+type AddressServiceAddressGqlOutput {
+  address: String!
+  createdAt: DateTime
+  deletedAt: DateTime
+  fullAddress: String!
+  id: String!
+  isDefault: Boolean!
+  name: String!
+  phone: String!
+  province: String!
+  updatedAt: DateTime
+  ward: String!
+}
+
+type AddressServiceCountryGqlOutput {
+  code: String!
+  id: String!
+  name: String!
+}
+
+input AddressServiceCreateAddressGqlInput {
+  address: String!
+  fullAddress: String!
+  name: String!
+  phone: String!
+  province: String!
+  ward: String!
+}
+
+type AddressServiceProvinceGqlOutput {
+  code: String!
+  id: String!
+  name: String!
+}
+
+input AddressServiceUpdateAddressGqlInput {
+  address: String!
+  fullAddress: String!
+  id: String!
+  name: String!
+  phone: String!
+  province: String!
+  ward: String!
+}
+
+input AddressServiceUpdateDefaultGqlInput {
+  id: String!
+}
+
+type AddressServiceWardGqlOutput {
+  code: String!
+  id: String!
+  name: String!
+  provinceId: String!
+  type: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  addressServiceCreateAddress(
+    input: AddressServiceCreateAddressGqlInput!
+  ): AddressServiceAddressGqlOutput!
+  addressServiceUpdateAddress(
+    input: AddressServiceUpdateAddressGqlInput!
+  ): AddressServiceAddressGqlOutput!
+  addressServiceUpdateDefaultAddress(
+    input: AddressServiceUpdateDefaultGqlInput!
+  ): AddressServiceAddressGqlOutput!
+}
+
+input Pagination {
+  """
+  Maximum number of items to return (1-100)
+  """
+  limit: Int = 10
+
+  """
+  Number of items to skip (offset)
+  """
+  skip: Int = 0
+
+  """
+  Multiple sort fields for complex sorting
+  """
+  sort: [SortField!]
+}
+
+type Query {
+  addressServiceAllAddress(input: Pagination!): [AddressServiceAddressGqlOutput!]!
+  addressServiceCountries: [AddressServiceCountryGqlOutput!]!
+  addressServiceDefaultAddress: AddressServiceAddressGqlOutput!
+  addressServiceProvinces: [AddressServiceProvinceGqlOutput!]!
+  addressServiceWardsByProvinceId(provinceId: String!): [AddressServiceWardGqlOutput!]!
+}
+
+"""
+Sort direction for ordering query results
+"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input SortField {
+  """
+  Sort direction for this field
+  """
+  direction: SortDirection! = ASC
+
+  """
+  Field name to sort by
+  """
+  field: String!
+}

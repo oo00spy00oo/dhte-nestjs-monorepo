@@ -1,0 +1,20 @@
+grpc:
+  service:
+    user:
+      url: localhost:5001
+maxLoginAttempts: 5
+passwordPolicy:
+  minLength: 8
+  maxLength: 32
+  uppercase: true
+  lowercase: true
+  numbers: true
+  specialChars: true
+auth:
+  registrationExpiration: 24h
+  forgotPasswordExpiration: 24h # pragma: allowlist secret
+appDomain: http://domain.com
+kafka:
+  service:
+    brokers:
+      - localhost:9092

@@ -1,0 +1,208 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+type AdditionalSettings {
+  customTheme: CustomTheme
+  displayInApp: Boolean
+  emailTemplateId: String
+  integrations: Integrations
+  notificationEnabled: Boolean
+}
+
+input BenefitDetailsInput {
+  discounts: [DiscountInput!]
+  exclusiveAccess: Boolean
+  freeServices: [String!]
+  prioritySupport: Boolean
+}
+
+type CustomTheme {
+  logoUrl: String
+  primaryColor: String
+  secondaryColor: String
+}
+
+input CustomThemeInput {
+  logoUrl: String
+  primaryColor: String
+  secondaryColor: String
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input DiscountInput {
+  applicableServices: [String!]!
+  percentage: Float!
+}
+
+type EarnRules {
+  amountSpentRatio: Float!
+  referralBonus: Float!
+  registrationBonus: Float!
+}
+
+input EarnRulesInput {
+  amountSpentRatio: Float!
+  referralBonus: Float!
+  registrationBonus: Float!
+}
+
+type Integrations {
+  apiKeys: [String!]
+  externalSystemId: String
+}
+
+input IntegrationsInput {
+  apiKeys: [String!]
+  externalSystemId: String
+}
+
+type LoyaltyProgram {
+  _id: ID!
+  additionalSettings: AdditionalSettings
+  createdAt: DateTime
+  description: String!
+  endDate: DateTime
+  isActive: Boolean!
+  isDefault: Boolean!
+  isDeleted: Boolean!
+  isEnabled: Boolean!
+  name: String!
+  pointsConfig: PointsConfig!
+  startDate: DateTime!
+  tenantId: String!
+  updatedAt: DateTime
+}
+
+input LoyaltyProgramAdditionalSettingsInput {
+  customTheme: CustomThemeInput
+  displayInApp: Boolean
+  emailTemplateId: String
+  integrations: IntegrationsInput
+  notificationEnabled: Boolean
+}
+
+input LoyaltyServiceCreateLoyaltyProgramGqlInput {
+  additionalSettings: LoyaltyProgramAdditionalSettingsInput
+  description: String!
+  endDate: DateTime
+  isActive: Boolean = true
+  isDefault: Boolean = false
+  isEnabled: Boolean = true
+  name: String!
+  pointsConfig: PointsConfigInput!
+  startDate: DateTime!
+  tenantId: String
+}
+
+input LoyaltyServiceCreateLoyaltyTierGqlInput {
+  benefitDetails: BenefitDetailsInput!
+  benefits: [String!] = []
+  description: String!
+  iconFile: String!
+  level: Int!
+  loyaltyProgramId: String!
+  maintenanceThreshold: Int = 0
+  name: String!
+  pointsMultiplier: Float = 1
+  pointsThreshold: Int = 0
+  spendingThreshold: Int = 0
+  tenantId: String
+  validityPeriod: Int = 365
+}
+
+input LoyaltyServiceUpdateLoyaltyTierGqlInput {
+  benefitDetails: BenefitDetailsInput!
+  benefits: [String!] = []
+  description: String!
+  iconFile: String!
+  id: String!
+  level: Int!
+  loyaltyProgramId: String!
+  maintenanceThreshold: Int = 0
+  name: String!
+  pointsMultiplier: Float = 1
+  pointsThreshold: Int = 0
+  spendingThreshold: Int = 0
+  tenantId: String
+  validityPeriod: Int = 365
+}
+
+type LoyaltyTier {
+  _id: String
+  benefitDetails: LoyaltyTierBenefitDetails
+  benefits: [String!]
+  createdAt: DateTime
+  description: String!
+  iconUrl: String!
+  level: Int!
+  loyaltyProgramId: String!
+  maintenanceThreshold: Int
+  name: String!
+  pointsMultiplier: Int
+  pointsThreshold: Int
+  spendingThreshold: Int
+  tenantId: String!
+  updatedAt: DateTime
+  validityPeriod: Int
+}
+
+type LoyaltyTierBenefitDetails {
+  discounts: [LoyaltyTierDiscount!]
+  exclusiveAccess: Boolean
+  freeServices: [String!]
+  prioritySupport: Boolean
+}
+
+type LoyaltyTierDiscount {
+  applicableServices: [String!]!
+  percentage: Int!
+}
+
+type Mutation {
+  loyaltyServiceCreateLoyaltyProgram(input: LoyaltyServiceCreateLoyaltyProgramGqlInput!): Boolean!
+  loyaltyServiceCreateLoyaltyTier(input: LoyaltyServiceCreateLoyaltyTierGqlInput!): Boolean!
+  loyaltyServiceDeactiveLoyaltyProgram(id: String!): Boolean!
+  loyaltyServiceDeleteLoyaltyProgram(id: String!): Boolean!
+  loyaltyServiceDisableLoyaltyTier(id: String!): Boolean!
+  loyaltyServiceSetDefaultLoyaltyProgram(id: String!): Boolean!
+  loyaltyServiceUpdateLoyaltyTier(input: LoyaltyServiceUpdateLoyaltyTierGqlInput!): Boolean!
+}
+
+type PointsConfig {
+  earnRules: EarnRules!
+  expiryDays: Float!
+  redemptionRules: RedemptionRules!
+}
+
+input PointsConfigInput {
+  earnRules: EarnRulesInput!
+  expiryDays: Float!
+  redemptionRules: RedemptionRulesInput!
+}
+
+type Query {
+  loyaltyServiceActiveLoyaltyPrograms: [LoyaltyProgram!]!
+  loyaltyServiceAllLoyaltyPrograms: [LoyaltyProgram!]!
+  loyaltyServiceAllLoyaltyTiers: [LoyaltyTier!]!
+  loyaltyServiceDefaultLoyaltyProgram: LoyaltyProgram!
+  loyaltyServiceEnabledLoyaltyTiers: [LoyaltyTier!]!
+  loyaltyServiceLoyaltyProgramById(id: String!): LoyaltyProgram!
+  loyaltyServiceLoyaltyTierById(id: String!): LoyaltyTier!
+}
+
+type RedemptionRules {
+  minimumPoints: Float!
+  pointValue: Float!
+}
+
+input RedemptionRulesInput {
+  minimumPoints: Float!
+  pointValue: Float!
+}

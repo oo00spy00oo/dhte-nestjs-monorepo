@@ -1,0 +1,20 @@
+{
+  "name": "zma-grpc",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/zma-grpc/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/zma-grpc",
+        "main": "libs/zma-grpc/src/index.ts",
+        "tsConfig": "libs/zma-grpc/tsconfig.lib.json",
+        "assets": ["libs/zma-grpc/*.md"],
+        "format": ["cjs"]
+      }
+    }
+  }
+}

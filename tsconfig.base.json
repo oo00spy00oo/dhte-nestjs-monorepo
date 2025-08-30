@@ -1,0 +1,273 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "lib": ["es2020", "dom"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "paths": {
+      "@zma-nestjs-monorepo/zma-config": ["libs/zma-config/src/index.ts"],
+      "@zma-nestjs-monorepo/zma-decorators": ["libs/zma-decorators/src/index.ts"],
+      "@zma-nestjs-monorepo/zma-grpc": ["libs/zma-grpc/src/index.ts"],
+      "@zma-nestjs-monorepo/zma-i18n": ["libs/zma-i18n/src/index.ts"],
+      "@zma-nestjs-monorepo/zma-middlewares": ["libs/zma-middlewares/src/index.ts"],
+      "@zma-nestjs-monorepo/zma-repositories": ["libs/zma-repositories/src/index.ts"],
+      "@zma-nestjs-monorepo/zma-types": ["libs/zma-types/src/index.ts"],
+      "@zma-nestjs-monorepo/zma-types/inputs/address": [
+        "libs/zma-types/src/services/inputs/address/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/booking": [
+        "libs/zma-types/src/services/inputs/booking/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/campaign": [
+        "libs/zma-types/src/services/inputs/campaign/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/cart": [
+        "libs/zma-types/src/services/inputs/cart/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/checkin": [
+        "libs/zma-types/src/services/inputs/checkin/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/clockin": [
+        "libs/zma-types/src/services/inputs/clockin/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/content": [
+        "libs/zma-types/src/services/inputs/content/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/dictionary": [
+        "libs/zma-types/src/services/inputs/dictionary/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/event": [
+        "libs/zma-types/src/services/inputs/event/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/feature-flag": [
+        "libs/zma-types/src/services/inputs/feature-flag/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/fns": [
+        "libs/zma-types/src/services/inputs/fns/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/inventory": [
+        "libs/zma-types/src/services/inputs/inventory/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/kafka": [
+        "libs/zma-types/src/services/inputs/kafka/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/loyalty": [
+        "libs/zma-types/src/services/inputs/loyalty/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/membership": [
+        "libs/zma-types/src/services/inputs/membership/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/notification": [
+        "libs/zma-types/src/services/inputs/notification/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/order": [
+        "libs/zma-types/src/services/inputs/order/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/organization": [
+        "libs/zma-types/src/services/inputs/organization/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/payment": [
+        "libs/zma-types/src/services/inputs/payment/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/point": [
+        "libs/zma-types/src/services/inputs/point/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/product": [
+        "libs/zma-types/src/services/inputs/product/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/sdui": [
+        "libs/zma-types/src/services/inputs/sdui/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/shipping": [
+        "libs/zma-types/src/services/inputs/shipping/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/storage": [
+        "libs/zma-types/src/services/inputs/storage/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/subscription": [
+        "libs/zma-types/src/services/inputs/subscription/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/user": [
+        "libs/zma-types/src/services/inputs/user/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/inputs/voucher": [
+        "libs/zma-types/src/services/inputs/voucher/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/mappers/booking": [
+        "libs/zma-types/src/services/mappers/booking/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/mappers/campaign": [
+        "libs/zma-types/src/services/mappers/campaign/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/mappers/cart": [
+        "libs/zma-types/src/services/mappers/cart/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/mappers/checkin": [
+        "libs/zma-types/src/services/mappers/checkin/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/mappers/dictionary": [
+        "libs/zma-types/src/services/mappers/dictionary/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/mappers/event": [
+        "libs/zma-types/src/services/mappers/event/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/mappers/feature-flag": [
+        "libs/zma-types/src/services/mappers/feature-flag/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/mappers/fns": [
+        "libs/zma-types/src/services/mappers/fns/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/mappers/inventory": [
+        "libs/zma-types/src/services/mappers/inventory/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/mappers/loyalty": [
+        "libs/zma-types/src/services/mappers/loyalty/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/mappers/membership": [
+        "libs/zma-types/src/services/mappers/membership/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/mappers/order": [
+        "libs/zma-types/src/services/mappers/order/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/mappers/organization": [
+        "libs/zma-types/src/services/mappers/organization/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/mappers/payment": [
+        "libs/zma-types/src/services/mappers/payment/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/mappers/point": [
+        "libs/zma-types/src/services/mappers/point/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/mappers/product": [
+        "libs/zma-types/src/services/mappers/product/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/mappers/shipping": [
+        "libs/zma-types/src/services/mappers/shipping/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/mappers/storage": [
+        "libs/zma-types/src/services/mappers/storage/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/mappers/subscription": [
+        "libs/zma-types/src/services/mappers/subscription/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/mappers/user": [
+        "libs/zma-types/src/services/mappers/user/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/mappers/voucher": [
+        "libs/zma-types/src/services/mappers/voucher/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/models/campaign": [
+        "libs/zma-types/src/services/models/campaign/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/models/loyalty": [
+        "libs/zma-types/src/services/models/loyalty/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/models/meeting": [
+        "libs/zma-types/src/services/models/meeting/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/models/membership": [
+        "libs/zma-types/src/services/models/membership/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/models/notification": [
+        "libs/zma-types/src/services/models/notification/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/models/organization": [
+        "libs/zma-types/src/services/models/organization/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/models/point": [
+        "libs/zma-types/src/services/models/point/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/models/voucher": [
+        "libs/zma-types/src/services/models/voucher/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/address": [
+        "libs/zma-types/src/services/outputs/address/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/booking": [
+        "libs/zma-types/src/services/outputs/booking/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/cart": [
+        "libs/zma-types/src/services/outputs/cart/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/checkin": [
+        "libs/zma-types/src/services/outputs/checkin/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/clockin": [
+        "libs/zma-types/src/services/outputs/clockin/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/content": [
+        "libs/zma-types/src/services/outputs/content/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/dictionary": [
+        "libs/zma-types/src/services/outputs/dictionary/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/error": [
+        "libs/zma-types/src/services/outputs/error/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/event": [
+        "libs/zma-types/src/services/outputs/event/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/feature-flag": [
+        "libs/zma-types/src/services/outputs/feature-flag/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/fns": [
+        "libs/zma-types/src/services/outputs/fns/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/inventory": [
+        "libs/zma-types/src/services/outputs/inventory/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/notification": [
+        "libs/zma-types/src/services/outputs/notification/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/order": [
+        "libs/zma-types/src/services/outputs/order/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/organization": [
+        "libs/zma-types/src/services/outputs/organization/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/payment": [
+        "libs/zma-types/src/services/outputs/payment/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/product": [
+        "libs/zma-types/src/services/outputs/product/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/rbac": [
+        "libs/zma-types/src/services/outputs/rbac/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/sdui": [
+        "libs/zma-types/src/services/outputs/sdui/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/shipping": [
+        "libs/zma-types/src/services/outputs/shipping/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/storage": [
+        "libs/zma-types/src/services/outputs/storage/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/subscription": [
+        "libs/zma-types/src/services/outputs/subscription/index.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/user/auth": [
+        "libs/zma-types/src/services/outputs/user/auth.output.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/user/tenant": [
+        "libs/zma-types/src/services/outputs/user/tenant.output.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-types/outputs/user/user": [
+        "libs/zma-types/src/services/outputs/user/user.output.ts"
+      ],
+      "@zma-nestjs-monorepo/zma-utils": ["libs/zma-utils/src/index.ts"]
+    },
+    "rootDir": ".",
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "target": "es2015",
+    "esModuleInterop": true
+  },
+  "exclude": ["node_modules", "tmp", "dist", ".nx", "graphqls"]
+}

@@ -1,0 +1,256 @@
+syntax = "proto3";
+
+package UserService;
+
+service UserService {
+  rpc userServiceFindByEmail (FindByEmailInput) returns (User) {}
+  rpc userServiceFindById (FindByIdInput) returns (User) {}
+  rpc userServiceFindByIdOnly (FindByIdOnlyInput) returns (User) {}
+  rpc userServiceFindByZaloIdAndTenantId (FindByZaloIdAndTenantIdInput) returns (User) {}
+  rpc userServiceCreate (CreateInput) returns (User) {}
+  rpc userServiceCreateZaloUser (CreateZaloUserInput) returns (User) {}
+  rpc userServiceUpdate (UpdateInput) returns (User) {}
+  rpc userServiceDelete (FindByIdInput) returns (BooleanOutput) {}
+  rpc tenantServiceFindById (FindByIdInput) returns (Tenant) {}
+  rpc tenantServiceFindByOrganizationId (FindByOrganizationIdInput) returns (TenantArray) {}
+  rpc userServiceFindZaloUsersByTenantId (FindZaloUsersByTenantIdInput) returns (UserArray) {}
+  rpc tenantServiceAllTenants (AllTenantsInput) returns (TenantArray) {}
+  rpc userServiceUpdateStatus (UpdateStatusInput) returns (User) {}
+  rpc userServiceConfirmByCode (ConfirmByCodeInput) returns (User) {}
+  rpc userServiceIncrementFailedLoginAttempts (FindByIdInput) returns (User) {}
+  rpc userServiceResetVerificationCode (FindByIdInput) returns (User) {}
+  rpc userServiceUpdateSocialProviders (UpdateSocialProvidersInput) returns (User) {}
+  rpc userServiceValidateAgencyCanImpersonate (ValidateAgencyCanImpersonateInput) returns (BooleanOutput) {}
+  rpc userServiceValidateOrganizationAdminCanImpersonate (ValidateOrganizationAdminCanImpersonateInput) returns (BooleanOutput) {}
+  rpc userServiceFindByIds (FindUsersByIdsInput) returns (UserArray) {}
+}
+
+message FindByEmailInput {
+  string requestId = 1;
+  FindByEmail data = 2;
+}
+
+message FindByEmail {
+  string email = 1;
+}
+
+message FindByIdInput {
+  string requestId = 1;
+  FindById data = 2;
+}
+
+message FindById {
+  string id = 1;
+}
+
+message FindByIdOnlyInput {
+  string requestId = 1;
+  FindByIdOnly data = 2;
+}
+
+message FindByIdOnly {
+  string userId = 1;
+}
+
+message FindByZaloIdAndTenantIdInput {
+  string requestId = 1;
+  FindByZaloIdAndTenantId data = 2;
+}
+
+message FindByZaloIdAndTenantId {
+  string zaloId = 1;
+  string tenantId = 2;
+}
+
+message CreateInput {
+  string requestId = 1;
+  Create data = 2;
+}
+
+message Create {
+  string email = 1;
+  string password = 2;
+  string firstName = 3;
+  string lastName = 4;
+  string avatarUrl = 5;
+  string zaloId = 6;
+  string tenantId = 7;
+  string phoneNumber = 8;
+  string type = 9;
+  string organizationId = 10;
+  string verificationCode = 11;
+  map<string, SocialProviderInfo> socialProviders = 12;
+}
+
+message CreateZaloUserInput {
+  string requestId = 1;
+  CreateZaloUser data = 2;
+}
+
+message CreateZaloUser {
+  string zaloId = 1;
+  string avatarUrl = 2;
+  string phoneNumber = 3;
+  string tenantId = 4;
+}
+
+message UpdateInput {
+  string requestId = 1;
+  Update data = 2;
+}
+
+message Update {
+  string id = 1;
+  string avatarUrl = 2;
+  string phoneNumber = 3;
+  string firstName = 4;
+  string lastName = 5;
+  string resetToken = 6;
+  string resetTokenExpiry = 7;
+  int32 failedLoginAttempts = 8;
+  string verificationCode = 9;
+  string password = 10;
+}
+
+message BooleanOutput {
+  bool status = 1;
+}
+
+message FindByOrganizationIdInput {
+  string requestId = 1;
+  FindByOrganizationId data = 2;
+}
+
+message FindByOrganizationId {
+  string organizationId = 1;
+}
+
+message User {
+  string _id = 1;
+  string email = 2;
+  string password = 3;
+  string firstName = 4;
+  string lastName = 5;
+  string fullName = 6;
+  string zaloId = 7;
+  string phoneNumber = 8;
+  string birthDate = 9;
+  string gender = 10;
+  string avatarUrl = 11;
+  string type = 12;
+  string status = 13;
+  string tenantId = 14;
+  string organizationId = 15;
+  map<string, SocialProviderInfo> socialProviders = 16;
+  string resetToken = 17;
+  string resetTokenExpiry = 18;
+  int32 failedLoginAttempts = 19;
+  string verificationCode = 20;
+  string createdAt = 21;
+  string updatedAt = 22;
+  string deletedAt = 23;
+}
+
+message SocialProviderInfo {
+  string id = 1;
+  string email = 2;
+  string accessToken = 3;
+}
+
+message Tenant {
+  string _id = 1;
+  string name = 2;
+  string status = 3;
+  string billingStatus = 4;
+  string organizationId = 5;
+  string zaloAppId = 6;
+  string zaloAppSecret = 7;
+  bool registerEnabled = 8;
+  string type = 9;
+  string createdAt = 10;
+  string updatedAt = 11;
+  string deletedAt = 12;
+}
+
+message TenantArray {
+  repeated Tenant data = 1;
+}
+
+message FindZaloUsersByTenantIdInput {
+  string requestId = 1;
+  FindZaloUsersByTenantId data = 2;
+}
+
+message FindZaloUsersByTenantId {
+  string tenantId = 1;
+}
+
+message UserArray {
+  repeated User data = 1;
+}
+
+message AllTenantsInput {
+  string requestId = 1;
+}
+
+message UpdateStatusInput {
+  string requestId = 1;
+  UpdateStatus data = 2;
+}
+
+message UpdateStatus {
+  string id = 1;
+  string status = 2;
+}
+
+message ConfirmByCodeInput {
+  string requestId = 1;
+  ConfirmByCode data = 2;
+}
+
+message ConfirmByCode {
+  string id = 1;
+  string code = 2;
+}
+
+message UpdateSocialProvidersInput {
+  string requestId = 1;
+  UpdateSocialProviders data = 2;
+}
+
+message UpdateSocialProviders {
+  string id = 1;
+  map<string, SocialProviderInfo> socialProviders = 2;
+}
+
+message ValidateAgencyCanImpersonateInput {
+  string requestId = 1;
+  ValidateAgencyCanImpersonate data = 2;
+}
+
+message ValidateAgencyCanImpersonate {
+  string agencyUserId = 1;
+  string targetUserId = 2;
+  string tenantId = 3;
+}
+
+message ValidateOrganizationAdminCanImpersonateInput {
+  string requestId = 1;
+  ValidateOrganizationAdminCanImpersonate data = 2;
+}
+
+message ValidateOrganizationAdminCanImpersonate {
+  string organizationAdminUserId = 1;
+  string targetUserId = 2;
+  string tenantId = 3;
+}
+
+message FindUsersByIdsInput {
+  string requestId = 1;
+  FindUsersByIds data = 2;
+}
+
+message FindUsersByIds {
+  string tenantId = 1;
+  repeated string ids = 2;
+}

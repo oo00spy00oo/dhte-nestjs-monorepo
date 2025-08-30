@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package CheckinService;
+
+service CheckinService {
+  rpc checkinServiceCheckinByGps (CheckinByGpsInput) returns (CheckinOutput) {}
+  rpc checkinServiceCheckinByWifi (CheckinByWifiInput) returns (CheckinOutput) {}
+  rpc checkinServiceCheckinByImage (CheckinByImageInput) returns (CheckinOutput) {}
+  rpc checkinServiceCheckinByQrCode (CheckinByQrCodeInput) returns (CheckinOutput) {}
+}
+
+message Pagination {
+  int32 limit = 1;
+  int32 skip = 2;
+}
+
+message CheckinByGpsInput {
+  string requestId = 1;
+  string tenantId = 2;
+  GpsCheckinData data = 3;
+}
+
+message CheckinByWifiInput {
+  string requestId = 1;
+  string tenantId = 2;
+  WifiCheckinData data = 3;
+}
+
+message CheckinByImageInput {
+  string requestId = 1;
+  string tenantId = 2;
+  ImageCheckinData data = 3;
+}
+
+message CheckinByQrCodeInput {
+  string requestId = 1;
+  string tenantId = 2;
+  QrCodeCheckinData data = 3;
+}
+
+message GpsCheckinData {
+  string userId = 1;
+  double latitude = 2;
+  double longitude = 3;
+  double allowedLatitude = 4;
+  double allowedLongitude = 5;
+  double allowedRadius = 6;
+}
+
+message WifiCheckinData {
+  string userId = 1;
+  string ssid = 2;
+  string bssid = 3;
+  repeated string allowedSSIDs = 4;
+  repeated string allowedBSSIDs = 5;
+}
+
+message ImageCheckinData {
+  string userId = 1;
+  string imageFile = 2;
+}
+
+message QrCodeCheckinData {
+  string userId = 1;
+  string qrCode = 2;
+  string allowedQrCode = 3;
+}
+
+message CheckinOutput {
+  bool status = 1;
+  string checkinId = 2;
+}

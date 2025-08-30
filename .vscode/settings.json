@@ -1,0 +1,19 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/node_modules": true,
+    "**/.nx": true,
+    "dist": true
+  },
+  "files.watcherExclude": {
+    "**/.nx/**": true,
+    "**/node_modules": true,
+    "**/dist/**": true,
+    "**/graphqls/**": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.fixAll": "explicit"
+  },
+  "nxConsole.generateAiAgentRules": true
+}

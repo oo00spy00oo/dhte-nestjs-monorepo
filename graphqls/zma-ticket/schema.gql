@@ -1,0 +1,554 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+input CreateCustomerInput {
+  """
+  Customer address
+  """
+  address: String!
+
+  """
+  Unique customer identifier code
+  """
+  customerCode: String!
+
+  """
+  Contact email address
+  """
+  email: String!
+
+  """
+  Customer name
+  """
+  name: String!
+
+  """
+  Contact phone number
+  """
+  phone: String!
+
+  """
+  Customer priority level (defaults to MEDIUM)
+  """
+  priority: CustomerVariantPriority
+
+  """
+  Array of ProductInstance ObjectIds
+  """
+  products: [ID!]
+
+  """
+  Customer status (defaults to ACTIVE)
+  """
+  status: CustomerVariantStatus
+
+  """
+  Customer type (defaults to INDIVIDUAL)
+  """
+  type: CustomerVariantType
+}
+
+input CreateTicketInput {
+  """
+  _id of User (responsible technician or staff)
+  """
+  assignedTo: ID
+
+  """
+  _id of User (ticket creator)
+  """
+  createdBy: ID!
+
+  """
+  _id of Customer (ticket originator)
+  """
+  customerId: ID!
+
+  """
+  Responsible department
+  """
+  department: String!
+
+  """
+  Short description of the issue or reason for creating the ticket
+  """
+  description: String!
+
+  """
+  Array of image URLs
+  """
+  imgUrls: [String!]
+
+  """
+  Priority (defaults to MEDIUM)
+  """
+  priority: TicketVariantPriority
+
+  """
+  _id of ProductInstance (related device)
+  """
+  productInstanceId: ID!
+
+  """
+  Scheduled maintenance date
+  """
+  scheduledDate: DateTime
+
+  """
+  Unique ticket code
+  """
+  ticketCode: String!
+
+  """
+  Ticket type
+  """
+  type: TicketVariantType!
+}
+
+"""
+Customer
+"""
+type Customer {
+  _id: ID!
+
+  """
+  Customer address
+  """
+  address: String!
+
+  """
+  Created date
+  """
+  createdAt: DateTime!
+
+  """
+  Unique customer identifier code
+  """
+  customerCode: String!
+
+  """
+  Contact email address
+  """
+  email: String!
+
+  """
+  Customer name
+  """
+  name: String!
+
+  """
+  Contact phone number
+  """
+  phone: String!
+
+  """
+  Customer priority level
+  """
+  priority: CustomerVariantPriority!
+
+  """
+  Array of ProductInstance ObjectIds
+  """
+  products: [ID!]!
+
+  """
+  Customer registration date
+  """
+  registeredAt: DateTime!
+
+  """
+  Customer status
+  """
+  status: CustomerVariantStatus!
+
+  """
+  Customer type
+  """
+  type: CustomerVariantType!
+
+  """
+  Updated date
+  """
+  updatedAt: DateTime!
+}
+
+enum CustomerVariantPriority {
+  High
+  Low
+  Medium
+  Vip
+}
+
+enum CustomerVariantStatus {
+  Active
+  Inactive
+  Pending
+  Suspended
+}
+
+enum CustomerVariantType {
+  Company
+  Individual
+  Organization
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  ticketServiceAddCommentToTicket(
+    authorId: String!
+    content: String!
+    imgUrls: [String!]
+    performedBy: String
+    ticketId: String!
+  ): Boolean!
+  ticketServiceChangeCustomerStatus(id: String!, newStatus: CustomerVariantStatus!): Boolean!
+  ticketServiceCreateCustomer(input: CreateCustomerInput!): Customer!
+  ticketServiceCreateTicket(input: CreateTicketInput!): Boolean!
+  ticketServiceDeleteCustomer(id: String!): Boolean!
+  ticketServiceDeleteTickets(ids: [String!]!, performedBy: String): Boolean!
+  ticketServiceDisableTickets(ids: [String!]!, performedBy: String): Boolean!
+  ticketServiceEnableTickets(ids: [String!]!, performedBy: String): Boolean!
+  ticketServiceUpdateCustomer(id: String!, input: UpdateCustomerInput!): Customer!
+  ticketServiceUpdateTicket(id: String!, input: UpdateTicketInput!, performedBy: String): Boolean!
+}
+
+input Pagination {
+  limit: Int = 10
+  skip: Int = 0
+}
+
+type Query {
+  privacyPolicy: String!
+  termAndCondition: String!
+  ticketServiceAllCustomers: [Customer!]!
+  ticketServiceAllTicketLogs(pagination: Pagination!): [TicketLog!]!
+  ticketServiceAllTickets(pagination: Pagination!): [Ticket!]!
+  ticketServiceCustomer(id: String!): Customer!
+  ticketServiceCustomerByCode(customerCode: String!): Customer!
+  ticketServiceSearchCustomers(searchInput: SearchCustomerInput!): [Customer!]!
+  ticketServiceSearchTicketLogs(pagination: Pagination!, searchTerm: String!): [TicketLog!]!
+  ticketServiceSearchTickets(pagination: Pagination!, searchTerm: String!): [Ticket!]!
+  ticketServiceTicket(id: String!): Ticket!
+  ticketServiceTicketLog(id: String!): TicketLog!
+  ticketServiceTicketLogs(ticketId: String!): [TicketLog!]!
+  ticketServiceTicketLogsByActionType(
+    actionType: TicketLogActionType!
+    ticketId: String!
+  ): [TicketLog!]!
+  ticketServiceTicketLogsByIds(ids: [String!]!): [TicketLog!]!
+  ticketServiceTicketLogsByPerformer(performedBy: String!, ticketId: String!): [TicketLog!]!
+  ticketServiceTickets(ids: [String!]!): [Ticket!]!
+}
+
+input SearchCustomerInput {
+  """
+  Filter customers registered from this date
+  """
+  dateFrom: DateTime
+
+  """
+  Filter customers registered until this date
+  """
+  dateTo: DateTime
+
+  """
+  Filter by customer priority
+  """
+  priority: CustomerVariantPriority
+
+  """
+  Search by customer code, name, phone, or email
+  """
+  searchTerm: String
+
+  """
+  Filter by customer status
+  """
+  status: CustomerVariantStatus
+
+  """
+  Filter by customer type
+  """
+  type: CustomerVariantType
+}
+
+"""
+Ticket
+"""
+type Ticket {
+  _id: ID!
+
+  """
+  _id of User (responsible technician or staff)
+  """
+  assignedTo: ID
+
+  """
+  Array of sub-document containing comments
+  """
+  comments: [TicketComment!]!
+
+  """
+  Ticket creation time
+  """
+  createdAt: DateTime!
+
+  """
+  _id of User (ticket creator)
+  """
+  createdBy: ID!
+
+  """
+  _id of Customer (ticket originator)
+  """
+  customerId: ID!
+
+  """
+  Responsible department
+  """
+  department: String!
+
+  """
+  Short description of the issue or reason for creating the ticket
+  """
+  description: String!
+
+  """
+  Array of string URL or path
+  """
+  imgUrls: [String!]!
+
+  """
+  Array of ObjectId referencing TicketLog
+  """
+  logs: [ID!]!
+
+  """
+  Priority
+  """
+  priority: TicketVariantPriority!
+
+  """
+  _id of ProductInstance (related device)
+  """
+  productInstanceId: ID!
+
+  """
+  Scheduled maintenance date
+  """
+  scheduledDate: DateTime
+
+  """
+  Ticket status
+  """
+  status: TicketVariantStatus!
+
+  """
+  Unique ticket code
+  """
+  ticketCode: String!
+
+  """
+  Ticket type
+  """
+  type: TicketVariantType!
+
+  """
+  Last update time
+  """
+  updatedAt: DateTime!
+}
+
+type TicketComment {
+  _id: ID!
+
+  """
+  _id of User (comment author)
+  """
+  authorId: ID!
+
+  """
+  Comment content
+  """
+  content: String!
+
+  """
+  Comment time
+  """
+  createdAt: DateTime!
+
+  """
+  Array of image URL or path
+  """
+  imgUrls: [String!]!
+}
+
+"""
+Ticket Log
+"""
+type TicketLog {
+  _id: ID!
+
+  """
+  Action type
+  """
+  actionType: TicketLogActionType!
+
+  """
+  Action record time
+  """
+  createdAt: DateTime!
+
+  """
+  Detailed action description
+  """
+  description: String!
+
+  """
+  Value before change
+  """
+  fromValue: String
+
+  """
+  _id of User who performed the action
+  """
+  performedBy: ID!
+
+  """
+  Reference to _id of Ticket
+  """
+  ticketId: ID!
+
+  """
+  Value after change
+  """
+  toValue: String
+}
+
+enum TicketLogActionType {
+  Assign
+  CommentAdded
+  Create
+  Deleted
+  DepartmentChange
+  DescriptionChange
+  Disabled
+  Enabled
+  ImgAdded
+  PriorityChange
+  StatusChange
+  Updated
+}
+
+enum TicketVariantPriority {
+  Critical
+  High
+  Low
+  Medium
+}
+
+enum TicketVariantStatus {
+  Closed
+  InProgress
+  Open
+  PendingCustomer
+  Resolved
+}
+
+enum TicketVariantType {
+  Corrective
+  Predictive
+  Preventive
+  Unplanned
+}
+
+input UpdateCustomerInput {
+  """
+  Customer address
+  """
+  address: String
+
+  """
+  Contact email address
+  """
+  email: String
+
+  """
+  Customer name
+  """
+  name: String
+
+  """
+  Contact phone number
+  """
+  phone: String
+
+  """
+  Customer priority level
+  """
+  priority: CustomerVariantPriority
+
+  """
+  Array of ProductInstance ObjectIds
+  """
+  products: [ID!]
+
+  """
+  Customer status
+  """
+  status: CustomerVariantStatus
+
+  """
+  Customer type
+  """
+  type: CustomerVariantType
+}
+
+input UpdateTicketInput {
+  """
+  _id of User (responsible technician or staff)
+  """
+  assignedTo: ID
+
+  """
+  Responsible department
+  """
+  department: String
+
+  """
+  Short description of the issue
+  """
+  description: String
+
+  """
+  Array of image URLs
+  """
+  imgUrls: [String!]
+
+  """
+  Priority
+  """
+  priority: TicketVariantPriority
+
+  """
+  Scheduled maintenance date
+  """
+  scheduledDate: DateTime
+
+  """
+  Ticket status
+  """
+  status: TicketVariantStatus
+
+  """
+  Ticket type
+  """
+  type: TicketVariantType
+}

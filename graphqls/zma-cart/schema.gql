@@ -1,0 +1,126 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""
+Cart
+"""
+type CartServiceCartGqlOutput {
+  createdAt: DateTime!
+  currency: String!
+  id: String!
+  products: [CartServiceCartProductGqlOutput!]!
+  tenantId: String!
+  totalAmount: Float!
+  totalAmountFormatted: String!
+  updatedAt: DateTime!
+  userId: String!
+}
+
+"""
+Cart Product
+"""
+type CartServiceCartProductGqlOutput {
+  currency: String!
+  name: String!
+  price: Float!
+  priceFormatted: String!
+  productId: String!
+  quantity: Float!
+  thumbnailFile: String
+  variant: CartServiceCartProductVariantGqlOutput
+}
+
+"""
+Cart Product Variant
+"""
+type CartServiceCartProductVariantGqlOutput {
+  attributeKey: String
+  attributeValue: String
+  name: String!
+  price: Float!
+  priceFormatted: String!
+  sku: String!
+}
+
+input CartServiceCreateGqlInput {
+  products: [CartServiceProductGqlInput!]!
+}
+
+input CartServiceDeleteGqlInput {
+  cartId: ID!
+}
+
+input CartServiceGetGqlInput {
+  """
+  Maximum number of items to return (1-100)
+  """
+  limit: Int = 10
+
+  """
+  Number of items to skip (offset)
+  """
+  skip: Int = 0
+
+  """
+  Multiple sort fields for complex sorting
+  """
+  sort: [SortField!]
+}
+
+input CartServiceProductGqlInput {
+  name: String!
+  productId: String!
+  quantity: Float!
+  variant: CartServiceProductVariantGqlInput
+}
+
+input CartServiceProductVariantGqlInput {
+  attributeKey: String!
+  attributeValue: String!
+  name: String!
+  sku: String!
+}
+
+input CartServiceUpdateGqlInput {
+  cartId: ID!
+  products: [CartServiceProductGqlInput!]!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  cartServiceCreate(input: CartServiceCreateGqlInput!): CartServiceCartGqlOutput!
+  cartServiceDelete(input: CartServiceDeleteGqlInput!): Boolean!
+  cartServiceDeleteAll: Boolean!
+  cartServiceUpdate(input: CartServiceUpdateGqlInput!): CartServiceCartGqlOutput!
+}
+
+type Query {
+  cartService(input: CartServiceGetGqlInput!): [CartServiceCartGqlOutput!]!
+}
+
+"""
+Sort direction for ordering query results
+"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input SortField {
+  """
+  Sort direction for this field
+  """
+  direction: SortDirection! = ASC
+
+  """
+  Field name to sort by
+  """
+  field: String!
+}

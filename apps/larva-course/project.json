@@ -1,0 +1,65 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "larva-course",
+  "projectType": "application",
+  "sourceRoot": "apps/larva-course/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "configurations": {
+        "development": {
+          "args": ["node-env=development"]
+        }
+      },
+      "executor": "nx:run-commands",
+      "options": {
+        "args": ["node-env=production"],
+        "command": "webpack-cli build",
+        "assets": [
+          {
+            "input": "apps/larva-course",
+            "glob": "**/(*.yaml|yml)",
+            "output": "."
+          },
+          {
+            "input": "libs/zma-i18n/src/i18n",
+            "glob": "**/*",
+            "output": "./i18n"
+          },
+          {
+            "input": "libs/zma-grpc",
+            "glob": "src/proto/**/dictionary.proto",
+            "output": "."
+          },
+          {
+            "input": "libs/zma-grpc",
+            "glob": "src/proto/**/fns.proto",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "serve": {
+      "configurations": {
+        "development": {
+          "buildTarget": "larva-course:build:development"
+        },
+        "production": {
+          "buildTarget": "larva-course:build:production"
+        }
+      },
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "executor": "@nx/js:node",
+      "options": {
+        "buildTarget": "larva-course:build",
+        "runBuildTargetDependencies": false
+      }
+    },
+    "test": {
+      "options": {
+        "passWithNoTests": true
+      }
+    }
+  }
+}

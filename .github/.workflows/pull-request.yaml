@@ -1,0 +1,60 @@
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Needed for Nx to compare changes
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 10
+          run_install: false
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 23
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Get affected projects
+        id: affected
+        run: |
+          AFFECTED=$(pnpm nx show projects --affected)
+          echo "projects=$AFFECTED" >> $GITHUB_OUTPUT
+      - name: Check schemas for affected projects
+        env:
+          HIVE_ENDPOINT: ${{ secrets.HIVE_ENDPOINT }}
+        run: |
+          #!/bin/bash
+          PROJECTS=(
+            "zma-auth"
+            "zma-booking"
+            "zma-campaign"
+            "zma-cart"
+            "zma-cdn"
+            "zma-loyalty"
+            "zma-membership"
+            "zma-order"
+            "zma-point"
+            "zma-product"
+            "zma-sdui"
+            "zma-storage"
+            "zma-user"
+            "zma-voucher"
+          )
+
+          for project in ${{ steps.affected.outputs.projects }}; do
+            for known_project in "${PROJECTS[@]}"; do
+              if [ "$project" = "$known_project" ]; then
+                hive schema:publish "graphqls/$project/schema.graphql" \
+                  --registry.accessToken '${{ secrets.HIVE_TOKEN }}' \
+                  --target "passion-tech/zma/development" \
+                  --github
+                break
+              fi
+            done
+          done

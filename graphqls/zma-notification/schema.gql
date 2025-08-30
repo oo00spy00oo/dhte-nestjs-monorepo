@@ -1,0 +1,138 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+enum LanguageEnum {
+  EN
+  VI
+}
+
+type Mutation {
+  notificationServiceCreateTemplateForAdmin(
+    input: NotificationServiceCreateTemplateGqlInput!
+  ): NotificationServiceTemplateGqlOutput!
+  notificationServiceMarkInAppNotificationAsRead(
+    id: String!
+  ): NotificationServiceInAppNotificationGqlOutput!
+  notificationServiceUpdateTemplateForAdmin(
+    id: String!
+    input: NotificationServiceUpdateTemplateGqlInput!
+  ): NotificationServiceTemplateGqlOutput!
+}
+
+enum NotificationServiceChannel {
+  Email
+  InApp
+  Push
+  SMS
+}
+
+"""
+Input for creating a notification service template
+"""
+input NotificationServiceCreateTemplateGqlInput {
+  channel: NotificationServiceChannel!
+  code: String!
+  content: String!
+  language: LanguageEnum!
+  subject: String
+}
+
+"""
+Notification Service Output
+"""
+type NotificationServiceInAppNotificationGqlOutput {
+  content: String
+  createdAt: DateTime
+  id: String!
+  isRead: Boolean
+  metadata: JSON
+  readAt: DateTime
+  tenantId: String
+  title: String
+  updatedAt: DateTime
+  userId: String
+}
+
+"""
+Notification Service Template Output
+"""
+type NotificationServiceTemplateGqlOutput {
+  channel: NotificationServiceChannel
+  code: String
+  content: String
+  createdAt: DateTime
+  id: String!
+  language: LanguageEnum
+  subject: String
+  tenantId: String
+  updatedAt: DateTime
+}
+
+"""
+Input for updating a notification service template
+"""
+input NotificationServiceUpdateTemplateGqlInput {
+  channel: NotificationServiceChannel
+  code: String
+  content: String
+  language: LanguageEnum
+  subject: String
+}
+
+input Pagination {
+  """
+  Maximum number of items to return (1-100)
+  """
+  limit: Int = 10
+
+  """
+  Number of items to skip (offset)
+  """
+  skip: Int = 0
+
+  """
+  Multiple sort fields for complex sorting
+  """
+  sort: [SortField!]
+}
+
+type Query {
+  notificationServiceInAppNotifications(
+    pagination: Pagination!
+  ): [NotificationServiceInAppNotificationGqlOutput!]!
+  notificationServiceTemplate(id: String!): NotificationServiceTemplateGqlOutput!
+  notificationServiceTemplates(pagination: Pagination!): [NotificationServiceTemplateGqlOutput!]!
+}
+
+"""
+Sort direction for ordering query results
+"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input SortField {
+  """
+  Sort direction for this field
+  """
+  direction: SortDirection! = ASC
+
+  """
+  Field name to sort by
+  """
+  field: String!
+}

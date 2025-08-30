@@ -1,0 +1,128 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+input ChangePasswordInput {
+  currentPassword: String!
+  newPassword: String!
+}
+
+input ConfirmTokenInput {
+  token: String!
+}
+
+input ForgotPasswordInput {
+  email: String!
+}
+
+input ImpersonateUserInput {
+  targetUserId: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input LoginWithSocialInput {
+  token: String!
+}
+
+type Mutation {
+  authServiceChangePassword(input: ChangePasswordInput!): Boolean!
+  authServiceConfirmRegister(input: ConfirmTokenInput!): Boolean!
+  authServiceEmailForgotPassword(input: ForgotPasswordInput!): Boolean!
+  authServiceEmailLogin(input: LoginInput!): TokenOutput!
+  authServiceEmailRegister(input: RegisterInput!): Boolean!
+  authServiceImpersonateUser(input: ImpersonateUserInput!): TokenOutput!
+  authServiceLoginWithGoogle(input: LoginWithSocialInput!): TokenOutput!
+  authServiceRefreshToken(refreshToken: String!): TokenOutput!
+  authServiceResetPassword(input: ResetPasswordInput!): Boolean!
+  authServiceZaloLogin(input: ZaloLoginInput!): TokenOutput!
+}
+
+type Query {
+  authServiceMe: UserServiceUserGqlOutput!
+}
+
+input RegisterInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+}
+
+input ResetPasswordInput {
+  newPassword: String!
+  token: String!
+}
+
+type TokenOutput {
+  accessToken: String!
+  accessTokenExpiry: String!
+  refreshToken: String!
+  refreshTokenExpiry: String!
+  user: UserServiceUserGqlOutput!
+}
+
+enum UserServiceGender {
+  Female
+  Male
+}
+
+type UserServiceSocialProvider {
+  email: String!
+  id: String!
+}
+
+type UserServiceSocialProviders {
+  facebook: UserServiceSocialProvider
+  google: UserServiceSocialProvider
+}
+
+"""
+User
+"""
+type UserServiceUserGqlOutput {
+  avatarUrl: String
+  birthDate: String
+  createdAt: String
+  email: String
+  firstName: String
+  fullName: String
+  gender: UserServiceGender
+  id: String!
+  lastActive: String
+  lastName: String
+  organizationId: String
+  phoneNumber: String
+  status: UserServiceUserStatus!
+  tenantId: String
+  type: UserServiceUserType!
+  updatedAt: String
+  zaloId: String
+  zaloOAId: String
+}
+
+enum UserServiceUserStatus {
+  Active
+  Inactive
+  Pending
+  Suspended
+}
+
+enum UserServiceUserType {
+  Admin
+  Agency
+  OrganizationAdmin
+  TenantAdmin
+  User
+  Zalo
+}
+
+input ZaloLoginInput {
+  phoneNumberToken: String!
+  token: String!
+}

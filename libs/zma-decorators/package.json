@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "@nestjs/common": "^11.1.6",
+    "@nestjs/core": "^11.1.6",
+    "@nestjs/graphql": "^13.1.0",
+    "@zma-nestjs-monorepo/zma-types": "0.0.1",
+    "rxjs": "^7.8.2",
+    "@nestjs/config": "^4.0.2",
+    "@nestjs/passport": "^11.0.5",
+    "@nestjs/jwt": "^11.0.0",
+    "passport-jwt": "^4.0.1",
+    "lodash": "^4.17.21",
+    "ioredis": "^5.7.0",
+    "socket.io": "^4.8.1",
+    "@nestjs/websockets": "^11.1.6"
+  },
+  "main": "./index.cjs",
+  "name": "@zma-nestjs-monorepo/zma-decorators",
+  "private": true,
+  "type": "commonjs",
+  "types": "./index.d.ts",
+  "version": "0.0.1"
+}

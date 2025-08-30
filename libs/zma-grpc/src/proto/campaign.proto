@@ -1,0 +1,136 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package CampaignService;
+
+service CampaignService {
+  rpc campaignServiceGetCampaignById (GetCampaignByIdInput) returns (Campaign) {}
+  rpc campaignServiceGetAllCampaigns (GetAllCampaignsInput) returns (CampaignArray) {}
+  rpc campaignServiceUserRegisteredEvent (UserRegisteredEventInput) returns (UserRegisteredEventOutput) {}
+}
+
+message GetCampaignByIdInputData {
+  string id = 1;
+  string tenantId = 2;
+}
+
+message GetCampaignByIdInput {
+  GetCampaignByIdInputData data = 1;
+  optional string requestId = 2;
+}
+
+message GetAllCampaignsInputData {
+  string tenantId = 1;
+  optional CampaignStatus status = 2;
+  optional CampaignType campaignType = 3;
+  optional string searchQuery = 4;
+}
+
+message GetAllCampaignsInput {
+  GetAllCampaignsInputData data = 1;
+  optional string requestId = 2;
+  optional int32 page = 3;
+  optional int32 limit = 4;
+}
+
+message UserRegisteredEventInputData {
+  string userId = 1;
+  string tenantId = 2;
+  string loyaltyProgramId = 3;
+}
+
+message UserRegisteredEventInput {
+  UserRegisteredEventInputData data = 1;
+  optional string requestId = 2;
+}
+
+message UserRegisteredEventOutput {
+  bool success = 1;
+  optional string message = 2;
+}
+
+message BenefitConfig {
+  optional string discountType = 1;
+  optional int32 discountValue = 2;
+  optional int32 pointsToEarn = 3;
+  optional int32 pointsMultiplier = 4;
+  optional string voucherTypeId = 5;
+  optional string tierUpgrade = 6;
+}
+
+message EligibilityRules {
+  repeated string membershipTiers = 1;
+  optional int32 minimumSpend = 2;
+  optional bool firstPurchaseOnly = 3;
+  repeated string productCategories = 4;
+  repeated string excludedProducts = 5;
+}
+
+message Campaign {
+  string id = 1;
+  string tenantId = 2;
+  string name = 3;
+  string description = 4;
+  google.protobuf.Timestamp startDate = 5;
+  google.protobuf.Timestamp endDate = 6;
+  CampaignStatus status = 7;
+  CampaignType campaignType = 8;
+  optional BenefitConfig benefitConfig = 9;
+  optional EligibilityRules eligibilityRules = 10;
+  bool isRecurring = 11;
+  optional CampaignRecurringPattern recurringPattern = 12;
+  optional int32 usageLimitPerUser = 13;
+  bool isStackable = 14;
+  optional string targetAudience = 15;
+  optional int32 targetParticipants = 16;
+  optional int32 currentParticipants = 17;
+  optional int32 voucherLimit = 18;
+  optional int32 vouchersIssued = 19;
+  repeated string locations = 20;
+  optional string bannerUrl = 21;
+  bool isEnabled = 22;
+  bool isDeleted = 23;
+  int32 priority = 24;
+  google.protobuf.Timestamp createdAt = 25;
+  google.protobuf.Timestamp updatedAt = 26;
+}
+
+message CampaignArray {
+  repeated Campaign data = 1;
+  int32 total = 2;
+  int32 page = 3;
+  int32 limit = 4;
+}
+
+message UserRegisteredEventResult {
+  bool success = 1;
+  optional string message = 2;
+}
+
+enum CampaignStatus {
+  ACTIVE = 0;
+  DRAFT = 1;
+  ENDED = 2;
+  SCHEDULED = 3;
+}
+
+enum CampaignType {
+  DISCOUNT = 0;
+  POINTS = 1;
+  VOUCHER = 2;
+  TIER_UPGRADE = 3;
+  MIXED = 4;
+}
+
+enum CampaignDiscountType {
+  PERCENTAGE = 0;
+  FIXED = 1;
+}
+
+enum CampaignRecurringPattern {
+  DAILY = 0;
+  WEEKLY = 1;
+  MONTHLY = 2;
+  YEARLY = 3;
+}

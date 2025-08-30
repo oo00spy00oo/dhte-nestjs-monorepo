@@ -1,0 +1,433 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  addClickAppToSpace(clickApp: String!, spaceId: String!): Boolean!
+  addCommentToTask(comment: TaskServiceCommentInput!, taskId: String!): Boolean!
+  addListToFolder(folderId: String!, listId: String!): Boolean!
+  addMemberToWorkspace(memberId: String!, workspaceId: String!): Boolean!
+  addTaskToList(listId: String!, taskId: String!): Boolean!
+  addTimeLog(taskId: String!, timeLog: TaskServiceTimeLogInput!): Boolean!
+  assignTask(assigneeId: String!, taskId: String!): Boolean!
+  createDependency(input: TaskServiceCreateDependencyGqlInput!): Boolean!
+  createFolder(input: TaskServiceCreateFolderGqlInput!): Boolean!
+  createList(input: TaskServiceCreateListGqlInput!): Boolean!
+  createSpace(input: TaskServiceCreateSpaceGqlInput!): Boolean!
+  createSubtask(input: TaskServiceCreateTaskGqlInput!, parentId: String!): Boolean!
+  createTask(input: TaskServiceCreateTaskGqlInput!): Boolean!
+  createWorkspace(input: TaskServiceCreateWorkspaceGqlInput!): Boolean!
+  deleteDependencies(ids: [String!]!): Boolean!
+  deleteDependenciesByTask(taskId: String!): Boolean!
+  deleteFolders(ids: [String!]!): Boolean!
+  deleteLists(ids: [String!]!): Boolean!
+  deleteSpaces(ids: [String!]!): Boolean!
+  deleteTasks(ids: [String!]!): Boolean!
+  deleteWorkspaces(ids: [String!]!): Boolean!
+  moveListToFolder(folderId: String, listId: String!): Boolean!
+  moveTaskToList(listId: String!, taskId: String!): Boolean!
+  removeClickAppFromSpace(clickApp: String!, spaceId: String!): Boolean!
+  removeListFromFolder(folderId: String!, listId: String!): Boolean!
+  removeMemberFromWorkspace(memberId: String!, workspaceId: String!): Boolean!
+  removeTaskFromList(listId: String!, taskId: String!): Boolean!
+  unassignTask(assigneeId: String!, taskId: String!): Boolean!
+  updateDependency(id: String!, input: TaskServiceUpdateDependencyGqlInput!): Boolean!
+  updateFolder(id: String!, input: TaskServiceUpdateFolderGqlInput!): Boolean!
+  updateList(id: String!, input: TaskServiceUpdateListGqlInput!): Boolean!
+  updateSpace(id: String!, input: TaskServiceUpdateSpaceGqlInput!): Boolean!
+  updateSpaceStatuses(spaceId: String!, statuses: TaskServiceSpaceStatusesInput!): Boolean!
+  updateTask(id: String!, input: TaskServiceUpdateTaskGqlInput!): Boolean!
+  updateTaskStatus(status: String!, taskId: String!): Boolean!
+  updateWorkspace(id: String!, input: TaskServiceUpdateWorkspaceGqlInput!): Boolean!
+}
+
+input Pagination {
+  """
+  Maximum number of items to return (1-100)
+  """
+  limit: Int = 10
+
+  """
+  Number of items to skip (offset)
+  """
+  skip: Int = 0
+
+  """
+  Multiple sort fields for complex sorting
+  """
+  sort: [SortField!]
+}
+
+type Query {
+  allDependencies(pagination: Pagination!): [TaskServiceDependencyGqlOutput!]!
+  allFolders(pagination: Pagination!): [TaskServiceFolderGqlOutput!]!
+  allLists(pagination: Pagination!): [TaskServiceListGqlOutput!]!
+  allSpaces(pagination: Pagination!): [TaskServiceSpaceGqlOutput!]!
+  allTasks(pagination: Pagination!): [TaskServiceTaskGqlOutput!]!
+  allWorkspaces(pagination: Pagination!): [TaskServiceWorkspaceGqlOutput!]!
+  blockedTasks(taskId: String!): [String!]!
+  blockingTasks(taskId: String!): [String!]!
+  dependencies(ids: [String!]!): [TaskServiceDependencyGqlOutput!]!
+  dependenciesByTask(pagination: Pagination!, taskId: String!): [TaskServiceDependencyGqlOutput!]!
+  dependenciesByType(pagination: Pagination!, type: String!): [TaskServiceDependencyGqlOutput!]!
+  dependenciesFromTask(
+    fromTaskId: String!
+    pagination: Pagination!
+  ): [TaskServiceDependencyGqlOutput!]!
+  dependenciesToTask(pagination: Pagination!, toTaskId: String!): [TaskServiceDependencyGqlOutput!]!
+  dependency(id: String!): TaskServiceDependencyGqlOutput!
+  folder(id: String!): TaskServiceFolderGqlOutput!
+  folders(ids: [String!]!): [TaskServiceFolderGqlOutput!]!
+  foldersBySpace(pagination: Pagination!, spaceId: String!): [TaskServiceFolderGqlOutput!]!
+  list(id: String!): TaskServiceListGqlOutput!
+  lists(ids: [String!]!): [TaskServiceListGqlOutput!]!
+  listsByFolder(folderId: String!, pagination: Pagination!): [TaskServiceListGqlOutput!]!
+  listsBySpace(pagination: Pagination!, spaceId: String!): [TaskServiceListGqlOutput!]!
+  overdueTasks(pagination: Pagination!): [TaskServiceTaskGqlOutput!]!
+  searchFolders(input: String!, pagination: Pagination!): [TaskServiceFolderGqlOutput!]!
+  searchLists(input: String!, pagination: Pagination!): [TaskServiceListGqlOutput!]!
+  searchSpaces(input: String!, pagination: Pagination!): [TaskServiceSpaceGqlOutput!]!
+  searchTasks(input: String!, pagination: Pagination!): [TaskServiceTaskGqlOutput!]!
+  searchWorkspaces(input: String!, pagination: Pagination!): [TaskServiceWorkspaceGqlOutput!]!
+  space(id: String!): TaskServiceSpaceGqlOutput!
+  spaces(ids: [String!]!): [TaskServiceSpaceGqlOutput!]!
+  spacesByWorkspace(pagination: Pagination!, workspaceId: String!): [TaskServiceSpaceGqlOutput!]!
+  subtasks(pagination: Pagination!, parentId: String!): [TaskServiceTaskGqlOutput!]!
+  task(id: String!): TaskServiceTaskGqlOutput!
+  tasks(ids: [String!]!): [TaskServiceTaskGqlOutput!]!
+  tasksByAssignee(assigneeId: String!, pagination: Pagination!): [TaskServiceTaskGqlOutput!]!
+  tasksByList(listId: String!, pagination: Pagination!): [TaskServiceTaskGqlOutput!]!
+  tasksByPriority(pagination: Pagination!, priority: String!): [TaskServiceTaskGqlOutput!]!
+  tasksByStatus(pagination: Pagination!, status: String!): [TaskServiceTaskGqlOutput!]!
+  workspace(id: String!): TaskServiceWorkspaceGqlOutput!
+  workspaces(ids: [String!]!): [TaskServiceWorkspaceGqlOutput!]!
+  workspacesByMember(memberId: String!, pagination: Pagination!): [TaskServiceWorkspaceGqlOutput!]!
+  workspacesByOwner(ownerId: String!, pagination: Pagination!): [TaskServiceWorkspaceGqlOutput!]!
+}
+
+"""
+Sort direction for ordering query results
+"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input SortField {
+  """
+  Sort direction for this field
+  """
+  direction: SortDirection! = ASC
+
+  """
+  Field name to sort by
+  """
+  field: String!
+}
+
+type TaskServiceActivityGqlOutput {
+  event: String
+  timestamp: DateTime
+  userId: String
+}
+
+input TaskServiceActivityInput {
+  event: String!
+  timestamp: DateTime!
+  userId: String!
+}
+
+type TaskServiceCommentGqlOutput {
+  createdAt: DateTime
+  text: String
+  user: String
+}
+
+input TaskServiceCommentInput {
+  createdAt: DateTime!
+  text: String!
+  userId: String!
+}
+
+input TaskServiceCreateDependencyGqlInput {
+  fromTaskId: String!
+  toTaskId: String!
+  type: String!
+}
+
+input TaskServiceCreateFolderGqlInput {
+  lists: [String!]
+  name: String!
+  spaceId: String!
+}
+
+input TaskServiceCreateListGqlInput {
+  folderId: String
+  name: String!
+  spaceId: String!
+  tasks: [String!]
+}
+
+input TaskServiceCreateSpaceGqlInput {
+  clickApps: [String!]
+  defaultViews: [String!]
+  name: String!
+  requiredViews: [String!]
+  statuses: TaskServiceSpaceStatusesInput
+  workspaceId: String!
+}
+
+input TaskServiceCreateTaskGqlInput {
+  activity: [TaskServiceActivityInput!]
+  assignees: [String!]
+  attachments: [String!]
+  comments: [TaskServiceCommentInput!]
+  createdBy: String!
+  customFields: [TaskServiceCustomFieldInput!]
+  description: String
+  dueDate: DateTime
+  listId: String
+  name: String!
+  parentId: String
+  priority: String
+  startDate: DateTime
+  status: String
+  tags: [String!]
+  timeEstimate: Int
+  timeTracked: TaskServiceTimeTrackedInput
+  updatedBy: String!
+}
+
+input TaskServiceCreateWorkspaceGqlInput {
+  members: [String!]
+  name: String!
+  spaces: [String!]
+}
+
+type TaskServiceCustomFieldGqlOutput {
+  name: String
+  type: String
+  value: String
+}
+
+input TaskServiceCustomFieldInput {
+  name: String!
+  type: String!
+  value: String!
+}
+
+"""
+Dependency
+"""
+type TaskServiceDependencyGqlOutput {
+  createdAt: DateTime
+  createdBy: String
+  deletedAt: DateTime
+  fromTaskId: String
+  id: String
+  isDeleted: Boolean
+  toTaskId: String
+  type: String
+  updatedAt: DateTime
+  updatedBy: String
+}
+
+"""
+Folder
+"""
+type TaskServiceFolderGqlOutput {
+  createdAt: DateTime
+  createdBy: String
+  deletedAt: DateTime
+  id: String
+  isDeleted: Boolean
+  lists: [String!]
+  name: String
+  spaceId: String
+  tenantId: String
+  updatedAt: DateTime
+  updatedBy: String
+}
+
+"""
+List
+"""
+type TaskServiceListGqlOutput {
+  createdAt: DateTime
+  createdBy: String
+  deletedAt: DateTime
+  folderId: String
+  id: String
+  isDeleted: Boolean
+  name: String
+  spaceId: String
+  tasks: [String!]
+  tenantId: String
+  updatedAt: DateTime
+  updatedBy: String
+}
+
+"""
+Space
+"""
+type TaskServiceSpaceGqlOutput {
+  clickApps: [String!]
+  createdAt: DateTime
+  createdBy: String
+  defaultViews: [String!]
+  deletedAt: DateTime
+  id: String
+  isDeleted: Boolean
+  name: String
+  requiredViews: [String!]
+  statuses: TaskServiceSpaceStatusesGqlOutput
+  tenantId: String
+  updatedAt: DateTime
+  updatedBy: String
+  workspaceId: String
+}
+
+type TaskServiceSpaceStatusesGqlOutput {
+  active: [String!]
+  closed: [String!]
+  done: [String!]
+}
+
+input TaskServiceSpaceStatusesInput {
+  active: [String!]!
+  closed: [String!]!
+  done: [String!]!
+}
+
+"""
+Task
+"""
+type TaskServiceTaskGqlOutput {
+  activity: [TaskServiceActivityGqlOutput!]
+  assignees: [String!]
+  attachments: [String!]
+  comments: [TaskServiceCommentGqlOutput!]
+  createdAt: DateTime
+  createdBy: String
+  customFields: [TaskServiceCustomFieldGqlOutput!]
+  deletedAt: DateTime
+  description: String
+  dueDate: DateTime
+  id: String
+  isDeleted: Boolean
+  listId: String
+  name: String
+  parentId: String
+  priority: String
+  startDate: DateTime
+  status: String
+  tags: [String!]!
+  tenantId: String
+  timeEstimate: Int
+  timeTracked: TaskServiceTimeTrackedGqlOutput
+  updatedAt: DateTime
+  updatedBy: String
+}
+
+type TaskServiceTimeLogGqlOutput {
+  duration: Int
+  timestamp: DateTime
+  userId: String
+}
+
+input TaskServiceTimeLogInput {
+  duration: Int!
+  timestamp: DateTime!
+  userId: String!
+}
+
+type TaskServiceTimeTrackedGqlOutput {
+  logs: [TaskServiceTimeLogGqlOutput!]
+  total: Int
+}
+
+input TaskServiceTimeTrackedInput {
+  logs: [TaskServiceTimeLogInput!]!
+  total: Int!
+}
+
+input TaskServiceUpdateDependencyGqlInput {
+  fromTaskId: String
+  toTaskId: String
+  type: String
+}
+
+input TaskServiceUpdateFolderGqlInput {
+  lists: [String!]
+  name: String
+  spaceId: String
+}
+
+input TaskServiceUpdateListGqlInput {
+  folderId: String
+  name: String
+  spaceId: String
+  tasks: [String!]
+}
+
+input TaskServiceUpdateSpaceGqlInput {
+  clickApps: [String!]
+  defaultViews: [String!]
+  name: String
+  requiredViews: [String!]
+  statuses: TaskServiceSpaceStatusesInput
+  workspaceId: String
+}
+
+input TaskServiceUpdateTaskGqlInput {
+  activity: [TaskServiceActivityInput!]
+  assignees: [String!]
+  attachments: [String!]
+  comments: [TaskServiceCommentInput!]
+  createdBy: String
+  customFields: [TaskServiceCustomFieldInput!]
+  description: String
+  dueDate: DateTime
+  listId: String
+  name: String
+  parentId: String
+  priority: String
+  startDate: DateTime
+  status: String
+  tags: [String!]
+  timeEstimate: Int
+  timeTracked: TaskServiceTimeTrackedInput
+  updatedBy: String
+}
+
+input TaskServiceUpdateWorkspaceGqlInput {
+  members: [String!]
+  name: String
+  ownerId: String
+  spaces: [String!]
+}
+
+"""
+Workspace
+"""
+type TaskServiceWorkspaceGqlOutput {
+  createdAt: DateTime
+  createdBy: String
+  deletedAt: DateTime
+  id: String
+  isDeleted: Boolean
+  members: [String!]
+  name: String
+  ownerId: String
+  spaces: [String!]
+  tenantId: String
+  updatedAt: DateTime
+  updatedBy: String
+}

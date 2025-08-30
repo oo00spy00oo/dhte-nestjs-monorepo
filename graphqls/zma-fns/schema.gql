@@ -1,0 +1,298 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input FnsServiceAnswerGqlInput {
+  answer: [String!]!
+  questionId: String!
+}
+
+type FnsServiceAnswerGqlOutput {
+  answer: [String!]
+  questionId: String
+  questionName: String
+}
+
+input FnsServiceCreateFormGqlInput {
+  description: String
+  isActive: Boolean
+  isAnonymous: Boolean!
+  questions: [FnsServiceSurveyQuestionGqlInput!]!
+  title: String!
+}
+
+input FnsServiceCreateSurveyGqlInput {
+  description: String
+  isActive: Boolean
+  isAnonymous: Boolean!
+  questions: [FnsServiceSurveyQuestionGqlInput!]!
+  title: String!
+  type: SurveyType!
+}
+
+input FnsServiceCreateUserResponseFormGqlInput {
+  answers: [FnsServiceAnswerGqlInput!]!
+  formId: String!
+}
+
+input FnsServiceCreateUserResponseSurveyGqlInput {
+  answers: [FnsServiceAnswerGqlInput!]!
+  surveyId: String!
+}
+
+input FnsServiceFindUserResponsesToFormGqlInput {
+  formId: String
+}
+
+input FnsServiceFindUserResponsesToSurveyGqlInput {
+  surveyId: String
+}
+
+type FnsServiceFormGqlOutput {
+  createdAt: DateTime
+  description: String
+  id: String!
+  isActive: Boolean
+  isAnonymous: Boolean
+  questions: [FnsServiceSurveyQuestionGqlOutput!]
+  tenantId: String
+  title: String
+  updatedAt: DateTime
+}
+
+type FnsServiceFormsGqlOutput {
+  """
+  Array of found items
+  """
+  data: [FnsServiceFormGqlOutput!]!
+
+  """
+  Total number of items
+  """
+  total: Int!
+}
+
+type FnsServiceSurveyGqlOutput {
+  createdAt: DateTime
+  description: String
+  id: String!
+  isActive: Boolean
+  isAnonymous: Boolean
+  questions: [FnsServiceSurveyQuestionGqlOutput!]
+  tenantId: String
+  title: String
+  type: SurveyType
+  updatedAt: DateTime
+}
+
+input FnsServiceSurveyQuestionGqlInput {
+  actionLabel: String
+  actionUrl: String
+  index: Float!
+  isActive: Boolean
+  isRequired: Boolean!
+  maxValue: Float
+  minValue: Float
+  options: [String!]
+  questionId: String
+  text: String!
+  type: SurveyQuestionType!
+  uiTemplate: SurveyUiTemplate!
+}
+
+type FnsServiceSurveyQuestionGqlOutput {
+  actionLabel: String
+  actionUrl: String
+  id: String!
+  index: Float
+  isActive: Boolean
+  isRequired: Boolean
+  maxValue: Float
+  minValue: Float
+  options: [String!]
+  text: String
+  type: SurveyQuestionType
+  uiTemplate: SurveyUiTemplate
+}
+
+type FnsServiceSurveysGqlOutput {
+  """
+  Array of found items
+  """
+  data: [FnsServiceSurveyGqlOutput!]!
+
+  """
+  Total number of items
+  """
+  total: Int!
+}
+
+input FnsServiceUpdateFormGqlInput {
+  description: String
+  isActive: Boolean
+  isAnonymous: Boolean
+  questions: [FnsServiceSurveyQuestionGqlInput!]
+  title: String
+}
+
+input FnsServiceUpdateSurveyGqlInput {
+  description: String
+  isActive: Boolean
+  isAnonymous: Boolean
+  questions: [FnsServiceSurveyQuestionGqlInput!]
+  title: String
+  type: SurveyType
+}
+
+type FnsServiceUserResponseGqlOutput {
+  answers: [FnsServiceAnswerGqlOutput!]
+  createdAt: DateTime
+  formId: String
+  formTitle: String
+  id: String!
+  ipAddress: String
+  surveyId: String
+  surveyTitle: String
+  tenantId: String
+  updatedAt: DateTime
+  userAgent: String
+  userId: String
+  userName: String
+}
+
+type FnsServiceUserResponsesGqlOutput {
+  """
+  Array of found items
+  """
+  data: [FnsServiceUserResponseGqlOutput!]!
+
+  """
+  Total number of items
+  """
+  total: Int!
+}
+
+type Mutation {
+  fnsServiceCreateFormForAdmin(input: FnsServiceCreateFormGqlInput!): FnsServiceFormGqlOutput!
+  fnsServiceCreateSurveyForAdmin(input: FnsServiceCreateSurveyGqlInput!): FnsServiceSurveyGqlOutput!
+  fnsServiceCreateUserResponseToForm(
+    input: FnsServiceCreateUserResponseFormGqlInput!
+  ): FnsServiceUserResponseGqlOutput!
+  fnsServiceCreateUserResponseToFormForAnonymous(
+    input: FnsServiceCreateUserResponseFormGqlInput!
+  ): FnsServiceUserResponseGqlOutput!
+  fnsServiceCreateUserResponseToSurvey(
+    input: FnsServiceCreateUserResponseSurveyGqlInput!
+  ): FnsServiceUserResponseGqlOutput!
+  fnsServiceCreateUserResponseToSurveyForAnonymous(
+    input: FnsServiceCreateUserResponseSurveyGqlInput!
+  ): FnsServiceUserResponseGqlOutput!
+  fnsServiceUpdateFormForAdmin(
+    id: String!
+    input: FnsServiceUpdateFormGqlInput!
+  ): FnsServiceFormGqlOutput!
+  fnsServiceUpdateSurveyForAdmin(
+    id: String!
+    input: FnsServiceUpdateSurveyGqlInput!
+  ): FnsServiceSurveyGqlOutput!
+}
+
+input Pagination {
+  """
+  Maximum number of items to return (1-100)
+  """
+  limit: Int = 10
+
+  """
+  Number of items to skip (offset)
+  """
+  skip: Int = 0
+
+  """
+  Multiple sort fields for complex sorting
+  """
+  sort: [SortField!]
+}
+
+type Query {
+  fnsServiceGetFormById(id: String!): FnsServiceFormGqlOutput!
+  fnsServiceGetFormByIdForAdmin(id: String!): FnsServiceFormGqlOutput!
+  fnsServiceGetFormsForAdmin(pagination: Pagination!): FnsServiceFormsGqlOutput!
+  fnsServiceGetSurveyById(id: String!): FnsServiceSurveyGqlOutput!
+  fnsServiceGetSurveyByIdForAdmin(id: String!): FnsServiceSurveyGqlOutput!
+  fnsServiceGetSurveyByType(type: SurveyType!): FnsServiceSurveyGqlOutput!
+  fnsServiceGetSurveysForAdmin(pagination: Pagination!): FnsServiceSurveysGqlOutput!
+  fnsServiceGetUserResponseByIdForAdmin(id: String!): FnsServiceUserResponseGqlOutput!
+  fnsServiceGetUserResponsesToFormForAdmin(
+    input: FnsServiceFindUserResponsesToFormGqlInput!
+    pagination: Pagination!
+  ): FnsServiceUserResponsesGqlOutput!
+  fnsServiceGetUserResponsesToSurveyForAdmin(
+    input: FnsServiceFindUserResponsesToSurveyGqlInput!
+    pagination: Pagination!
+  ): FnsServiceUserResponsesGqlOutput!
+}
+
+"""
+Sort direction for ordering query results
+"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input SortField {
+  """
+  Sort direction for this field
+  """
+  direction: SortDirection! = ASC
+
+  """
+  Field name to sort by
+  """
+  field: String!
+}
+
+"""
+Type of the survey question
+"""
+enum SurveyQuestionType {
+  CTA
+  MultipleChoice
+  Rating
+  SingleChoice
+  Text
+  YesNo
+}
+
+"""
+Type of the survey
+"""
+enum SurveyType {
+  CustomerEffortScore
+  CustomerSatisfactionScore
+  NetPromoterScore
+  Onboarding
+  OpenFeedback
+  ProductMarketFit
+  UserInterview
+}
+
+"""
+UI Template for the survey question
+"""
+enum SurveyUiTemplate {
+  CTA
+  Default
+  Emoji
+  Faces
+  Scale
+  Stars
+}

@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package StorageService;
+
+service StorageService {
+  rpc storageServiceGetFileMetadataById(GetFileMetadataByIdInput) returns (FileMetadata);
+  rpc storageServiceCreateFileMetadata(CreateFileMetadataInput) returns (FileMetadata);
+  rpc storageServiceUpdateFileMetadata(UpdateFileMetadataInput) returns (FileMetadata);
+}
+
+message GetFileMetadataByIdInput {
+  string requestId = 1;
+  GetFileMetadataByIdInputData data = 2;
+}
+
+message GetFileMetadataByIdInputData {
+  string id = 1;
+}
+
+message FileMetadata {
+  string id = 1;
+  string tenantId = 2;
+  string mimeType = 3;
+  string bucketKey = 4;
+  string bucketName = 5;
+  string provider = 6;
+  string status = 7;
+  int32 sizeInBytes = 8;
+  string ownerService = 9;
+  string ownerEntityId = 10;
+  string usageType = 11;
+  google.protobuf.Timestamp createdAt = 12;
+  google.protobuf.Timestamp updatedAt = 13;
+}
+
+message CreateFileMetadataInput {
+  string requestId = 1;
+  CreateFileMetadataInputData data = 2;
+}
+
+message CreateFileMetadataInputData {
+  string id = 1;
+  string tenantId = 2;
+  string originalFilename = 3;
+  string mimeType = 4;
+  string bucketKey = 5;
+  string bucketName = 6;
+  string provider = 7;
+  string status = 8;
+  int32 sizeInBytes = 9;
+  string ownerService = 10;
+  string ownerEntityId = 11;
+  string usageType = 12;
+}
+
+message UpdateFileMetadataInput {
+  string requestId = 1;
+  UpdateFileMetadataInputData data = 2;
+}
+
+message UpdateFileMetadataInputData {
+  string id = 1;
+  string tenantId = 2;
+  optional string mimeType = 3;
+  optional string bucketKey = 4;
+  optional string bucketName = 5;
+  optional string provider = 6;
+  optional string status = 7;
+  optional int32 sizeInBytes = 8;
+  optional string ownerService = 9;
+  optional string ownerEntityId = 10;
+  optional string usageType = 11;
+}

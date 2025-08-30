@@ -1,0 +1,191 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+type Mutation {
+  sduiServiceCreateLayout(input: SduiServiceCreateLayoutGqlInput!): Boolean!
+  sduiServiceToggleLayout(id: String!): Boolean!
+  sduiServiceUpdateLayout(id: String!, input: SduiServiceUpdateLayoutGqlInput!): Boolean!
+  sduiServiceUpdateTenantLayout(input: SduiServiceUpdateTenantLayoutGqlInput!): Boolean!
+}
+
+type Query {
+  sduiServiceGetAllLayouts: [SduiServiceLayoutGqlOutput!]!
+  sduiServiceGetLayout: SduiServiceLayoutGqlOutput!
+  sduiServiceGetLayoutDetail(id: String!): SduiServiceLayoutGqlOutput!
+  sduiServiceGetLayouts: [SduiServiceLayoutGqlOutput!]!
+  sduiServiceGetTenantLayout: SduiServiceLayoutGqlOutput!
+}
+
+"""
+Available feature codes the client can use
+"""
+enum SduiFeatureEnum {
+  articles
+  banners
+  branches
+  categories
+  categoryMenu
+  claims
+  dashboard
+  discounts
+  events
+  fnsResponses
+  forms
+  heroSection
+  inventories
+  orders
+  policies
+  popularItems
+  productSlider
+  products
+  promotions
+  recommendations
+  settings
+  surveys
+  tenants
+  userLastActiveTracking
+  userManagement
+  vouchers
+  zaloOA
+}
+
+input SduiServiceActionInput {
+  route: String
+  target: String
+  type: String
+  value: String
+}
+
+type SduiServiceActionOutput {
+  route: String
+  target: String
+  type: String
+  value: String
+}
+
+input SduiServiceBannerComponentInput {
+  action: SduiServiceActionInput
+  imageUrl: String
+}
+
+type SduiServiceBannerComponentOutput {
+  action: SduiServiceActionOutput
+  imageUrl: String
+}
+
+input SduiServiceBottomNavBarComponentInput {
+  items: [SduiServiceBottomNavBarItemInput!]!
+  selectedIndex: Float
+}
+
+type SduiServiceBottomNavBarComponentOutput {
+  items: [SduiServiceBottomNavBarItemOutput!]
+  selectedIndex: Float
+}
+
+input SduiServiceBottomNavBarItemInput {
+  action: SduiServiceActionInput
+  icon: String
+  label: String
+}
+
+type SduiServiceBottomNavBarItemOutput {
+  action: SduiServiceActionOutput
+  icon: String
+  label: String
+}
+
+input SduiServiceComponentInput {
+  banner: SduiServiceBannerComponentInput!
+  bottomNavBar: SduiServiceBottomNavBarComponentInput!
+}
+
+type SduiServiceComponentOutput {
+  banner: SduiServiceBannerComponentOutput
+  bottomNavBar: SduiServiceBottomNavBarComponentOutput
+}
+
+input SduiServiceCreateLayoutGqlInput {
+  components: SduiServiceComponentInput!
+  layoutId: String!
+  modules: [SduiServiceModuleInput!]!
+  theme: SduiServiceThemeInput!
+}
+
+input SduiServiceCustomFieldInput {
+  fieldName: String
+  fieldType: String
+  fieldValue: String
+}
+
+type SduiServiceCustomFieldOutput {
+  fieldName: String
+  fieldType: String
+  fieldValue: String
+}
+
+type SduiServiceLayoutGqlOutput {
+  components: SduiServiceComponentOutput
+  customFields: [SduiServiceCustomFieldOutput!]
+  id: String
+  layoutId: String
+  modules: [SduiServiceModuleOutput!]
+  tenantId: String
+  theme: SduiServiceThemeOutput
+}
+
+input SduiServiceModuleInput {
+  action: SduiServiceActionInput!
+  featureCode: SduiFeatureEnum
+  icon: String
+  isShow: Boolean! = true
+  title: String
+}
+
+type SduiServiceModuleOutput {
+  action: SduiServiceActionOutput
+  featureCode: String
+  icon: String
+  isShow: Boolean
+  title: String
+}
+
+input SduiServiceThemeInput {
+  backgroundColor: String!
+  buttonStyle: String!
+  color: String!
+  fontFamily: String!
+  fontSize: String!
+  primaryColor: String!
+  secondaryColor: String!
+  themeName: String!
+}
+
+type SduiServiceThemeOutput {
+  backgroundColor: String
+  buttonStyle: String
+  color: String
+  fontFamily: String
+  fontSize: String
+  primaryColor: String
+  secondaryColor: String
+  themeName: String
+}
+
+input SduiServiceUpdateComponentInput {
+  banner: SduiServiceBannerComponentInput!
+}
+
+input SduiServiceUpdateLayoutGqlInput {
+  components: SduiServiceComponentInput!
+  modules: [SduiServiceModuleInput!]!
+  theme: SduiServiceThemeInput!
+}
+
+input SduiServiceUpdateTenantLayoutGqlInput {
+  components: SduiServiceUpdateComponentInput!
+  customFields: [SduiServiceCustomFieldInput!]!
+}

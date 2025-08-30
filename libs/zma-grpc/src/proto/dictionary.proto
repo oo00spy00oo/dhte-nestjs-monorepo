@@ -1,0 +1,166 @@
+syntax = "proto3";
+
+package DictionaryService;
+
+import "google/protobuf/timestamp.proto";
+
+service DictionaryService {
+  rpc dictionaryServiceGetDictionary(GetDictionaryInput) returns (Dictionary) {}
+  rpc dictionaryServiceGetDictionaries(GetDictionariesInput) returns (Dictionaries) {}
+  rpc dictionaryServiceSearchDictionariesByWordAndPos(SearchDictionariesByWordAndPosInput) returns (Dictionaries) {}
+  rpc dictionaryServiceSearchDictionaryByWordAndPos(SearchDictionaryByWordAndPosInput) returns (Dictionary) {}
+  rpc dictionaryServiceSearchDictionaries(SearchDictionariesInput) returns (Dictionaries) {}
+}
+
+message Pagination {
+  int32 limit = 1;
+  int32 skip = 2;
+}
+
+message Dictionary {
+  string id = 1;
+  string word = 2;
+  string etymology = 3;
+  repeated DictionaryImage images = 4;
+  repeated DictionaryVideo videos = 5;
+  repeated DictionaryPronunciation pronunciations = 6;
+  string partOfSpeech = 7;
+  repeated DictionarySense senses = 8;
+  repeated DictionaryInflection inflections = 9;
+  repeated DictionaryPhrase phrases = 10;
+  DictionaryServiceDictionaryStatus status = 11;
+  bool hasAudio = 12;
+  bool hasImage = 13;
+  repeated DictionaryWordTranslation wordTranslations = 14;
+  google.protobuf.Timestamp createdAt = 15;
+  google.protobuf.Timestamp updatedAt = 16;
+}
+
+message Dictionaries {
+  repeated Dictionary data = 1;
+}
+
+message DictionaryImage {
+  string url = 1;
+  string caption = 2;
+}
+
+message DictionaryVideo {
+  string url = 1;
+  string caption = 2;
+}
+
+message DictionaryPronunciation {
+  string phoneticSpelling = 1;
+  string simplePhonetic = 2;
+  string audioUrl = 3;
+  string dialect = 4;
+  string region = 5;
+  string notes = 6;
+  string audioKey = 7;
+}
+
+message DictionarySense {
+  int32 senseNumber = 1;
+  repeated DictionaryDefinition definitions = 2;
+  repeated string labels = 3;
+  repeated string grammar = 4;
+  repeated string domain = 5;
+  repeated string regions = 6;
+  repeated DictionaryExample examples = 7;
+  repeated DictionaryQuotation quotations = 8;
+  repeated DictionaryCrossReference crossReferences = 9;
+  string notes = 10;
+}
+
+message DictionaryDefinition {
+  repeated LanguageDefinition languageDefinitions = 1;
+}
+
+message LanguageDefinition {
+  string definition = 1;
+  string lang = 2;
+}
+
+message DictionaryExample {
+  string text = 1;
+}
+
+message DictionaryQuotation {
+  string text = 1;
+  string source = 2;
+  string author = 3;
+  string date = 4;
+  string publication = 5;
+}
+
+message DictionaryCrossReference {
+  string wordId = 1;
+  string type = 2;
+  string notes = 3;
+}
+
+message DictionaryInflection {
+  string form = 1;
+  string type = 2;
+  string pronunciations = 3;
+}
+
+message DictionaryPhrase {
+  string phrase = 1;
+  string definition = 2;
+  repeated DictionaryExample examples = 3;
+}
+
+message DictionaryWordTranslation {
+  string lang = 1;
+  string translation = 2;
+}
+
+message Id {
+  string id = 1;
+}
+
+message GetDictionaryInput {
+  Id data = 1;
+}
+
+message Ids {
+  repeated string ids = 1;
+}
+
+message GetDictionariesInput {
+  Ids data = 1;
+}
+
+message Word {
+  string word = 1;
+}
+
+message SearchDictionariesInput {
+  Word data = 1;
+}
+
+message WordAndPos {
+  string word = 1;
+  string partOfSpeech = 2;
+}
+
+message SearchDictionaryByWordAndPosInput {
+  WordAndPos data = 1;
+}
+message WordAndPosInput {
+  repeated WordAndPos wordAndPosInputs = 1;
+}
+
+message SearchDictionariesByWordAndPosInput {
+  WordAndPosInput data = 1;
+  Pagination pagination = 2;
+}
+
+enum DictionaryServiceDictionaryStatus {
+  UNKNOWN = 0;
+  ACTIVE = 1;
+  INACTIVE = 2;
+  DELETED = 3;
+}

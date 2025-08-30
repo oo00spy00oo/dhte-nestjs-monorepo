@@ -1,0 +1,29 @@
+redis:
+  url: redis://localhost:6379
+mediasoup:
+  rtc:
+    minPort: 40000
+    maxPort: 40500
+  announcedIp: 94.100.26.6
+meeting:
+  roomTtl: 86400
+websocket:
+  namespace: '/signaling'
+  cors:
+    origin:
+      - 'https://dev-streaming.dhte.vn'
+      - 'http://localhost:3000'
+      - 'http://172.17.0.1:3000'
+      - 'http://localhost'
+    credentials: true
+  transports:
+    - 'websocket'
+    - 'polling'
+  allowEIO3: true
+  path: '/socket.io/'
+  serveClient: true
+  pingTimeout: 60000
+  pingInterval: 25000
+analyze:
+  speech:
+    url: https://analyze-speech.passiontech.dev/graphql

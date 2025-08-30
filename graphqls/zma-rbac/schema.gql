@@ -1,0 +1,77 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+input AssignRoleInput {
+  roleId: String!
+  userId: String!
+}
+
+input CreateRoleInput {
+  description: String
+  name: String!
+  organizationId: String
+  permissions: [PermissionInput!]!
+  tenantId: String
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  rbacServiceAssignRoleToUser(input: AssignRoleInput!): Boolean!
+  rbacServiceCreateRole(input: CreateRoleInput!): RoleOutput!
+  rbacServiceDeleteRole(roleId: String!): Boolean!
+  rbacServiceUnassignRoleFromUser(input: AssignRoleInput!): Boolean!
+  rbacServiceUpdateRole(input: UpdateRoleInput!, roleId: String!): RoleOutput!
+  rbacServiceValidatePermission(permission: PermissionInput!): Boolean!
+}
+
+input PermissionInput {
+  action: String!
+  possession: String!
+  resource: String!
+}
+
+type PermissionOutput {
+  action: String!
+  possession: String!
+  resource: String!
+}
+
+type Query {
+  rbacServiceAvailablePermissions: [PermissionOutput!]!
+  rbacServiceCurrentUserRole: [RoleOutput!]!
+  rbacServiceRoleById(roleId: String!): RoleOutput!
+  rbacServiceRoles: [RoleOutput!]!
+  rbacServiceRolesByOrganization: [RoleOutput!]!
+  rbacServiceRolesByOwn: [RoleOutput!]!
+  rbacServiceRolesByTenant: [RoleOutput!]!
+  rbacServiceUserRoles(userIds: [String!]!): [RoleOutput!]!
+}
+
+type RoleOutput {
+  createdAt: DateTime!
+  createdBy: String!
+  description: String
+  id: ID!
+  isActive: Boolean!
+  isDeleted: Boolean!
+  name: String!
+  organizationId: String
+  permissions: [PermissionOutput!]!
+  tenantId: String
+  updatedAt: DateTime!
+}
+
+input UpdateRoleInput {
+  description: String
+  name: String
+  organizationId: String
+  permissions: [PermissionInput!]
+  tenantId: String
+}

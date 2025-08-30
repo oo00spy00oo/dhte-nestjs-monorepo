@@ -1,0 +1,74 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  storageServiceGetFileMetadata(id: String!): StorageServiceFileMetadataGqlOutput!
+}
+
+"""
+Available ZMA microservices for inter-service communication
+"""
+enum ServiceName {
+  AUTH
+  BOOKING
+  CAMPAIGN
+  CART
+  CHECKIN
+  CLOCKIN
+  CONTENT
+  DICTIONARY
+  EVENT
+  FEATURE_FLAG
+  FNS
+  INVENTORY
+  LARVA_COURSE
+  LOYALTY
+  MEMBERSHIP
+  ORDER
+  ORGANIZATION
+  PAYMENT
+  POINT
+  PRODUCT
+  SHIPPING
+  STORAGE
+  SUBSCRIPTION
+  TICKET
+  USER
+  VOUCHER
+}
+
+enum StorageProviderType {
+  R2
+  S3
+}
+
+type StorageServiceFileMetadataGqlOutput {
+  bucketKey: String
+  bucketName: String
+  createdAt: DateTime!
+  id: String
+  mimeType: String
+  ownerEntityId: String
+  ownerService: ServiceName
+  provider: StorageProviderType
+  sizeInBytes: Float
+  status: StorageStatusType
+  tenantId: String
+  updatedAt: DateTime!
+}
+
+enum StorageStatusType {
+  Completed
+  Failed
+  Pending
+  Processing
+  Quarantined
+}

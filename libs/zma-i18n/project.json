@@ -1,0 +1,26 @@
+{
+  "name": "zma-i18n",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/zma-i18n/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/zma-i18n",
+        "main": "libs/zma-i18n/src/index.ts",
+        "tsConfig": "libs/zma-i18n/tsconfig.lib.json",
+        "assets": [
+          {
+            "input": "libs/zma-i18n/src/i18n",
+            "glob": "**/*",
+            "output": "./i18n"
+          }
+        ],
+        "format": ["cjs"]
+      }
+    }
+  }
+}

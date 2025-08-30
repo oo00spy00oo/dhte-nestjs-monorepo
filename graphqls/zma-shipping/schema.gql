@@ -1,0 +1,51 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  shippingServiceShippingMethodCreate(providerId: String!): ShippingServiceShippingMethodGqlOutput!
+  shippingServiceShippingMethodUpdate(
+    shippingMethodId: String!
+    status: Boolean!
+  ): ShippingServiceShippingMethodGqlOutput!
+}
+
+type Query {
+  shippingServiceProviders: [ShippingServiceProviderGqlOutput!]!
+  shippingServiceShippingMethods: [ShippingServiceShippingMethodGqlOutput!]!
+  shippingServiceShippingMethodsAvailable(
+    address: String!
+    cartIds: [String!]!
+    provinceId: String!
+    wardId: String!
+  ): [ShippingServiceShippingMethodGqlOutput!]!
+}
+
+type ShippingServiceProviderGqlOutput {
+  description: String!
+  fixedPrice: Float
+  id: String!
+  logoUrl: String!
+  name: String!
+  status: Boolean!
+}
+
+type ShippingServiceShippingMethodGqlOutput {
+  amount: Float!
+  amountFormatted: String!
+  createdAt: DateTime!
+  id: String!
+  provider: String!
+  providerId: String!
+  providerLogoUrl: String!
+  status: Boolean!
+  tenantId: String!
+  updatedAt: DateTime!
+}

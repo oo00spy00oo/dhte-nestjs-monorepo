@@ -1,0 +1,139 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+enum ContentCategoryEnum {
+  Event
+  News
+  Policy
+}
+
+input ContentServiceArticleGqlInput {
+  category: ContentCategoryEnum!
+  content: String!
+  contentType: ContentTypeEnum!
+  description: String
+  eventDate: String
+  imageUrl: String
+  tags: [String!]!
+  title: String!
+}
+
+"""
+Article
+"""
+type ContentServiceArticleGqlOutput {
+  category: ContentCategoryEnum!
+  content: String!
+  contentType: ContentTypeEnum!
+  createdAt: DateTime!
+  description: String
+  eventDate: String
+  hidden: Boolean
+  id: String!
+  imageUrl: String
+  isDeleted: Boolean!
+  publishedAt: DateTime
+  refId: String!
+  status: ContentStatusEnum!
+  tags: [String!]!
+  tenantId: String
+  title: String!
+  updatedAt: DateTime!
+  viewCount: Float!
+}
+
+input ContentServiceSearchArticleGqlInput {
+  category: ContentCategoryEnum
+  content: String
+  id: String
+  status: ContentStatusEnum
+  title: String
+}
+
+input ContentServiceUpdateArticleGqlInput {
+  category: ContentCategoryEnum
+  content: String
+  contentType: ContentTypeEnum
+  description: String
+  eventDate: String
+  imageUrl: String
+  tags: [String!]
+  title: String
+}
+
+enum ContentStatusEnum {
+  Created
+  Published
+  Unpublished
+}
+
+enum ContentTypeEnum {
+  Markdown
+  Text
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  contentServiceCreateArticle(input: ContentServiceArticleGqlInput!): Boolean!
+  contentServiceDeleteArticles(ids: [String!]!): Boolean!
+  contentServiceHideArticles(ids: [String!]!): Boolean!
+  contentServiceUnhideArticles(ids: [String!]!): Boolean!
+  contentServiceUpdateArticle(id: String!, input: ContentServiceUpdateArticleGqlInput!): Boolean!
+  contentServiceUpdateArticleStatus(id: String!, status: ContentStatusEnum!): Boolean!
+}
+
+input Pagination {
+  """
+  Maximum number of items to return (1-100)
+  """
+  limit: Int = 10
+
+  """
+  Number of items to skip (offset)
+  """
+  skip: Int = 0
+
+  """
+  Multiple sort fields for complex sorting
+  """
+  sort: [SortField!]
+}
+
+type Query {
+  contentServiceArticle(id: String!): ContentServiceArticleGqlOutput!
+  contentServiceGetAllArticles(
+    input: ContentServiceSearchArticleGqlInput!
+    pagination: Pagination!
+  ): [ContentServiceArticleGqlOutput!]!
+  contentServiceSearchArticles(
+    input: ContentServiceSearchArticleGqlInput!
+    pagination: Pagination!
+  ): [ContentServiceArticleGqlOutput!]!
+}
+
+"""
+Sort direction for ordering query results
+"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input SortField {
+  """
+  Sort direction for this field
+  """
+  direction: SortDirection! = ASC
+
+  """
+  Field name to sort by
+  """
+  field: String!
+}

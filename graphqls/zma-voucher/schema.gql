@@ -1,0 +1,282 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  voucherServiceBulkIssueToAllUsers(input: VoucherServiceBulkIssueAllGqlInput!): Boolean!
+  voucherServiceBulkIssueToUsers(input: VoucherServiceBulkIssueGqlInput!): Boolean!
+  voucherServiceCreateVoucher(input: VoucherServiceCreateVoucherGqlInput!): Boolean!
+  voucherServiceCreateVoucherType(input: VoucherServiceCreateVoucherTypeGqlInput!): Boolean!
+  voucherServiceDeleteVoucherTypeById(id: String!): Boolean!
+  voucherServiceDeleteVouchers(ids: [String!]!): Boolean!
+  voucherServiceDisableVoucherTypeById(id: String!): Boolean!
+  voucherServiceEnableVoucherTypeById(id: String!): Boolean!
+  voucherServiceEnableVouchers(ids: [String!]!): Boolean!
+  voucherServiceUpdateVoucher(id: String!, input: VoucherServiceUpdateVoucherGqlInput!): Boolean!
+}
+
+input Pagination {
+  """
+  Maximum number of items to return (1-100)
+  """
+  limit: Int = 10
+
+  """
+  Number of items to skip (offset)
+  """
+  skip: Int = 0
+
+  """
+  Multiple sort fields for complex sorting
+  """
+  sort: [SortField!]
+}
+
+type ProductDiscountDetail {
+  discountAmount: Float!
+  discountedPrice: Float!
+  originalPrice: Float!
+  productId: String!
+}
+
+type Query {
+  voucherServiceAllVoucherTypes(pagination: Pagination!): [VoucherServiceVoucherTypeGqlOutput!]!
+  voucherServiceAllVouchers(pagination: Pagination!): [VoucherServiceVoucherGqlOutput!]!
+  voucherServiceDeletedVoucherTypes(pagination: Pagination!): [VoucherServiceVoucherTypeGqlOutput!]!
+  voucherServiceDisabledVoucherTypes(
+    pagination: Pagination!
+  ): [VoucherServiceVoucherTypeGqlOutput!]!
+  voucherServiceDisabledVouchers(pagination: Pagination!): [VoucherServiceVoucherGqlOutput!]!
+  voucherServiceEnabledVoucherTypes(pagination: Pagination!): [VoucherServiceVoucherTypeGqlOutput!]!
+  voucherServiceEnabledVouchers(pagination: Pagination!): [VoucherServiceVoucherGqlOutput!]!
+  voucherServiceRedeemableVoucherTypes(
+    pagination: Pagination!
+  ): [VoucherServiceVoucherTypeGqlOutput!]!
+  voucherServiceSearchVouchers(
+    pagination: Pagination!
+    search: String!
+  ): [VoucherServiceVoucherGqlOutput!]!
+  voucherServiceVoucherById(id: String!): VoucherServiceVoucherGqlOutput!
+  voucherServiceVoucherTypeById(id: String!): VoucherServiceVoucherTypeGqlOutput!
+  voucherServiceVouchersByIds(ids: [String!]!): [VoucherServiceVoucherGqlOutput!]!
+}
+
+type RedeemedVoucher {
+  code: String!
+  discountAmount: Float!
+  isRedeemed: Boolean!
+  message: String
+  voucherId: String!
+}
+
+"""
+Sort direction for ordering query results
+"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input SortField {
+  """
+  Sort direction for this field
+  """
+  direction: SortDirection! = ASC
+
+  """
+  Field name to sort by
+  """
+  field: String!
+}
+
+type VoucherApplicationResult {
+  applicableProductIds: [String!]
+  discountAmount: Float!
+  errorMessage: String
+  isApplicable: Boolean!
+  productDiscounts: [ProductDiscountDetail!]
+  reservation: VoucherReservation
+}
+
+type VoucherDetail {
+  applicationResult: VoucherApplicationResult!
+  code: String!
+  description: String
+  discountType: VoucherDiscountType!
+  discountValue: Float!
+  maximumDiscount: Float
+  name: String!
+  voucherId: String!
+}
+
+"""
+The type of discount offered by the voucher
+"""
+enum VoucherDiscountType {
+  BOGO
+  FIXED_AMOUNT
+  FREE_ITEM
+  FREE_SHIPPING
+  PERCENTAGE
+}
+
+type VoucherReservation {
+  expiryDate: DateTime!
+  reservationId: String!
+}
+
+input VoucherServiceBulkIssueAllGqlInput {
+  voucherTypeId: String!
+}
+
+input VoucherServiceBulkIssueGqlInput {
+  userIds: [String!]!
+  voucherTypeId: String!
+}
+
+input VoucherServiceCreateVoucherGqlInput {
+  applicableCategoryIds: [String!] = []
+  applicableProductIds: [String!] = []
+  campaignId: String!
+  code: String!
+  description: String!
+  discountType: VoucherDiscountType!
+  discountValue: Float!
+  endDate: DateTime!
+  excludedProductIds: [String!] = []
+  imageFile: String
+  isActive: Boolean = true
+  isDeleted: Boolean = false
+  isExpired: Boolean = false
+  isRedeemed: Boolean = false
+  issueDate: DateTime!
+  maximumDiscount: Float
+  minimumPurchase: Float = 0
+  name: String!
+  redeemedDate: DateTime
+  redeemedOrderId: String
+  startDate: DateTime!
+  tenantId: String!
+  userId: String!
+  voucherTypeId: String!
+}
+
+input VoucherServiceCreateVoucherTypeGqlInput {
+  applicableCategoryIds: [String!]! = []
+  applicableProductIds: [String!]! = []
+  description: String!
+  discountType: VoucherDiscountType!
+  discountValue: Float!
+  excludedProductIds: [String!]! = []
+  globalRedemptionLimit: Float
+  imageFile: String
+  isEnabled: Boolean! = true
+  isSharedCode: Boolean! = false
+  isStackable: Boolean! = false
+  maximumDiscount: Float
+  minimumPurchase: Float = 0
+  name: String!
+  redemptionLimitPerUser: Float
+  tenantId: String!
+  termsAndConditions: String! = ""
+  totalRedemptionLimit: Float
+  validityDays: Float! = 0
+}
+
+input VoucherServiceUpdateVoucherGqlInput {
+  applicableCategoryIds: [String!] = []
+  applicableProductIds: [String!] = []
+  campaignId: String!
+  code: String!
+  description: String!
+  discountType: VoucherDiscountType!
+  discountValue: Float!
+  endDate: DateTime!
+  excludedProductIds: [String!] = []
+  id: String!
+  imageFile: String
+  isActive: Boolean = true
+  isDeleted: Boolean = false
+  isExpired: Boolean = false
+  isRedeemed: Boolean = false
+  issueDate: DateTime!
+  maximumDiscount: Float
+  minimumPurchase: Float = 0
+  name: String!
+  redeemedDate: DateTime
+  redeemedOrderId: String
+  startDate: DateTime!
+  tenantId: String!
+  userId: String!
+  voucherTypeId: String!
+}
+
+"""
+Voucher
+"""
+type VoucherServiceVoucherGqlOutput {
+  applicableCategoryIds: [String!]!
+  applicableProductIds: [String!]!
+  campaignId: String
+  code: String!
+  createdAt: DateTime
+  description: String!
+  discountType: VoucherDiscountType!
+  discountValue: Float!
+  endDate: DateTime
+  excludedProductIds: [String!]!
+  id: String!
+  imageUrl: String
+  isActive: Boolean!
+  isDeleted: Boolean!
+  isExpired: Boolean!
+  isRedeemed: Boolean!
+  issueDate: DateTime!
+  maximumDiscount: Float
+  minimumPurchase: Float!
+  name: String!
+  redeemedDate: DateTime
+  redeemedOrderId: String
+  startDate: DateTime!
+  tenantId: String!
+  updatedAt: DateTime
+  userId: String!
+  voucherTypeId: String!
+}
+
+type VoucherServiceVoucherTypeGqlOutput {
+  applicableCategoryIds: [String!]!
+  applicableProductIds: [String!]!
+  createdAt: DateTime
+  description: String!
+  discountType: VoucherDiscountType!
+  discountValue: Float!
+  excludedProductIds: [String!]!
+  globalRedemptionCount: Int!
+  globalRedemptionLimit: Int
+  id: String!
+  imageUrl: String
+  isDeleted: Boolean!
+  isEnabled: Boolean!
+  isSharedCode: Boolean!
+  isStackable: Boolean!
+  maximumDiscount: Float
+  minimumPurchase: Float!
+  name: String!
+  pointsRequired: Int
+  redemptionLimitPerUser: Int
+  sharedCode: String
+  tenantId: String!
+  termsAndConditions: String!
+  totalRedemptionCount: Int!
+  totalRedemptionLimit: Int
+  updatedAt: DateTime
+  validityDays: Int!
+}

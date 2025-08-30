@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package MembershipService;
+
+service MembershipService {
+  rpc membershipServiceCreateMemberProfile(CreateMemberProfileInput) returns (MemberProfile) {}
+}
+
+message CreateMemberProfileInputData {
+  string userId = 1;
+  string tenantId = 2;
+}
+
+message CreateMemberProfileInput {
+  CreateMemberProfileInputData data = 1;
+  string requestId = 2;
+}
+
+message MemberProfile {
+  string id = 1;
+  string tenantId = 2;
+  string userId = 3;
+  string loyaltyProgramId = 4;
+  string currentTierId = 5;
+  string currentTierName = 6;
+  int32 currentTierLevel = 7;
+  string membershipNumber = 8;
+  google.protobuf.Timestamp joinDate = 9;
+  int32 lifetimePoints = 10;
+  int32 availablePoints = 11;
+  float cumulativeSpending = 12;
+  float currentYearSpending = 13;
+  string nextTierId = 14;
+  string nextTierName = 15;
+  int32 pointsToNextTier = 16;
+  float spendingToNextTier = 17;
+  google.protobuf.Timestamp tierExpiryDate = 18;
+  bool isActive = 19;
+  bool isDeleted = 20;
+  google.protobuf.Timestamp createdAt = 21;
+  google.protobuf.Timestamp updatedAt = 22;
+}

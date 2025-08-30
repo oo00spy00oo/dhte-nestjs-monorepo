@@ -1,0 +1,230 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+enum CurrencyEnum {
+  USD
+  VND
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  productServiceCreateCategory(input: ProductServiceCategoryGqlInput!): Boolean!
+  productServiceCreateProduct(input: ProductServiceProductGqlInput!): Boolean!
+  productServiceCreateProductContent(input: ProductServiceContentGqlInput!): Boolean!
+  productServiceDeleteCategory(id: String!): Boolean!
+  productServiceDeleteProducts(ids: [String!]!): Boolean!
+  productServiceDisableCategories(ids: [String!]!): Boolean!
+  productServiceDisableProducts(ids: [String!]!): Boolean!
+  productServiceEnableCategories(ids: [String!]!): Boolean!
+  productServiceEnableProducts(ids: [String!]!): Boolean!
+  productServiceRateProduct(id: String!, rating: Float!): Boolean!
+  productServiceUpdateCategory(id: String!, input: ProductServiceCategoryGqlInput!): Boolean!
+  productServiceUpdateProduct(id: String!, input: ProductServiceProductGqlInput!): Boolean!
+  productServiceUpdateProductContent(input: ProductServiceContentGqlInput!): Boolean!
+}
+
+input Pagination {
+  """
+  Maximum number of items to return (1-100)
+  """
+  limit: Int = 10
+
+  """
+  Number of items to skip (offset)
+  """
+  skip: Int = 0
+
+  """
+  Multiple sort fields for complex sorting
+  """
+  sort: [SortField!]
+}
+
+enum ProductAttributeEnum {
+  Color
+  Gender
+  Height
+  Ingredients
+  Innovation
+  Length
+  Material
+  Origin
+  Shape
+  Size
+  Smell
+  Style
+  Taste
+  Warranty
+  Weight
+  Width
+}
+
+input ProductAttributeInput {
+  key: ProductAttributeEnum!
+  value: String!
+}
+
+type ProductAttributeOutput {
+  key: ProductAttributeEnum!
+  value: String!
+}
+
+input ProductServiceCategoryGqlInput {
+  description: String
+  iconFile: String
+  name: String!
+  parentId: String
+}
+
+"""
+Category
+"""
+type ProductServiceCategoryGqlOutput {
+  children: [ProductServiceCategoryGqlOutput!]
+  createdAt: DateTime!
+  description: String
+  iconFile: String
+  id: String!
+  isDeleted: Boolean!
+  isEnabled: Boolean!
+  name: String!
+  parent: ProductServiceCategoryGqlOutput
+  parentId: String
+  tenantId: String
+  updatedAt: DateTime!
+}
+
+input ProductServiceContentGqlInput {
+  content: String!
+  productId: String!
+}
+
+type ProductServiceContentGqlOutput {
+  content: String!
+  productId: String!
+}
+
+input ProductServiceProductGqlInput {
+  categories: [String!]!
+  commonAttributes: [ProductAttributeInput!]
+  currency: CurrencyEnum!
+  description: String!
+  isFeatured: Boolean
+  isLatest: Boolean
+  mediaFiles: [String!]
+  merchantNames: [String!]
+  tags: [String!]
+  thumbnailFile: String!
+  title: String!
+  variants: [ProductVariantInput!]!
+}
+
+type ProductServiceProductGqlOutput {
+  categories: [String!]!
+  commonAttributes: [ProductAttributeOutput!]!
+  createdAt: DateTime!
+  currency: CurrencyEnum!
+  description: String
+  id: String!
+  isDeleted: Boolean!
+  isEnabled: Boolean!
+  isFeatured: Boolean!
+  isLatest: Boolean!
+  mediaFiles: [String!]
+  merchantNames: [String!]
+  rating: ProductServiceProductRating!
+  summarizedAttributes: [SummarizedAttribute!]
+  tags: [String!]!
+  tenantId: String
+  thumbnailFile: String
+  title: String!
+  updatedAt: DateTime!
+  variants: [ProductVariantOutput!]
+}
+
+type ProductServiceProductRating {
+  average: Float!
+  total: Float!
+}
+
+type ProductServiceProductsGqlOutput {
+  """
+  Array of found items
+  """
+  data: [ProductServiceProductGqlOutput!]!
+
+  """
+  Total number of items
+  """
+  total: Int!
+}
+
+input ProductVariantInput {
+  attributes: [ProductAttributeInput!]
+  mediaFiles: [String!]
+  name: String
+  price: Float!
+  sku: String!
+}
+
+type ProductVariantOutput {
+  attributes: [ProductAttributeOutput!]
+  mediaFiles: [String!]
+  name: String
+  price: Float!
+  priceFormatted: String!
+  sku: String!
+}
+
+type Query {
+  productServiceAllCategories: [ProductServiceCategoryGqlOutput!]!
+  productServiceAllProducts(pagination: Pagination!): ProductServiceProductsGqlOutput!
+  productServiceCategoryById(id: String!): ProductServiceCategoryGqlOutput!
+  productServiceDisabledProducts(pagination: Pagination!): ProductServiceProductsGqlOutput!
+  productServiceEnabledProducts(pagination: Pagination!): ProductServiceProductsGqlOutput!
+  productServiceFeaturedProducts(pagination: Pagination!): [ProductServiceProductGqlOutput!]!
+  productServiceLatestProducts(pagination: Pagination!): [ProductServiceProductGqlOutput!]!
+  productServiceProductById(id: String!): ProductServiceProductGqlOutput!
+  productServiceProductContentById(productId: String!): ProductServiceContentGqlOutput!
+  productServicePublicCategories: [ProductServiceCategoryGqlOutput!]!
+  productServicePublicProducts(pagination: Pagination!): [ProductServiceProductGqlOutput!]!
+  productServicePublicSubCategories(parentId: String!): [ProductServiceCategoryGqlOutput!]!
+  productServiceSearchProducts(
+    input: String!
+    pagination: Pagination!
+  ): [ProductServiceProductGqlOutput!]!
+  productServiceSubCategories(parentId: String!): [ProductServiceCategoryGqlOutput!]!
+}
+
+"""
+Sort direction for ordering query results
+"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input SortField {
+  """
+  Sort direction for this field
+  """
+  direction: SortDirection! = ASC
+
+  """
+  Field name to sort by
+  """
+  field: String!
+}
+
+type SummarizedAttribute {
+  displayName: String!
+  key: ProductAttributeEnum!
+  values: [String!]!
+}

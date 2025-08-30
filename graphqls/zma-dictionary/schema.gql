@@ -1,0 +1,339 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type DictionaryCrossReference {
+  notes: String
+  type: String!
+  words: [DictionaryCrossReferenceWordOutput!]!
+}
+
+input DictionaryCrossReferenceInput {
+  notes: String
+  type: String!
+  words: [DictionaryCrossReferenceWordInput!]!
+}
+
+input DictionaryCrossReferenceWordInput {
+  partOfSpeech: String
+  word: String!
+}
+
+type DictionaryCrossReferenceWordOutput {
+  partOfSpeech: String
+  word: String!
+}
+
+input DictionaryDefinitionInput {
+  languageDefinitions: [LanguageDefinitionInput!]!
+}
+
+type DictionaryDefinitionOutput {
+  languageDefinitions: [LanguageDefinitionOutput!]!
+}
+
+type DictionaryExample {
+  text: String
+}
+
+input DictionaryExampleInput {
+  text: String!
+}
+
+type DictionaryImage {
+  caption: String
+  url: String
+}
+
+input DictionaryImageInput {
+  caption: String
+  url: String!
+}
+
+type DictionaryInflection {
+  form: String
+  pronunciations: String
+  type: String
+}
+
+input DictionaryInflectionInput {
+  form: String!
+  pronunciations: String
+  type: String!
+}
+
+type DictionaryPhrase {
+  definition: String
+  examples: [DictionaryExample!]
+  phrase: String
+}
+
+input DictionaryPhraseInput {
+  definition: String!
+  examples: [DictionaryExampleInput!]
+  phrase: String!
+}
+
+type DictionaryPronunciation {
+  audioKey: String
+  audioUrl: String
+  dialect: String
+  notes: String
+  phoneticSpelling: String
+  region: String
+  simplePhonetic: String
+}
+
+input DictionaryPronunciationInput {
+  audioKey: String
+  audioUrl: String
+  dialect: String!
+  notes: String
+  phoneticSpelling: String
+  region: String
+  simplePhonetic: String
+}
+
+type DictionaryQuotation {
+  author: String
+  date: String
+  publication: String
+  source: String
+  text: String
+}
+
+input DictionaryQuotationInput {
+  author: String
+  date: String
+  publication: String
+  source: String
+  text: String!
+}
+
+type DictionarySense {
+  crossReferences: [DictionaryCrossReference!]
+  definitions: [DictionaryDefinitionOutput!]
+  domain: [String!]
+  examples: [DictionaryExample!]
+  grammar: [String!]
+  labels: [String!]
+  notes: String
+  quotations: [DictionaryQuotation!]
+  regions: [String!]
+  senseNumber: Float!
+}
+
+input DictionarySenseInput {
+  crossReferences: [DictionaryCrossReferenceInput!]
+  definitions: [DictionaryDefinitionInput!]!
+  domain: [String!]
+  examples: [DictionaryExampleInput!]
+  grammar: [String!]
+  labels: [String!]
+  notes: String
+  quotations: [DictionaryQuotationInput!]
+  regions: [String!]
+  senseNumber: Float!
+}
+
+input DictionaryServiceCrawlWordGqlInput {
+  partOfSpeech: String!
+  word: String!
+}
+
+type DictionaryServiceCrawlWordOutput {
+  errorMessage: String
+  isDone: Boolean!
+  partOfSpeech: String!
+  word: String!
+}
+
+input DictionaryServiceCrawlWordsGqlInput {
+  concurrency: Float!
+  words: [DictionaryServiceCrawlWordGqlInput!]!
+}
+
+"""
+Dictionary
+"""
+input DictionaryServiceCreateDictionaryGqlInput {
+  etymology: String
+  images: [DictionaryImageInput!]
+  inflections: [DictionaryInflectionInput!]
+  partOfSpeech: String!
+  phrases: [DictionaryPhraseInput!]
+  pronunciations: [DictionaryPronunciationInput!]!
+  senses: [DictionarySenseInput!]
+  status: DictionaryServiceDictionaryStatus! = Active
+  word: String!
+  wordTranslations: [DictionaryWordTranslationInput!]
+}
+
+"""
+Dictionary
+"""
+type DictionaryServiceDictionaryGqlOutput {
+  createdAt: DateTime
+  deletedAt: DateTime
+  etymology: String
+  hasAudio: Boolean
+  hasImage: Boolean
+  id: String!
+  images: [DictionaryImage!]
+  inflections: [DictionaryInflection!]
+  partOfSpeech: String!
+  phrases: [DictionaryPhrase!]
+  pronunciations: [DictionaryPronunciation!]
+  senses: [DictionarySense!]
+  status: DictionaryServiceDictionaryStatus!
+  updatedAt: DateTime
+  videos: [DictionaryVideo!]
+  word: String!
+  wordTranslations: [DictionaryWordTranslationOutput!]
+}
+
+"""
+The status of the dictionary entry
+"""
+enum DictionaryServiceDictionaryStatus {
+  Active
+  Deleted
+  Inactive
+}
+
+input DictionaryServiceSearchByWordAndPosInput {
+  partOfSpeech: String!
+  word: String!
+}
+
+input DictionaryServiceSearchDictionariesInput {
+  word: String
+}
+
+input DictionaryServiceSearchManyByWordAndPosInput {
+  wordAndPosInputs: [DictionaryServiceSearchByWordAndPosInput!]!
+}
+
+input DictionaryServiceUpdateDictionaryGqlInput {
+  etymology: String
+  hasAudio: Boolean
+  hasImage: Boolean
+  images: [DictionaryImageInput!]
+  inflections: [DictionaryInflectionInput!]
+  phrases: [DictionaryPhraseInput!]
+  pronunciations: [DictionaryPronunciationInput!]
+  senses: [DictionarySenseInput!]
+  status: DictionaryServiceDictionaryStatus! = Active
+  videos: [DictionaryVideoInput!]
+  wordTranslations: [DictionaryWordTranslationInput!]
+}
+
+type DictionaryVideo {
+  caption: String
+  url: String
+}
+
+input DictionaryVideoInput {
+  caption: String
+  url: String!
+}
+
+input DictionaryWordTranslationInput {
+  lang: LanguageEnum!
+  translation: String!
+}
+
+type DictionaryWordTranslationOutput {
+  lang: LanguageEnum
+  translation: String
+}
+
+input LanguageDefinitionInput {
+  definition: String!
+  lang: LanguageEnum!
+}
+
+type LanguageDefinitionOutput {
+  definition: String!
+  lang: LanguageEnum!
+}
+
+enum LanguageEnum {
+  EN
+  VI
+}
+
+type Mutation {
+  dictionaryServiceCrawlWord(input: DictionaryServiceCrawlWordGqlInput!): Boolean!
+  dictionaryServiceCrawlWords(
+    input: DictionaryServiceCrawlWordsGqlInput!
+  ): [DictionaryServiceCrawlWordOutput!]!
+  dictionaryServiceCreateDictionary(input: DictionaryServiceCreateDictionaryGqlInput!): Boolean!
+  dictionaryServiceDeleteDictionaries(ids: [String!]!): Boolean!
+  dictionaryServiceEnableDictionaries(ids: [String!]!): Boolean!
+  dictionaryServiceUpdateDictionary(
+    id: String!
+    input: DictionaryServiceUpdateDictionaryGqlInput!
+  ): Boolean!
+}
+
+input Pagination {
+  """
+  Maximum number of items to return (1-100)
+  """
+  limit: Int = 10
+
+  """
+  Number of items to skip (offset)
+  """
+  skip: Int = 0
+
+  """
+  Multiple sort fields for complex sorting
+  """
+  sort: [SortField!]
+}
+
+type Query {
+  dictionaryServiceAllDictionaries(input: Pagination!): [DictionaryServiceDictionaryGqlOutput!]!
+  dictionaryServiceDictionaries(
+    ids: [String!]!
+    pagination: Pagination!
+  ): [DictionaryServiceDictionaryGqlOutput!]!
+  dictionaryServiceDictionary(id: String!): DictionaryServiceDictionaryGqlOutput!
+  dictionaryServiceSearchDictionaries(
+    input: DictionaryServiceSearchDictionariesInput!
+    pagination: Pagination!
+  ): [DictionaryServiceDictionaryGqlOutput!]!
+  dictionaryServiceSearchDictionariesByWordAndPos(
+    input: DictionaryServiceSearchManyByWordAndPosInput!
+    pagination: Pagination!
+  ): [DictionaryServiceDictionaryGqlOutput!]!
+}
+
+"""
+Sort direction for ordering query results
+"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input SortField {
+  """
+  Sort direction for this field
+  """
+  direction: SortDirection! = ASC
+
+  """
+  Field name to sort by
+  """
+  field: String!
+}

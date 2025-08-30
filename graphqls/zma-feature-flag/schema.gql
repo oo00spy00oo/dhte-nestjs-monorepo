@@ -1,0 +1,122 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+enum FeatureFlagOperatorEnum {
+  Includes
+  NotIncludes
+}
+
+input FeatureFlagServiceConditionGqlInput {
+  key: String!
+  operator: FeatureFlagOperatorEnum!
+  values: [String!]!
+}
+
+type FeatureFlagServiceConditionGqlOutput {
+  key: String!
+  operator: FeatureFlagOperatorEnum!
+  values: [String!]!
+}
+
+input FeatureFlagServiceCreateFeatureFlagGqlInput {
+  description: String
+  featureFlagData: [FeatureFlagServiceFeatureFlagDataGqlInput!]
+  rules: [FeatureFlagServiceRuleGqlInput!]!
+  type: FeatureFlagTypeEnum!
+}
+
+input FeatureFlagServiceFeatureFlagDataGqlInput {
+  description: String
+  featureCode: String!
+}
+
+"""
+Feature flag
+"""
+type FeatureFlagServiceFeatureFlagGqlOutput {
+  createdAt: DateTime
+  description: String
+  featureCode: String
+  id: String!
+  isEnabled: Boolean
+  rules: [FeatureFlagServiceRuleGqlOutput!]!
+  tenantId: String
+  type: FeatureFlagTypeEnum
+  updatedAt: DateTime
+}
+
+input FeatureFlagServiceGetAllFeatureFlagGqlInput {
+  types: [FeatureFlagTypeEnum!]
+}
+
+input FeatureFlagServiceGetFeatureFlagDetailGqlInput {
+  id: String!
+  type: FeatureFlagTypeEnum
+}
+
+input FeatureFlagServiceGetFeatureFlagGqlInput {
+  plan: String
+  tenantId: String
+}
+
+input FeatureFlagServiceRuleGqlInput {
+  conditions: [FeatureFlagServiceConditionGqlInput!]!
+  isEnabled: Boolean!
+  priority: Float!
+}
+
+type FeatureFlagServiceRuleGqlOutput {
+  conditions: [FeatureFlagServiceConditionGqlOutput!]!
+  isEnabled: Boolean
+  priority: Float!
+}
+
+input FeatureFlagServiceUpdateFeatureFlagGqlInput {
+  description: String
+  rules: [FeatureFlagServiceUpdateRuleGqlInput!]!
+  type: FeatureFlagTypeEnum
+}
+
+input FeatureFlagServiceUpdateRuleGqlInput {
+  conditions: [FeatureFlagServiceConditionGqlInput!]!
+  isEnabled: Boolean!
+  priority: Float!
+}
+
+enum FeatureFlagTypeEnum {
+  Custom
+  PlanBased
+}
+
+type Mutation {
+  featureFlagServiceCreateFeatureFlag(input: FeatureFlagServiceCreateFeatureFlagGqlInput!): Boolean!
+  featureFlagServiceDeleteFeatureFlag(featureFlagId: String!, type: FeatureFlagTypeEnum!): Boolean!
+  featureFlagServiceToggleFeatureFlagById(
+    featureFlagId: String!
+    type: FeatureFlagTypeEnum!
+  ): FeatureFlagServiceFeatureFlagGqlOutput
+  featureFlagServiceUpdateFeatureFlag(
+    featureFlagId: String!
+    input: FeatureFlagServiceUpdateFeatureFlagGqlInput!
+  ): Boolean!
+}
+
+type Query {
+  featureFlagServiceGetAllFeatureFlags(
+    input: FeatureFlagServiceGetAllFeatureFlagGqlInput!
+  ): [FeatureFlagServiceFeatureFlagGqlOutput!]!
+  featureFlagServiceGetEnabledFeatureFlags(
+    input: FeatureFlagServiceGetFeatureFlagGqlInput!
+  ): [FeatureFlagServiceFeatureFlagGqlOutput!]!
+  featureFlagServiceGetFeatureFlagDetail(
+    input: FeatureFlagServiceGetFeatureFlagDetailGqlInput!
+  ): FeatureFlagServiceFeatureFlagGqlOutput!
+}

@@ -1,0 +1,33 @@
+grpc:
+  service:
+    storage:
+      url: localhost:5009
+cdn:
+  host: https://dev-cdn.passiontech.xyz
+buckets:
+  staging:
+    name: gaas-staging
+    provider: R2
+  image:
+    name: gaas-permanent-demo
+    provider: R2
+  video:
+    name: gaas-permanent-demo
+    provider: R2
+  audio:
+    name: gaas-permanent-demo
+    provider: R2
+  document:
+    name: gaas-permanent-demo
+    provider: R2
+redis:
+  host: localhost
+  port: 6379
+clamav:
+  enabled: false
+  deleteInfectedFiles: false
+  host: localhost
+  port: 3310
+  timeout: 60000
+ffmpeg:
+  path: /usr/bin/ffmpeg

@@ -1,0 +1,55 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "zma-signaling",
+  "projectType": "application",
+  "sourceRoot": "apps/zma-signaling/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "configurations": {
+        "development": {
+          "args": ["node-env=development"]
+        }
+      },
+      "executor": "nx:run-commands",
+      "options": {
+        "args": ["node-env=production"],
+        "command": "webpack-cli build",
+        "assets": [
+          {
+            "input": "apps/zma-signaling",
+            "glob": "**/(*.yaml|yml)",
+            "output": "."
+          },
+          {
+            "input": "libs/zma-i18n/src/i18n",
+            "glob": "**/*",
+            "output": "./i18n"
+          }
+        ]
+      }
+    },
+    "serve": {
+      "configurations": {
+        "development": {
+          "buildTarget": "zma-signaling:build:development"
+        },
+        "production": {
+          "buildTarget": "zma-signaling:build:production"
+        }
+      },
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "executor": "@nx/js:node",
+      "options": {
+        "buildTarget": "zma-signaling:build",
+        "runBuildTargetDependencies": false
+      }
+    },
+    "test": {
+      "options": {
+        "passWithNoTests": true
+      }
+    }
+  }
+}

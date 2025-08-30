@@ -1,0 +1,11 @@
+{
+  "name": "@zma-nestjs-monorepo/zma-repositories",
+  "version": "0.0.1",
+  "private": true,
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "types": "./index.d.ts",
+  "dependencies": {
+    "mongoose": "^8.17.1"
+  }
+}

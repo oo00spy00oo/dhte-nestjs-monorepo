@@ -1,0 +1,20 @@
+{
+  "name": "zma-repositories",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/zma-repositories/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/zma-repositories",
+        "main": "libs/zma-repositories/src/index.ts",
+        "tsConfig": "libs/zma-repositories/tsconfig.lib.json",
+        "assets": ["libs/zma-repositories/*.md"],
+        "format": ["cjs"]
+      }
+    }
+  }
+}

@@ -1,0 +1,106 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input InventoryServiceCreateStockGqlInput {
+  productId: String!
+  productName: String!
+  quantity: Int!
+  sku: String!
+}
+
+input InventoryServiceStockGqlInput {
+  productId: String!
+  quantity: Int!
+  sku: String!
+}
+
+type InventoryServiceStockGqlOutput {
+  availableQuantity: Int!
+  createdAt: DateTime!
+  deletedAt: DateTime
+  id: String!
+  isDeleted: Boolean!
+  productId: String!
+  productName: String!
+  reservedQuantity: Int!
+  sku: String!
+  soldQuantity: Int!
+  tenantId: String!
+  totalQuantity: Int!
+  updatedAt: DateTime!
+}
+
+type InventoryServiceStocksGqlOutput {
+  """
+  Array of found items
+  """
+  data: [InventoryServiceStockGqlOutput!]!
+
+  """
+  Total number of items
+  """
+  total: Int!
+}
+
+type Mutation {
+  inventoryServiceConfirmProduct(input: InventoryServiceStockGqlInput!): Boolean!
+  inventoryServiceCreateStock(input: InventoryServiceCreateStockGqlInput!): Boolean!
+  inventoryServiceDeleteStock(stockId: String!): Boolean!
+  inventoryServiceReleaseProduct(input: InventoryServiceStockGqlInput!): Boolean!
+  inventoryServiceReserveProduct(input: InventoryServiceStockGqlInput!): Boolean!
+  inventoryServiceUpdateStock(input: InventoryServiceStockGqlInput!, stockId: String!): Boolean!
+}
+
+input Pagination {
+  """
+  Maximum number of items to return (1-100)
+  """
+  limit: Int = 10
+
+  """
+  Number of items to skip (offset)
+  """
+  skip: Int = 0
+
+  """
+  Multiple sort fields for complex sorting
+  """
+  sort: [SortField!]
+}
+
+type Query {
+  inventoryServiceAllStock(pagination: Pagination!): InventoryServiceStocksGqlOutput!
+  inventoryServiceStockById(stockId: String!): InventoryServiceStockGqlOutput!
+  inventoryServiceStockByProductAndSku(
+    productId: String!
+    sku: String!
+  ): InventoryServiceStockGqlOutput!
+}
+
+"""
+Sort direction for ordering query results
+"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input SortField {
+  """
+  Sort direction for this field
+  """
+  direction: SortDirection! = ASC
+
+  """
+  Field name to sort by
+  """
+  field: String!
+}

@@ -1,0 +1,77 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+type Mutation {
+  uploadServiceCompleteUpload(
+    input: UploadServiceCompleteGqlInput!
+  ): UploadServiceCompleteGqlOutput!
+  uploadServiceRequestUpload(input: UploadServiceRequestGqlInput!): UploadServiceRequestGqlOutput!
+}
+
+type Query {
+  uploadTest: String!
+}
+
+"""
+Available ZMA microservices for inter-service communication
+"""
+enum ServiceName {
+  AUTH
+  BOOKING
+  CAMPAIGN
+  CART
+  CHECKIN
+  CLOCKIN
+  CONTENT
+  DICTIONARY
+  EVENT
+  FEATURE_FLAG
+  FNS
+  INVENTORY
+  LARVA_COURSE
+  LOYALTY
+  MEMBERSHIP
+  ORDER
+  ORGANIZATION
+  PAYMENT
+  POINT
+  PRODUCT
+  SHIPPING
+  STORAGE
+  SUBSCRIPTION
+  TICKET
+  USER
+  VOUCHER
+}
+
+enum StorageStatusType {
+  Completed
+  Failed
+  Pending
+  Processing
+  Quarantined
+}
+
+input UploadServiceCompleteGqlInput {
+  fileId: String!
+}
+
+type UploadServiceCompleteGqlOutput {
+  fileUrl: String!
+  status: StorageStatusType!
+}
+
+input UploadServiceRequestGqlInput {
+  fileName: String!
+  mimeType: String!
+  ownerEntityId: String!
+  ownerService: ServiceName!
+}
+
+type UploadServiceRequestGqlOutput {
+  fileId: String!
+  uploadUrl: String!
+}

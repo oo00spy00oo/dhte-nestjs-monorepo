@@ -1,0 +1,80 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+package CartService;
+
+service CartService {
+  rpc cartServiceDelete (DeleteInput) returns (BooleanOutput) {}
+  rpc cartServiceDeleteByCartIds (DeletesInput) returns (BooleanOutput) {}
+  rpc cartServiceGetByIds (GetByIdsInput) returns (CartArray) {}
+}
+
+message BooleanOutput {
+  bool status = 1;
+}
+
+message DeleteInput {
+  string requestId = 1;
+  string tenantId = 2;
+  Delete data = 3;
+}
+
+message DeletesInput {
+  string requestId = 1;
+  string tenantId = 2;
+  Deletes data = 3;
+}
+
+message Delete {
+  string userId = 1;
+  string tenantId = 2;
+}
+
+message Deletes {
+  repeated string cartIds = 1;
+  string userId = 2;
+  string tenantId = 3;
+}
+
+message GetByIdsInput {
+  string requestId = 1;
+  GetByIds data = 2;
+}
+
+message GetByIds {
+  repeated string ids = 1;
+  string userId = 2;
+}
+
+message CartArray {
+  repeated CartServiceCart data = 1;
+}
+
+message CartServiceCartProductVariant {
+  string sku = 1;
+  string name = 2;
+  double price = 3;
+  string attributeKey = 4;
+  string attributeValue = 5;
+}
+
+message CartServiceCartProduct {
+  string productId = 1;
+  string name = 2;
+  int32 quantity = 3;
+  double price = 4;
+  CartServiceCartProductVariant variant = 5;
+  string thumbnailFile = 6;
+  string currency = 7;
+}
+
+message CartServiceCart {
+  string _id = 1;
+  string tenantId = 2;
+  string userId = 3;
+  repeated CartServiceCartProduct products = 4;
+  double totalAmount = 5;
+  string currency = 6;
+  google.protobuf.Timestamp createdAt = 7;
+  google.protobuf.Timestamp updatedAt = 8;
+}

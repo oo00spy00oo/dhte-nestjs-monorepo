@@ -1,0 +1,42 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""
+Membership Service Member
+"""
+type MembershipServiceMemberGqlOutput {
+  availablePoints: Int!
+  createdAt: DateTime
+  cumulativeSpending: Float!
+  currentTierId: String!
+  currentTierLevel: Int!
+  currentTierName: String!
+  currentYearSpending: Float!
+  id: String
+  isActive: Boolean!
+  isDeleted: Boolean!
+  joinDate: DateTime!
+  lifetimePoints: Int!
+  loyaltyProgramId: String!
+  membershipNumber: String!
+  nextTierId: String
+  nextTierName: String
+  pointsToNextTier: Int!
+  spendingToNextTier: Float!
+  tenantId: String!
+  tierExpiryDate: DateTime
+  updatedAt: DateTime
+  userId: String!
+}
+
+type Query {
+  membershipServiceMemberDetailInfo: MembershipServiceMemberGqlOutput!
+}

@@ -1,0 +1,14 @@
+bucket:
+  image:
+    presignedName: zma-images-presigned-dev
+    name: zma-images-public-dev
+cdn:
+  url: https://cdn.passiontech.dev
+virusScanner:
+  enabled: false
+  url: https://scand.passiontech.dev
+database:
+  mongo:
+    uri: mongodb://${username}:${password}@${host}/zma-storage?directConnection=true&authSource=admin
+grpc:
+  url: localhost:5009

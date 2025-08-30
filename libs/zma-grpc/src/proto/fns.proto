@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package FnsService;
+
+service FnsService {
+  rpc fnsServiceFindUserResponse (FindUserResponseInput) returns (UserResponse) {}
+}
+
+message FindUserResponseInput {
+  string requestId = 1;
+  FindUserResponse data = 2;
+}
+
+message FindUserResponse {
+  string userId = 1;
+  optional string surveyId = 2;
+  optional string formId = 3;
+  string tenantId = 4;
+}
+
+message UserResponse {
+  string id = 1;
+  string tenantId = 2;
+  optional string surveyId = 3;
+  optional string formId = 4;
+  string userId = 5;
+  repeated Answer answers = 6;
+}
+
+message Answer {
+  string questionId = 1;
+  repeated string answer = 2;
+}

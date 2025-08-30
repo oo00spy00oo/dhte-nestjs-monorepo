@@ -1,0 +1,161 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  paymentServiceCreatePaymentVendor(
+    input: PaymentServiceCreatePaymentVendorGqlInput!
+  ): PaymentServiceVendorForAdminGqlOutput!
+  paymentServiceUpdatePaymentVendor(
+    input: PaymentServiceUpdatePaymentVendorGqlInput!
+  ): PaymentServiceVendorForAdminGqlOutput!
+}
+
+enum PackageDurationUnitType {
+  Day
+  Month
+  Week
+  Year
+}
+
+input Pagination {
+  limit: Int = 10
+  skip: Int = 0
+}
+
+input PaymentServiceCreatePaymentVendorGqlInput {
+  code: PaymentServiceVendor!
+  momoConfig: PaymentServiceMomoConfigGqlInput
+  name: String!
+  vnpayConfig: PaymentServiceVnpayConfigGqlInput
+}
+
+enum PaymentServiceCurrencyEnum {
+  Usd
+  Vnd
+}
+
+input PaymentServiceMomoConfigGqlInput {
+  accessKey: String!
+  apiUrl: String!
+  ipnUrl: String!
+  partnerCode: String!
+  redirectUrl: String!
+  secretKey: String!
+}
+
+type PaymentServiceMomoConfigGqlOutput {
+  accessKey: String
+  apiUrl: String
+  ipnUrl: String
+  partnerCode: String
+  redirectUrl: String
+  secretKey: String
+}
+
+enum PaymentServicePaymentStatus {
+  Failed
+  Paid
+  Pending
+  Refunded
+}
+
+"""
+Payment Service Subscription Transaction Output
+"""
+type PaymentServiceSubscriptionTransactionGqlOutput {
+  amount: Float!
+  createdAt: DateTime
+  currency: PaymentServiceCurrencyEnum!
+  duration: Float!
+  durationUnit: PackageDurationUnitType!
+  id: String!
+  packageName: String!
+  paymentMethod: PaymentServiceVendor!
+  pricingName: String!
+  status: PaymentServicePaymentStatus!
+  subscriptionId: String!
+  tenantId: String!
+  updatedAt: DateTime
+  userId: String!
+}
+
+input PaymentServiceUpdatePaymentVendorGqlInput {
+  code: PaymentServiceVendor!
+  momoConfig: PaymentServiceMomoConfigGqlInput
+  name: String
+  vnpayConfig: PaymentServiceVnpayConfigGqlInput
+}
+
+enum PaymentServiceVendor {
+  ApplePay
+  CreditCard
+  GooglePay
+  MoMo
+  Paypal
+  VNPay
+}
+
+type PaymentServiceVendorForAdminGqlOutput {
+  code: PaymentServiceVendor
+  createdAt: DateTime
+  deletedAt: DateTime
+  id: String
+  isDeleted: Boolean
+  isEnabled: Boolean
+  momoConfig: PaymentServiceMomoConfigGqlOutput
+  name: String
+  updatedAt: DateTime
+  vnpayConfig: PaymentServiceVnpayConfigGqlOutput
+}
+
+"""
+Payment Service Vendor Output
+"""
+type PaymentServiceVendorGqlOutput {
+  code: String
+  createdAt: DateTime
+  id: String
+  isEnabled: Boolean
+  name: String
+  tenantId: String
+  updatedAt: DateTime
+}
+
+input PaymentServiceVnpayConfigGqlInput {
+  vnpApi: String!
+  vnpHashSecret: String!
+  vnpReturnUrl: String!
+  vnpTmnCode: String!
+  vnpUrl: String!
+  vnpVersion: String!
+}
+
+type PaymentServiceVnpayConfigGqlOutput {
+  vnpApi: String
+  vnpHashSecret: String
+  vnpReturnUrl: String
+  vnpTmnCode: String
+  vnpUrl: String
+  vnpVersion: String
+}
+
+type Query {
+  paymentServiceUserSubscriptionTransaction(
+    transactionId: String!
+  ): PaymentServiceSubscriptionTransactionGqlOutput!
+  paymentServiceUserSubscriptionTransactions(
+    pagination: Pagination!
+  ): [PaymentServiceSubscriptionTransactionGqlOutput!]!
+  paymentServiceVendor(code: PaymentServiceVendor!): PaymentServiceVendorGqlOutput!
+  paymentServiceVendorForAdmin(code: PaymentServiceVendor!): PaymentServiceVendorForAdminGqlOutput!
+  paymentServiceVendors(pagination: Pagination!): [PaymentServiceVendorGqlOutput!]!
+  paymentServiceVendorsForAdmin(pagination: Pagination!): [PaymentServiceVendorForAdminGqlOutput!]!
+}

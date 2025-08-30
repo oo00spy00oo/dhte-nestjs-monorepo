@@ -1,0 +1,213 @@
+apiVersion: skaffold/v4beta13
+kind: Config
+metadata:
+  name: zma-project
+build:
+  tagPolicy:
+    gitCommit: {}
+  local:
+    push: true
+    useDockerCLI: true
+    useBuildkit: true
+    concurrency: 3
+profiles:
+  - name: zma-auth
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-auth
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-auth
+  - name: zma-booking
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-booking
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-booking
+  - name: zma-campaign
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-campaign
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-campaign
+  - name: zma-cart
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-cart
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-cart
+  - name: zma-checkout
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-checkout
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-checkout
+  - name: zma-content
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-content
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-content
+  - name: larva-course
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/larva-course
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: larva-course
+  - name: zma-dictionary
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-dictionary
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-dictionary
+  - name: zma-event
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-event
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-event
+  - name: zma-feature-flag
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-feature-flag
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-feature-flag
+  - name: zma-loyalty
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-loyalty
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-loyalty
+  - name: zma-membership
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-membership
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-membership
+  - name: zma-notification
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-notification
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-notification
+  - name: zma-order
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-order
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-order
+  - name: zma-organization
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-organization
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-organization
+  - name: zma-payment
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-payment
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-payment
+  - name: zma-point
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-point
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-point
+  - name: zma-product
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-product
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-product
+  - name: zma-sdui
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-sdui
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-sdui
+  - name: zma-storage
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-storage
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-storage
+  - name: zma-user
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-user
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-user
+  - name: zma-voucher
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-voucher
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-voucher
+  - name: zma-shipping
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-shipping
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-shipping
+  - name: zma-address
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-address
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-address
+  - name: zma-rbac
+    build:
+      artifacts:
+        - image: registry.passiontech.dev/zma-rbac
+          docker:
+            dockerfile: ci/Dockerfile
+            buildArgs:
+              SERVICE_NAME: zma-rbac

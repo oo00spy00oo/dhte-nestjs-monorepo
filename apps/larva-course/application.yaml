@@ -1,0 +1,39 @@
+database:
+  mongo:
+    uri: mongodb://${username}:${password}@${host}/larva-course?directConnection=true&authSource=admin
+onboarding:
+  english:
+    surveyId: 01987e36-9bc3-7edf-9e17-c3d4ef8b641b #pragma: allowlist secret
+    questionId: 01987e36-9bc2-735e-a3bd-f454834e8280 #pragma: allowlist secret
+grpc:
+  service:
+    dictionary:
+      url: localhost:5009
+    fns:
+      url: localhost:5020
+analyze:
+  speech:
+    url: https://analyze-speech.passiontech.dev/graphql
+r2:
+  commonAssetsBucket: larva-common-assets
+  userAudiosBucket: larva-user-audios
+  region: auto
+  accountId: b52e6d1169f89b16bff8f2a3909bc2d5 #pragma: allowlist secret
+  userAudiosBaseUrl: https://pub-02c858aca9154e5398c15cb41f7f41ab.r2.dev #pragma: allowlist secret
+  commonAssetsBaseUrl: https://pub-2ce0a20e043b42e8a0528b30b9d6d85b.r2.dev #pragma: allowlist secret
+  imageAssetsBaseUrl: https://pub-1e38b9094c0e4453ae5cc43051dad9ff.r2.dev #pragma: allowlist secret
+maxCollectionPerUser: 10
+maxCollectionItem: 100
+kafka:
+  service:
+    brokers:
+      - localhost:9092
+sampleAiVideoUrl: https://pub-1e38b9094c0e4453ae5cc43051dad9ff.r2.dev/2025/08/11/11/019898ef-cbcf-71ce-8334-5d0a8167bd51.mp4
+dapr:
+  host: http://localhost
+  httpPort: 3500
+  # grpcPort: 50001
+  # protocol: HTTP
+  # pubsubName: pubsub
+  # pubsubTopic: messages
+  # stateStoreName: statestore

@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package PaymentService;
+
+service PaymentService {
+    rpc paymentServiceHandleMomoIpn (HandleIpnInput) returns (HandleIpnMomoOutput) {}
+    rpc paymentServiceHandleVnpayIpn (HandleIpnInput) returns (HandleIpnVnpayOutput) {}
+    rpc paymentServiceCreatePaymentSubscription (CreatePaymentSubscriptionInput) returns (CreatePaymentOutput) {}
+}
+
+message HandleIpnInput {
+    string requestId = 1;
+    IpnData data = 3;
+}
+
+message HandleIpnMomoOutput {}
+
+message HandleIpnVnpayOutput {
+    string RspCode = 1;
+    string Message = 2;
+}
+
+message IpnData {
+    string vendorResultCode = 1;
+    string vendorTransactionId = 2;
+    optional string vendorMessage = 3;
+    optional string vendorStatus = 4;
+    string orderId = 5;
+    string signature = 6;
+    double amount = 7;
+    map<string, string> rawParams = 8;
+    bytes vendorLog = 9;
+}
+
+message CreatePaymentSubscriptionInput {
+    string requestId = 1;
+    CreatePaymentSubscriptionData data = 2;
+}
+
+message CreatePaymentSubscriptionData {
+    string tenantId = 1;
+    string userId = 2;
+    string vendor = 3;
+    string userIp = 4;
+    SubscriptionData subscription = 5;
+}
+
+message SubscriptionData {
+    string id = 1;
+    double amount = 2;
+    string currency = 3;
+    string packageName = 4;
+    string pricingName = 5;
+    int32 duration = 6;
+    string durationUnit = 7;
+}
+
+message CreatePaymentOutput {
+    string redirectUrl = 1;
+}

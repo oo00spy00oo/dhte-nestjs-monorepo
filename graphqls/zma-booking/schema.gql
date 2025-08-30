@@ -1,0 +1,241 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+type BookingServiceAvailableDayGqlOutput {
+  date: DateTime!
+}
+
+input BookingServiceAvailableDaysGqlInput {
+  branchId: String!
+  month: Int!
+  slotId: String!
+  year: Int!
+}
+
+"""
+Available Month
+"""
+type BookingServiceAvailableMonthGqlOutput {
+  month: Int!
+  monthName: String!
+}
+
+input BookingServiceAvailableMonthsGqlInput {
+  branchId: String!
+  slotId: String!
+  year: Int!
+}
+
+type BookingServiceAvailableTimeGqlOutput {
+  time: DateTime!
+}
+
+input BookingServiceAvailableTimesGqlInput {
+  branchId: String!
+  day: Int!
+  month: Int!
+  slotId: String!
+  year: Int!
+}
+
+input BookingServiceBookingGqlInput {
+  branchId: String!
+  contactPhone: String
+  note: String
+  numOfAdults: Int
+  numOfChildren: Int
+  requests: [BookingServiceBookingRequestGqlInput!]
+  reserveDate: DateTime
+  reserveName: String
+  reserveTime: DateTime
+  slot: String
+}
+
+type BookingServiceBookingGqlOutput {
+  branchId: String!
+  contactPhone: String
+  createdAt: DateTime
+  id: String!
+  isDeleted: Boolean!
+  note: String
+  numOfAdults: Int
+  numOfChildren: Int
+  requests: [BookingServiceBookingRequestGqlOutput!]
+  reserveDate: DateTime
+  reserveName: String
+  reserveTime: DateTime
+  slot: String
+  status: String
+  tenantId: String
+  updatedAt: DateTime
+  userId: String!
+}
+
+input BookingServiceBookingRequestGqlInput {
+  question: String!
+  request: String
+}
+
+type BookingServiceBookingRequestGqlOutput {
+  question: String!
+  request: String
+}
+
+input BookingServiceRecurrenceGqlInput {
+  availableTimes: [DateTime!]
+  customDates: [DateTime!]
+  daysOfMonth: [Int!]
+  daysOfWeek: [DayOfWeek!]
+  endDate: DateTime
+  monthsOfYear: [Int!]
+  recurrenceType: RecurrenceType!
+  startDate: DateTime
+}
+
+type BookingServiceRecurrenceGqlOutput {
+  availableTimes: [DateTime!]
+  customDates: [DateTime!]
+  daysOfMonth: [Int!]
+  daysOfWeek: [String!]
+  endDate: DateTime
+  monthsOfYear: [Int!]
+  recurrenceType: String!
+  startDate: DateTime
+}
+
+input BookingServiceSlotGqlInput {
+  description: String!
+  isEnabled: Boolean = true
+  name: String!
+  recurrence: BookingServiceRecurrenceGqlInput!
+}
+
+type BookingServiceSlotGqlOutput {
+  branchId: String!
+  createdAt: DateTime
+  deletedAt: DateTime
+  description: String!
+  id: String!
+  isDeleted: Boolean
+  isEnabled: Boolean
+  name: String!
+  recurrence: BookingServiceRecurrenceGqlOutput!
+  tenantId: String
+  updatedAt: DateTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+enum DayOfWeek {
+  Friday
+  Monday
+  Saturday
+  Sunday
+  Thursday
+  Tuesday
+  Wednesday
+}
+
+type Mutation {
+  bookingServiceAcceptBookings(ids: [String!]!): Boolean!
+  bookingServiceCancelBookings(ids: [String!]!): Boolean!
+  bookingServiceCreateBooking(input: BookingServiceBookingGqlInput!): Boolean!
+  bookingServiceCreateSlot(branchId: String!, input: BookingServiceSlotGqlInput!): Boolean!
+  bookingServiceDeleteBookings(ids: [String!]!): Boolean!
+  bookingServiceDeleteSlots(branchId: String!, ids: [String!]!): Boolean!
+  bookingServiceDisableSlots(branchId: String!, ids: [String!]!): Boolean!
+  bookingServiceEnableSlots(branchId: String!, ids: [String!]!): Boolean!
+  bookingServiceUpdateBooking(id: String!, input: BookingServiceBookingGqlInput!): Boolean!
+  bookingServiceUpdateSlot(
+    branchId: String!
+    id: String!
+    input: BookingServiceSlotGqlInput!
+  ): Boolean!
+}
+
+input Pagination {
+  """
+  Maximum number of items to return (1-100)
+  """
+  limit: Int = 10
+
+  """
+  Number of items to skip (offset)
+  """
+  skip: Int = 0
+
+  """
+  Multiple sort fields for complex sorting
+  """
+  sort: [SortField!]
+}
+
+type Query {
+  bookingServiceAllBookings(pagination: Pagination!): [BookingServiceBookingGqlOutput!]!
+  bookingServiceAllSlots(
+    branchId: String!
+    pagination: Pagination!
+  ): [BookingServiceSlotGqlOutput!]!
+  bookingServiceAvailableDays(
+    input: BookingServiceAvailableDaysGqlInput!
+  ): [BookingServiceAvailableDayGqlOutput!]!
+  bookingServiceAvailableMonths(
+    input: BookingServiceAvailableMonthsGqlInput!
+  ): [BookingServiceAvailableMonthGqlOutput!]!
+  bookingServiceAvailableTimes(
+    input: BookingServiceAvailableTimesGqlInput!
+  ): [BookingServiceAvailableTimeGqlOutput!]!
+  bookingServiceBookingsById(id: String!): BookingServiceBookingGqlOutput!
+  bookingServiceDisabledSlots(
+    branchId: String!
+    pagination: Pagination!
+  ): [BookingServiceSlotGqlOutput!]!
+  bookingServiceEnabledSlots(
+    branchId: String!
+    pagination: Pagination!
+  ): [BookingServiceSlotGqlOutput!]!
+  bookingServiceEndedBookings(pagination: Pagination!): [BookingServiceBookingGqlOutput!]!
+  bookingServiceIncomingBookings(pagination: Pagination!): [BookingServiceBookingGqlOutput!]!
+  bookingServiceMyBookings(pagination: Pagination!): [BookingServiceBookingGqlOutput!]!
+  bookingServiceOngoingBookings(pagination: Pagination!): [BookingServiceBookingGqlOutput!]!
+  bookingServicePendingBookings(pagination: Pagination!): [BookingServiceBookingGqlOutput!]!
+  bookingServicePublicSlots(
+    branchId: String!
+    pagination: Pagination!
+  ): [BookingServiceSlotGqlOutput!]!
+  bookingServiceSlotById(branchId: String!, id: String!): BookingServiceSlotGqlOutput!
+}
+
+enum RecurrenceType {
+  Annually
+  Custom
+  Daily
+  Monthly
+  Weekly
+}
+
+"""
+Sort direction for ordering query results
+"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input SortField {
+  """
+  Sort direction for this field
+  """
+  direction: SortDirection! = ASC
+
+  """
+  Field name to sort by
+  """
+  field: String!
+}

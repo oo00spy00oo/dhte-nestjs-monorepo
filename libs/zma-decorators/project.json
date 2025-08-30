@@ -1,0 +1,20 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "zma-decorators",
+  "projectType": "library",
+  "sourceRoot": "libs/zma-decorators/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "options": {
+        "assets": ["libs/zma-decorators/*.md"],
+        "format": ["cjs"],
+        "main": "libs/zma-decorators/src/index.ts",
+        "outputPath": "dist/libs/zma-decorators",
+        "tsConfig": "libs/zma-decorators/tsconfig.lib.json"
+      },
+      "outputs": ["{options.outputPath}"]
+    }
+  }
+}

@@ -1,0 +1,211 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package TicketService;
+
+service TicketService {
+  rpc ticketServiceCreate (CreateTicketInput) returns (Ticket) {}
+  rpc ticketServiceGetById (GetTicketByIdInput) returns (Ticket) {}
+  rpc ticketServiceUpdate (UpdateTicketInput) returns (Ticket) {}
+  rpc ticketServiceDelete (DeleteTicketInput) returns (BooleanOutput) {}
+  rpc ticketServiceGetByUserId (GetTicketsByUserIdInput) returns (TicketArray) {}
+  rpc ticketServiceGetByTenantId (GetTicketsByTenantIdInput) returns (TicketArray) {}
+  rpc ticketServiceUpdateStatus (UpdateTicketStatusInput) returns (Ticket) {}
+  rpc ticketServiceAssignAgent (AssignAgentInput) returns (Ticket) {}
+  rpc ticketServiceAddComment (AddCommentInput) returns (TicketComment) {}
+  rpc ticketServiceGetComments (GetCommentsInput) returns (TicketCommentArray) {}
+  rpc ticketServiceUpdatePriority (UpdatePriorityInput) returns (Ticket) {}
+}
+
+message BooleanOutput {
+  bool status = 1;
+}
+
+message CreateTicketInput {
+  string requestId = 1;
+  string tenantId = 2;
+  CreateTicket data = 3;
+}
+
+message CreateTicket {
+  string userId = 1;
+  string subject = 2;
+  string description = 3;
+  string category = 4;
+  string priority = 5;
+  repeated string attachments = 6;
+  map<string, string> metadata = 7;
+}
+
+message GetTicketByIdInput {
+  string requestId = 1;
+  string tenantId = 2;
+  GetTicketById data = 3;
+}
+
+message GetTicketById {
+  string id = 1;
+}
+
+message UpdateTicketInput {
+  string requestId = 1;
+  string tenantId = 2;
+  UpdateTicket data = 3;
+}
+
+message UpdateTicket {
+  string id = 1;
+  optional string subject = 2;
+  optional string description = 3;
+  optional string category = 4;
+  optional string priority = 5;
+  repeated string attachments = 6;
+  map<string, string> metadata = 7;
+}
+
+message DeleteTicketInput {
+  string requestId = 1;
+  string tenantId = 2;
+  DeleteTicket data = 3;
+}
+
+message DeleteTicket {
+  string id = 1;
+}
+
+message GetTicketsByUserIdInput {
+  string requestId = 1;
+  string tenantId = 2;
+  GetTicketsByUserId data = 3;
+}
+
+message GetTicketsByUserId {
+  string userId = 1;
+  optional Pagination pagination = 2;
+  optional string status = 3;
+  optional string priority = 4;
+}
+
+message GetTicketsByTenantIdInput {
+  string requestId = 1;
+  string tenantId = 2;
+  GetTicketsByTenantId data = 3;
+}
+
+message GetTicketsByTenantId {
+  optional Pagination pagination = 1;
+  optional string status = 2;
+  optional string priority = 3;
+  optional string category = 4;
+  optional string assignedAgentId = 5;
+}
+
+message UpdateTicketStatusInput {
+  string requestId = 1;
+  string tenantId = 2;
+  UpdateTicketStatus data = 3;
+}
+
+message UpdateTicketStatus {
+  string id = 1;
+  string status = 2;
+  optional string comment = 3;
+}
+
+message AssignAgentInput {
+  string requestId = 1;
+  string tenantId = 2;
+  AssignAgent data = 3;
+}
+
+message AssignAgent {
+  string ticketId = 1;
+  string agentId = 2;
+}
+
+message AddCommentInput {
+  string requestId = 1;
+  string tenantId = 2;
+  AddComment data = 3;
+}
+
+message AddComment {
+  string ticketId = 1;
+  string authorId = 2;
+  string content = 3;
+  bool isInternal = 4;
+  repeated string attachments = 5;
+}
+
+message GetCommentsInput {
+  string requestId = 1;
+  string tenantId = 2;
+  GetComments data = 3;
+}
+
+message GetComments {
+  string ticketId = 1;
+  optional Pagination pagination = 2;
+  optional bool includeInternal = 3;
+}
+
+message UpdatePriorityInput {
+  string requestId = 1;
+  string tenantId = 2;
+  UpdatePriority data = 3;
+}
+
+message UpdatePriority {
+  string id = 1;
+  string priority = 2;
+}
+
+message Pagination {
+  int32 limit = 1;
+  int32 skip = 2;
+}
+
+message Ticket {
+  string _id = 1;
+  string tenantId = 2;
+  string userId = 3;
+  string subject = 4;
+  string description = 5;
+  string category = 6;
+  string priority = 7;
+  string status = 8;
+  optional string assignedAgentId = 9;
+  repeated string attachments = 10;
+  map<string, string> metadata = 11;
+  int32 commentCount = 12;
+  google.protobuf.Timestamp createdAt = 13;
+  google.protobuf.Timestamp updatedAt = 14;
+  optional google.protobuf.Timestamp resolvedAt = 15;
+  optional google.protobuf.Timestamp closedAt = 16;
+}
+
+message TicketComment {
+  string _id = 1;
+  string ticketId = 2;
+  string authorId = 3;
+  string content = 4;
+  bool isInternal = 5;
+  repeated string attachments = 6;
+  google.protobuf.Timestamp createdAt = 7;
+  google.protobuf.Timestamp updatedAt = 8;
+}
+
+message TicketArray {
+  repeated Ticket data = 1;
+  int32 total = 2;
+  int32 limit = 3;
+  int32 skip = 4;
+}
+
+message TicketCommentArray {
+  repeated TicketComment data = 1;
+  int32 total = 2;
+  int32 limit = 3;
+  int32 skip = 4;
+}

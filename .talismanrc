@@ -1,0 +1,8 @@
+scopeconfig:
+- scope: node
+fileignoreconfig:
+- filename: *.lock
+- filename: *-lock.yaml
+- filename: package.json
+  checksum: ""
+version: ""

@@ -1,0 +1,269 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  surveyServiceCreateFormForAdmin(
+    input: SurveyServiceCreateFormGqlInput!
+  ): SurveyServiceFormGqlOutput!
+  surveyServiceCreateSurveyForAdmin(
+    input: SurveyServiceCreateSurveyGqlInput!
+  ): SurveyServiceSurveyGqlOutput!
+  surveyServiceCreateUserResponseToForm(
+    input: SurveyServiceCreateUserResponseFormGqlInput!
+  ): SurveyServiceUserResponseGqlOutput!
+  surveyServiceCreateUserResponseToFormForAnonymous(
+    input: SurveyServiceCreateUserResponseFormGqlInput!
+  ): SurveyServiceUserResponseGqlOutput!
+  surveyServiceCreateUserResponseToSurvey(
+    input: SurveyServiceCreateUserResponseSurveyGqlInput!
+  ): SurveyServiceUserResponseGqlOutput!
+  surveyServiceCreateUserResponseToSurveyForAnonymous(
+    input: SurveyServiceCreateUserResponseSurveyGqlInput!
+  ): SurveyServiceUserResponseGqlOutput!
+  surveyServiceUpdateFormForAdmin(
+    id: String!
+    input: SurveyServiceUpdateFormGqlInput!
+  ): SurveyServiceFormGqlOutput!
+  surveyServiceUpdateSurveyForAdmin(
+    id: String!
+    input: SurveyServiceUpdateSurveyGqlInput!
+  ): SurveyServiceSurveyGqlOutput!
+}
+
+input Pagination {
+  limit: Int = 10
+  skip: Int = 0
+}
+
+type Query {
+  surveyServiceGetFormById(id: String!): SurveyServiceFormGqlOutput!
+  surveyServiceGetFormsForAdmin(pagination: Pagination!): SurveyServiceFormsGqlOutput!
+  surveyServiceGetSurveyById(id: String!): SurveyServiceSurveyGqlOutput!
+  surveyServiceGetSurveyByType(type: SurveyType!): SurveyServiceSurveyGqlOutput!
+  surveyServiceGetSurveysForAdmin(pagination: Pagination!): SurveyServiceSurveysGlqOutput!
+  surveyServiceGetUserResponseByIdForAdmin(id: String!): SurveyServiceUserResponseGqlOutput!
+  surveyServiceGetUserResponsesToFormForAdmin(
+    input: SurveyServiceFindUserResponsesToFormGqlInput!
+    pagination: Pagination!
+  ): SurveyServiceUserResponsesGqlOutput!
+  surveyServiceGetUserResponsesToSurveyForAdmin(
+    input: SurveyServiceFindUserResponsesToSurveyGqlInput!
+    pagination: Pagination!
+  ): SurveyServiceUserResponsesGqlOutput!
+}
+
+"""
+Type of the survey question
+"""
+enum SurveyQuestionType {
+  CTA
+  MultipleChoice
+  Rating
+  SingleChoice
+  Text
+  YesNo
+}
+
+"""
+Survey Answer Input
+"""
+input SurveyServiceAnswerGqlInput {
+  answer: [String!]!
+  questionId: String!
+}
+
+"""
+Survey Service Answer GQL Output
+"""
+type SurveyServiceAnswerGqlOutput {
+  answer: [String!]
+  questionId: String
+}
+
+input SurveyServiceCreateFormGqlInput {
+  description: String
+  isActive: Boolean
+  isAnonymous: Boolean!
+  questions: [SurveyServiceSurveyQuestionGqlInput!]!
+  title: String!
+}
+
+"""
+Survey Service Survey GQL Input
+"""
+input SurveyServiceCreateSurveyGqlInput {
+  description: String
+  isActive: Boolean
+  isAnonymous: Boolean!
+  questions: [SurveyServiceSurveyQuestionGqlInput!]!
+  title: String!
+  type: SurveyType!
+}
+
+input SurveyServiceCreateUserResponseFormGqlInput {
+  answers: [SurveyServiceAnswerGqlInput!]!
+  formId: String!
+}
+
+"""
+Create User Response Input
+"""
+input SurveyServiceCreateUserResponseSurveyGqlInput {
+  answers: [SurveyServiceAnswerGqlInput!]!
+  surveyId: String!
+}
+
+input SurveyServiceFindUserResponsesToFormGqlInput {
+  formId: String
+}
+
+input SurveyServiceFindUserResponsesToSurveyGqlInput {
+  surveyId: String
+}
+
+type SurveyServiceFormGqlOutput {
+  createdAt: DateTime
+  description: String
+  id: String!
+  isActive: Boolean
+  isAnonymous: Boolean
+  questions: [SurveyServiceSurveyQuestionGqlOutput!]
+  tenantId: String
+  title: String
+  updatedAt: DateTime
+}
+
+type SurveyServiceFormsGqlOutput {
+  data: [SurveyServiceFormGqlOutput!]!
+  total: Int!
+}
+
+"""
+Survey Service Survey GQL Output
+"""
+type SurveyServiceSurveyGqlOutput {
+  createdAt: DateTime
+  description: String
+  id: String!
+  isActive: Boolean
+  isAnonymous: Boolean
+  questions: [SurveyServiceSurveyQuestionGqlOutput!]
+  tenantId: String
+  title: String
+  type: SurveyType
+  updatedAt: DateTime
+}
+
+"""
+Survey Service Survey Question GQL Input
+"""
+input SurveyServiceSurveyQuestionGqlInput {
+  actionLabel: String
+  actionUrl: String
+  index: Float!
+  isActive: Boolean
+  isRequired: Boolean!
+  maxValue: Float
+  minValue: Float
+  options: [String!]
+  text: String!
+  type: SurveyQuestionType!
+  uiTemplate: SurveyUiTemplate!
+}
+
+"""
+Survey Service Survey Question GQL Output
+"""
+type SurveyServiceSurveyQuestionGqlOutput {
+  actionLabel: String
+  actionUrl: String
+  id: String!
+  index: Float
+  isActive: Boolean
+  isRequired: Boolean
+  maxValue: Float
+  minValue: Float
+  options: [String!]
+  text: String
+  type: SurveyQuestionType
+  uiTemplate: SurveyUiTemplate
+}
+
+type SurveyServiceSurveysGlqOutput {
+  data: [SurveyServiceSurveyGqlOutput!]!
+  total: Int!
+}
+
+input SurveyServiceUpdateFormGqlInput {
+  description: String
+  isActive: Boolean
+  isAnonymous: Boolean
+  questions: [SurveyServiceSurveyQuestionGqlInput!]
+  title: String
+}
+
+"""
+Survey Service Survey GQL Input
+"""
+input SurveyServiceUpdateSurveyGqlInput {
+  description: String
+  isActive: Boolean
+  isAnonymous: Boolean
+  questions: [SurveyServiceSurveyQuestionGqlInput!]
+  title: String
+  type: SurveyType
+}
+
+"""
+Survey Service User Response GQL Output
+"""
+type SurveyServiceUserResponseGqlOutput {
+  answers: [SurveyServiceAnswerGqlOutput!]
+  createdAt: DateTime
+  formId: String
+  id: String!
+  ipAddress: String
+  surveyId: String
+  tenantId: String
+  updatedAt: DateTime
+  userAgent: String
+  userId: String
+}
+
+type SurveyServiceUserResponsesGqlOutput {
+  data: [SurveyServiceUserResponseGqlOutput!]!
+  total: Int!
+}
+
+"""
+Type of the survey
+"""
+enum SurveyType {
+  CustomerEffortScore
+  CustomerSatisfactionScore
+  NetPromoterScore
+  Onboarding
+  OpenFeedback
+  ProductMarketFit
+  UserInterview
+}
+
+"""
+UI Template for the survey question
+"""
+enum SurveyUiTemplate {
+  CTA
+  Default
+  Emoji
+  Faces
+  Scale
+  Stars
+}

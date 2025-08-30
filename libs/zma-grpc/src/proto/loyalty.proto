@@ -1,0 +1,120 @@
+syntax = "proto3";
+
+package LoyaltyService;
+
+import "google/protobuf/timestamp.proto";
+
+service LoyaltyService {
+  rpc loyaltyServiceGetDefaultLoyaltyProgram(GetDefaultLoyaltyProgramInput) returns (LoyaltyProgram) {}
+  rpc loyaltyServiceGetDefaultLoyaltyTier(GetDefaultLoyaltyTierInput) returns (LoyaltyTier) {}
+  rpc loyaltyServiceGetNextLoyaltyTier(GetNextLoyaltyTierInput) returns (LoyaltyTier) {}
+  rpc loyaltyServiceGetLoyaltyTierById(GetLoyaltyTierByIdInput) returns (LoyaltyTier) {}
+}
+
+message GetDefaultLoyaltyProgramInput {
+  // Empty message as per the provided input
+}
+
+message GetDefaultLoyaltyTierInput {
+  string loyaltyProgramId = 1;
+  string tenantId = 2;
+}
+
+message GetNextLoyaltyTierInput {
+  string tierId = 1;
+  string tenantId = 2;
+}
+
+message GetLoyaltyTierById {
+  string tierId = 1;
+  string tenantId = 2;
+}
+
+message GetLoyaltyTierByIdInput {
+  GetLoyaltyTierById data = 1;
+  optional string requestId = 2;
+}
+
+message EarnRules {
+  double amountSpentRatio = 1;
+  double registrationBonus = 2;
+  double referralBonus = 3;
+}
+
+message RedemptionRules {
+  double minimumPoints = 1;
+  double pointValue = 2;
+}
+
+message PointsConfig {
+  double expiryDays = 1;
+  EarnRules earnRules = 2;
+  RedemptionRules redemptionRules = 3;
+}
+
+message CustomTheme {
+  string primaryColor = 1;
+  string secondaryColor = 2;
+  string logoUrl = 3;
+}
+
+message Integrations {
+  string externalSystemId = 1;
+  repeated string apiKeys = 2;
+}
+
+message AdditionalSettings {
+  bool notificationEnabled = 1;
+  string emailTemplateId = 2;
+  bool displayInApp = 3;
+  CustomTheme customTheme = 4;
+  Integrations integrations = 5;
+}
+
+message LoyaltyProgram {
+  string id = 1;
+  string tenantId = 2;
+  string name = 3;
+  string description = 4;
+  google.protobuf.Timestamp startDate = 5;
+  google.protobuf.Timestamp endDate = 6;
+  bool isActive = 7;
+  bool isDefault = 8;
+  PointsConfig pointsConfig = 9;
+  AdditionalSettings additionalSettings = 10;
+  bool isEnabled = 11;
+  bool isDeleted = 12;
+  google.protobuf.Timestamp createdAt = 13;
+  google.protobuf.Timestamp updatedAt = 14;
+}
+
+message LoyaltyTierDiscount {
+  int32 percentage = 1;
+  repeated string applicableServices = 2;
+}
+
+message LoyaltyTierBenefitDetails {
+  repeated LoyaltyTierDiscount discounts = 1;
+  repeated string freeServices = 2;
+  bool prioritySupport = 3;
+  bool exclusiveAccess = 4;
+}
+
+message LoyaltyTier {
+  string id = 1;
+  string tenantId = 2;
+  string loyaltyProgramId = 3;
+  string name = 4;
+  int32 level = 5;
+  string description = 6;
+  string iconUrl = 7;
+  int32 spendingThreshold = 8;
+  int32 pointsThreshold = 9;
+  int32 pointsMultiplier = 10;
+  repeated string benefits = 11;
+  LoyaltyTierBenefitDetails benefitDetails = 12;
+  int32 validityPeriod = 13;
+  int32 maintenanceThreshold = 14;
+  google.protobuf.Timestamp createdAt = 15;
+  google.protobuf.Timestamp updatedAt = 16;
+}

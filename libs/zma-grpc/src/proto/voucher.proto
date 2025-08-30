@@ -1,0 +1,249 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package VoucherService;
+
+service VoucherService {
+  rpc voucherServiceGetVoucherById (GetVoucherByIdInput) returns (Voucher) {}
+
+  rpc voucherServiceGetVouchersByCampaignId (GetVouchersByCampaignIdInput) returns (VoucherArray) {}
+
+  rpc voucherServiceGetVoucherTypeById (GetVoucherTypeByIdInput) returns (VoucherType) {}
+
+  rpc voucherServiceIssueVoucher (IssueVoucherInput) returns (Voucher) {}
+
+  rpc voucherServiceValidateAndApplyVoucher (ValidateAndApplyVoucherInput) returns (ValidateAndApplyVoucherOutput) {}
+
+  rpc voucherServiceIncrementVoucherTypeRedemptionCount (IncrementVoucherTypeRedemptionCountInput) returns (IncrementVoucherTypeRedemptionCountOutput) {}
+
+  rpc voucherServiceRedeemVouchers (RedeemVouchersInput) returns (RedeemVouchersOutput) {}
+
+  rpc voucherServiceRollbackVouchers (RollbackVouchersInput) returns (RollbackVouchersOutput) {}
+}
+
+message GetVoucherByIdInputData {
+  string id = 1;
+  string tenantId = 2;
+}
+
+message GetVoucherByIdInput {
+  GetVoucherByIdInputData data = 1;
+  string requestId = 2;
+}
+
+enum VoucherDiscountType {
+  PERCENTAGE = 0;
+  FIXED_AMOUNT = 1;
+  FREE_ITEM = 2;
+  FREE_SHIPPING = 3;
+  BOGO = 4;
+}
+
+message Voucher {
+  string id = 1;
+  string tenantId = 2;
+  string name = 3;
+  string code = 4;
+  string voucherTypeId = 5;
+  string userId = 6;
+  string campaignId = 7;
+  string description = 8;
+  VoucherDiscountType discountType = 9;
+  double discountValue = 10;
+  double minimumPurchase = 11;
+  double maximumDiscount = 12;
+  repeated string applicableProductIds = 13;
+  repeated string applicableCategoryIds = 14;
+  repeated string excludedProductIds = 15;
+  google.protobuf.Timestamp issueDate = 16;
+  google.protobuf.Timestamp startDate = 17;
+  google.protobuf.Timestamp endDate = 18;
+  bool isRedeemed = 19;
+  string redeemedOrderId = 20;
+  google.protobuf.Timestamp redeemedDate = 21;
+  bool isExpired = 22;
+  bool isActive = 23;
+  bool isDeleted = 24;
+  google.protobuf.Timestamp createdAt = 25;
+  google.protobuf.Timestamp updatedAt = 26;
+}
+
+message GetVouchersByCampaignIdInputData {
+  string campaignId = 1;
+  string tenantId = 2;
+}
+
+message GetVouchersByCampaignIdInput {
+  GetVouchersByCampaignIdInputData data = 1;
+  string requestId = 2;
+}
+
+message VoucherArray {
+  repeated Voucher data = 1;
+}
+
+message GetVoucherTypeByIdInputData {
+  string voucherTypeId = 1;
+  string tenantId = 2;
+}
+
+message GetVoucherTypeByIdInput {
+  GetVoucherTypeByIdInputData data = 1;
+  string requestId = 2;
+}
+
+message VoucherType {
+  string id = 1;
+  string tenantId = 2;
+  string name = 3;
+  string description = 4;
+  VoucherDiscountType discountType = 5;
+  double discountValue = 6;
+  double minimumPurchase = 7;
+  double maximumDiscount = 8;
+  repeated string applicableProductIds = 9;
+  repeated string applicableCategoryIds = 10;
+  repeated string excludedProductIds = 11;
+  int32 validityDays = 12;
+  bool isStackable = 13;
+  string imageUrl = 14;
+  bool isEnabled = 15;
+  bool isDeleted = 16;
+  string termsAndConditions = 17;
+  google.protobuf.Timestamp createdAt = 18;
+  google.protobuf.Timestamp updatedAt = 19;
+}
+
+message IssueVoucherInputData {
+  string tenantId = 1;
+  string userId = 2;
+  string voucherTypeId = 3;
+  optional string campaignId = 4;
+}
+
+message IssueVoucherInput {
+  IssueVoucherInputData data = 1;
+  optional string requestId = 2;
+}
+
+message CartItem {
+  string productId = 1;
+  string sku = 2;
+  int32 quantity = 3;
+  double unitPrice = 4;
+}
+
+message ValidateAndApplyVoucherInputData {
+  string tenantId = 1;
+  string userId = 2;
+  repeated string voucherIds = 3;
+  repeated CartItem cartItems = 4;
+  optional double shippingFee = 5;
+  optional bool calculateOnly = 6;
+}
+
+message ValidateAndApplyVoucherInput {
+  ValidateAndApplyVoucherInputData data = 1;
+  optional string requestId = 2;
+}
+
+message ProductDiscountDetail {
+  string productId = 1;
+  double originalPrice = 2;
+  double discountedPrice = 3;
+  double discountAmount = 4;
+}
+
+message VoucherReservation {
+  string reservationId = 1;
+  google.protobuf.Timestamp expiryDate = 2;
+}
+
+message VoucherApplicationResult {
+  bool isApplicable = 1;
+  repeated string applicableProductIds = 2;
+  double discountAmount = 3;
+  repeated ProductDiscountDetail productDiscounts = 4;
+  VoucherReservation reservation = 5;
+  string errorMessage = 6;
+}
+
+message VoucherDetail {
+  string voucherId = 1;
+  string code = 2;
+  string name = 3;
+  optional string description = 4;
+  VoucherDiscountType discountType = 5;
+  double discountValue = 6;
+  optional double maximumDiscount = 7;
+  VoucherApplicationResult applicationResult = 8;
+}
+
+message ValidateAndApplyVoucherOutput {
+  repeated VoucherDetail vouchers = 1;
+  double totalDiscountAmount = 2;
+  bool hasApplicableVouchers = 3;
+  repeated string invalidIds = 4;
+}
+
+message RedeemVouchersInputData {
+  string tenantId = 1;
+  string userId = 2;
+  repeated string voucherIds = 3;
+  repeated CartItem cartItems = 4;
+  optional double shippingFee = 5;
+  optional bool calculateOnly = 6;
+  string orderId = 7;
+}
+
+message RedeemVouchersInput {
+  RedeemVouchersInputData data = 1;
+  optional string requestId = 2;
+}
+
+message RedeemedVoucherOutputData {
+  string voucherId = 1;
+  string code = 2;
+  double discountAmount = 3;
+  bool isRedeemed = 4;
+  optional string message = 5;
+}
+
+message RedeemVouchersOutput {
+  bool success = 1;
+  repeated RedeemedVoucherOutputData redeemedVouchers = 2;
+  double totalDiscountAmount = 3;
+}
+
+message IncrementVoucherTypeRedemptionCountInputData {
+  string voucherTypeId = 1;
+  string tenantId = 2;
+  int32 incrementBy = 3;
+}
+
+message IncrementVoucherTypeRedemptionCountInput {
+  IncrementVoucherTypeRedemptionCountInputData data = 1;
+  optional string requestId = 2;
+}
+
+message IncrementVoucherTypeRedemptionCountOutput {
+  bool success = 1;
+  optional string errorMessage = 2;
+}
+
+message RollbackVouchersInputData {
+  string tenantId = 1;
+  string userId = 2;
+  string orderId = 4;
+}
+
+message RollbackVouchersInput {
+  RollbackVouchersInputData data = 1;
+  optional string requestId = 2;
+}
+
+message RollbackVouchersOutput {
+  bool success = 1;
+  optional string message = 2;
+}

@@ -1,0 +1,224 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+type Mutation {
+  orderServiceApplyVoucher(input: OrderServiceCreateGqlInput!): OrderServiceOrderGqlOutput!
+  orderServiceCancelOrder(orderId: String!): OrderServiceOrderGqlOutput!
+  orderServiceCreateBooking(input: OrderServiceCreateGqlInput!): OrderServiceOrderGqlOutput!
+  orderServiceCreateOrder(input: OrderServiceCreateGqlInput!): OrderServiceOrderGqlOutput!
+  orderServiceUpdateOrderStatus(input: OrderServiceUpdateStatusGqlInput!): Boolean!
+}
+
+input OrderHistoryServiceGetGqlInput {
+  orderId: String!
+}
+
+input OrderServiceCreateGqlInput {
+  branchId: String
+  cartIds: [String!]!
+  country: String
+  paymentMethod: String
+  shippingAddress: OrderServiceShippingAddressInput
+  shippingMethod: String
+  shippingNote: String
+  vouchers: [String!]
+}
+
+input OrderServiceDetailGqlInput {
+  id: ID!
+}
+
+input OrderServiceGetGqlInput {
+  """
+  Maximum number of items to return (1-100)
+  """
+  limit: Int = 10
+  search: String
+
+  """
+  Number of items to skip (offset)
+  """
+  skip: Int = 0
+
+  """
+  Multiple sort fields for complex sorting
+  """
+  sort: [SortField!]
+  sortBy: OrderServiceSortField
+  sortDirection: SortDirection
+  status: OrderServiceStatus
+  tenantId: String
+  userId: String
+}
+
+"""
+Order
+"""
+type OrderServiceOrderGqlOutput {
+  branchId: String
+  createdAt: String!
+  currency: String!
+  discountAmount: Float
+  discountAmountFormatted: String
+  id: String!
+  payment: OrderServicePaymentInfoGqlOutput
+  paymentMethod: String
+  paymentStatus: OrderServicePaymentStatus
+  productTotalAmount: Float!
+  productTotalAmountFormatted: String!
+  products: [OrderServiceProductGqlOutput!]!
+  promotionId: String
+  shippingAddress: OrderServiceShippingAddressGqlOutput
+  shippingFee: Float
+  shippingFeeFormatted: String
+  shippingMethod: String
+  shippingNote: String
+  shippingStatus: OrderServiceShippingStatus
+  status: String!
+  tenantId: String!
+  totalAmount: Float!
+  totalAmountFormatted: String!
+  type: String!
+  updatedAt: String!
+  userId: String!
+  vouchers: [String!]
+}
+
+"""
+Order History Entry
+"""
+type OrderServiceOrderHistoryGqlOutput {
+  comment: String
+  createdAt: String!
+  description: String!
+  id: String!
+  orderId: String!
+  paymentStatus: OrderServicePaymentStatus
+  shippingStatus: OrderServiceShippingStatus
+  status: OrderServiceStatus!
+  tenantId: String!
+  updatedBy: String!
+}
+
+"""
+Payment Information
+"""
+type OrderServicePaymentInfoGqlOutput {
+  amountPaid: Float!
+  amountPaidFormatted: String!
+  paidAt: String!
+  refundId: String
+  transactionId: String!
+}
+
+enum OrderServicePaymentStatus {
+  Failed
+  Paid
+  Pending
+  Refunded
+}
+
+"""
+Order Product
+"""
+type OrderServiceProductGqlOutput {
+  currency: String!
+  name: String!
+  price: Float!
+  priceFormatted: String!
+  productId: String!
+  quantity: Float!
+  thumbnailFile: String
+  variant: OrderServiceProductVariantGqlOutput
+}
+
+"""
+Order Product Variant
+"""
+type OrderServiceProductVariantGqlOutput {
+  attributeKey: String
+  attributeValue: String
+  name: String!
+  price: Float!
+  priceFormatted: String!
+  sku: String!
+}
+
+"""
+Order Shipping Address
+"""
+type OrderServiceShippingAddressGqlOutput {
+  address: String!
+  name: String!
+  phone: String!
+  province: String!
+  ward: String!
+}
+
+input OrderServiceShippingAddressInput {
+  address: String!
+  name: String!
+  phone: String!
+  province: String!
+  ward: String!
+}
+
+enum OrderServiceShippingStatus {
+  Delivered
+  Pending
+  Processing
+  Shipped
+}
+
+enum OrderServiceSortField {
+  CreatedAt
+  Status
+  TotalAmount
+  UpdatedAt
+}
+
+enum OrderServiceStatus {
+  Cancelled
+  Completed
+  Confirmed
+  New
+  Pending
+}
+
+input OrderServiceUpdateStatusGqlInput {
+  comment: String
+  id: String!
+  status: OrderServiceStatus
+}
+
+type Query {
+  orderServiceGetOrder(input: OrderServiceDetailGqlInput!): OrderServiceOrderGqlOutput!
+  orderServiceGetOrderHistories(
+    input: OrderHistoryServiceGetGqlInput!
+  ): [OrderServiceOrderHistoryGqlOutput!]!
+  orderServiceGetOrders(input: OrderServiceGetGqlInput!): [OrderServiceOrderGqlOutput!]!
+  orderServiceOrganizationGetOrders(input: OrderServiceGetGqlInput!): [OrderServiceOrderGqlOutput!]!
+}
+
+"""
+Sort direction for ordering query results
+"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input SortField {
+  """
+  Sort direction for this field
+  """
+  direction: SortDirection! = ASC
+
+  """
+  Field name to sort by
+  """
+  field: String!
+}

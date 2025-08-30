@@ -1,0 +1,98 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+package OrderService;
+
+service OrderService {
+  rpc orderServiceDelete (DeleteInput) returns (BooleanOutput) {}
+  rpc orderServiceGetById (GetByIdInput) returns (Order) {}
+  rpc orderServiceUpdateStatus (UpdateStatusInput) returns (BooleanOutput) {}
+}
+
+message BooleanOutput {
+  bool status = 1;
+}
+
+message DeleteInput {
+  string requestId = 1;
+  Delete data = 2;
+}
+
+message Delete {
+  string userId = 1;
+  string tenantId = 2;
+}
+
+message GetByIdInput {
+  string requestId = 1;
+  GetById data = 2;
+}
+
+message GetById {
+  string id = 1;
+}
+
+message UpdateStatusInput {
+  string requestId = 1;
+  UpdateStatus data = 2;
+}
+
+message UpdateStatus {
+  string id = 1;
+  string status = 2;
+  string comment = 3;
+}
+
+message OrderServiceProductVariant {
+  string sku = 1;
+  string name = 2;
+  double price = 3;
+  string attributeKey = 4;
+  string attributeValue = 5;
+}
+
+message OrderServiceProduct {
+  string product_id = 1;
+  string name = 2;
+  int32 quantity = 3;
+  double price = 4;
+  OrderServiceProductVariant variant = 5;
+  string thumbnailFile = 6;
+  string currency = 7;
+}
+
+message OrderServiceShippingAddress {
+  string address = 1;
+  string province = 2;
+  string phone = 3;
+  string ward = 4;
+}
+
+message OrderServicePaymentInfo {
+  string transaction_id = 1;
+  double amount_paid = 2;
+  string paid_at = 3;
+  optional string refund_id = 4;
+}
+
+message Order {
+  string _id = 1;
+  string tenant_id = 2;
+  string user_id = 3;
+  string type = 4;
+  repeated OrderServiceProduct products = 5;
+  double total_amount = 6;
+  optional double discount_amount = 7;
+  optional string promotion_id = 8;
+  optional string coupon_code = 9;
+  string status = 10;
+  optional string shipping_status = 11;
+  optional OrderServiceShippingAddress shipping_address = 12;
+  optional string shipping_method = 13;
+  optional string shipping_note = 14;
+  optional OrderServicePaymentInfo payment = 15;
+  optional string payment_method = 16;
+  optional string payment_status = 17;
+  google.protobuf.Timestamp created_at = 18;
+  google.protobuf.Timestamp updated_at = 19;
+}

@@ -1,0 +1,34 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+package ShippingService;
+
+service ShippingService {
+  rpc shippingServiceShippingMethodAvailable(ShippingMethodAvailableInput) returns (ShippingMethodAvailableOutput) {}
+}
+
+message ShippingMethodAvailableInput {
+  string tenantId = 1;
+  FindByIds data = 2;
+}
+
+message FindByIds {
+  repeated string cartIds = 1;
+}
+
+message ShippingMethodAvailableOutput {
+  repeated ShippingMethodAvailable data = 1;
+}
+
+message ShippingMethodAvailable {
+  string _id = 1;
+  string tenantId = 2;
+  string status = 3;
+  string provider = 4;
+  string providerLogoUrl = 5;
+  string providerId = 6;
+  double amount = 7;
+  google.protobuf.Timestamp createdAt = 8;
+  google.protobuf.Timestamp updatedAt = 9;
+  google.protobuf.Timestamp deletedAt = 10;
+}

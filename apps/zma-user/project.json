@@ -1,0 +1,70 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "zma-user",
+  "projectType": "application",
+  "sourceRoot": "apps/zma-user/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "configurations": {
+        "development": {
+          "args": ["node-env=development"]
+        }
+      },
+      "executor": "nx:run-commands",
+      "options": {
+        "args": ["node-env=production"],
+        "command": "webpack-cli build",
+        "assets": [
+          {
+            "input": "apps/zma-user",
+            "glob": "**/(*.yaml|yml)",
+            "output": "."
+          },
+          {
+            "input": "libs/zma-i18n/src/i18n",
+            "glob": "**/*",
+            "output": "./i18n"
+          },
+          {
+            "input": "libs/zma-grpc",
+            "glob": "src/proto/**/user.proto",
+            "output": "."
+          },
+          {
+            "input": "libs/zma-grpc",
+            "glob": "src/proto/**/storage.proto",
+            "output": "."
+          },
+          {
+            "input": "libs/zma-grpc",
+            "glob": "src/proto/**/organization.proto",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "serve": {
+      "configurations": {
+        "development": {
+          "buildTarget": "zma-user:build:development"
+        },
+        "production": {
+          "buildTarget": "zma-user:build:production"
+        }
+      },
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "executor": "@nx/js:node",
+      "options": {
+        "buildTarget": "zma-user:build",
+        "runBuildTargetDependencies": false
+      }
+    },
+    "test": {
+      "options": {
+        "passWithNoTests": true
+      }
+    }
+  }
+}

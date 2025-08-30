@@ -1,0 +1,342 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  userServiceCreateAgency(input: UserServiceCreateBasicUserGqlInput!): UserServiceUserGqlOutput!
+  userServiceCreateOrganizationAdmin(
+    input: UserServiceCreateUserGqlInput!
+  ): UserServiceUserGqlOutput!
+  userServiceCreateTenant(input: UserServiceCreateTenantGqlInput!): UserServiceTenantGqlOutput!
+  userServiceCreateTenantAdmin(input: UserServiceCreateUserGqlInput!): UserServiceUserGqlOutput!
+  userServiceDeleteUser: Boolean!
+  userServiceTenantStatus(input: UserServiceTenantStatusGqlInput!): UserServiceTenantGqlOutput!
+  userServiceUpdateAvatar(input: UpdateAvatarInput!): UserServiceUserGqlOutput!
+  userServiceUpdateProfile(input: UpdateProfileInput!): UserServiceUserGqlOutput!
+  userServiceUpdateTenant(input: UserServiceUpdateTenantGqlInput!): UserServiceTenantGqlOutput!
+  userServiceUpdateTenantType(input: UserServiceTenantTypeGqlInput!): UserServiceTenantGqlOutput!
+  userServiceUpdateZaloOAId(input: UpdateZaloOAIdInput!): UserServiceUserGqlOutput!
+}
+
+input Pagination {
+  """
+  Maximum number of items to return (1-100)
+  """
+  limit: Int = 10
+
+  """
+  Number of items to skip (offset)
+  """
+  skip: Int = 0
+
+  """
+  Multiple sort fields for complex sorting
+  """
+  sort: [SortField!]
+}
+
+type Query {
+  userServiceAdminAllTenant(
+    input: Pagination!
+    organizationId: String!
+  ): [UserServiceTenantGqlOutput!]!
+  userServiceAllTenant(input: UserServiceGetTenantsGqlInput!): [UserServiceTenantGqlOutput!]!
+  userServiceAllUserOfTenant(input: Pagination!): [UserServiceUserGqlOutput!]!
+  userServiceAllZaloUserOfTenant(
+    input: UserServiceGetZaloUsersGqlInput!
+  ): [UserServiceUserGqlOutput!]!
+  userServiceGetUserById: UserServiceUserGqlOutput!
+  userServiceGetUserByIdForAdmin(id: String!): UserServiceUserGqlOutput!
+  userServiceTenantByDomain(domain: String!): UserServiceTenantGqlOutput
+  userServiceTenantById: UserServiceTenantGqlOutput!
+  userServiceTenantIdFromDomain(domain: String!): String
+  userServiceTenantOfUser: UserServiceTenantGqlOutput!
+  userServiceUsersByType(
+    input: UserServiceFindUsersByTypeInput
+    pagination: Pagination!
+  ): UserServiceUsersGlqOutput!
+  userServiceUsersOfTenantForAdmin(
+    input: UserServiceFindUsersForAdminInput
+    pagination: Pagination!
+  ): UserServiceUsersGlqOutput!
+}
+
+"""
+Sort direction for ordering query results
+"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input SortField {
+  """
+  Sort direction for this field
+  """
+  direction: SortDirection! = ASC
+
+  """
+  Field name to sort by
+  """
+  field: String!
+}
+
+input UpdateAvatarInput {
+  avatarUrl: String!
+}
+
+input UpdateProfileInput {
+  birthDate: DateTime
+  firstName: String
+  gender: UserServiceGender
+  lastName: String
+}
+
+input UpdateZaloOAIdInput {
+  zaloOAId: String!
+}
+
+input UserServiceCreateBasicUserGqlInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+  phoneNumber: String!
+}
+
+input UserServiceCreateTenantGqlInput {
+  banner: String
+  description: String
+  domain: String
+  favicon: String
+  miniAppUrl: String
+  name: String!
+  oaId: String
+  registerEnabled: Boolean
+  title: String
+  zaloAppId: String!
+  zaloAppSecret: String!
+}
+
+input UserServiceCreateUserGqlInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  organizationId: String!
+  password: String!
+  phoneNumber: String!
+}
+
+input UserServiceFindUsersByTypeInput {
+  emails: [String!]
+  search: String
+  statuses: [UserServiceUserStatus!]
+  type: UserServiceUserType!
+}
+
+input UserServiceFindUsersForAdminInput {
+  emails: [String!]
+  search: String
+  statuses: [UserServiceUserStatus!]
+}
+
+enum UserServiceGender {
+  Female
+  Male
+}
+
+input UserServiceGetTenantsGqlInput {
+  """
+  Maximum number of items to return (1-100)
+  """
+  limit: Int = 10
+  name: String
+
+  """
+  Number of items to skip (offset)
+  """
+  skip: Int = 0
+
+  """
+  Multiple sort fields for complex sorting
+  """
+  sort: [SortField!]
+  sortBy: UserServiceTenantSortField
+  sortDirection: SortDirection
+  status: UserServiceTenantStatus
+}
+
+input UserServiceGetZaloUsersGqlInput {
+  """
+  Maximum number of items to return (1-100)
+  """
+  limit: Int = 10
+  search: String
+
+  """
+  Number of items to skip (offset)
+  """
+  skip: Int = 0
+
+  """
+  Multiple sort fields for complex sorting
+  """
+  sort: [SortField!]
+  sortBy: UserServiceUserSortField
+  sortDirection: SortDirection
+  status: UserServiceUserStatus
+}
+
+type UserServiceSocialProvider {
+  email: String!
+  id: String!
+}
+
+type UserServiceSocialProviders {
+  facebook: UserServiceSocialProvider
+  google: UserServiceSocialProvider
+}
+
+enum UserServiceTenantBillingStatus {
+  Cancelled
+  Overdue
+  Paid
+  Trial
+}
+
+type UserServiceTenantGqlOutput {
+  banner: String
+  billingStatus: UserServiceTenantBillingStatus!
+  createdAt: String
+  description: String
+  domain: String
+  favicon: String
+  id: String!
+  logo: String
+  miniAppUrl: String
+  name: String!
+  oaId: String
+  organizationId: String!
+  registerEnabled: Boolean
+  status: UserServiceTenantStatus!
+  title: String
+  type: UserServiceTenantType!
+  updatedAt: String
+  zaloAppId: String!
+  zaloAppSecret: String!
+}
+
+enum UserServiceTenantSortField {
+  CreatedAt
+  Name
+  Status
+  UpdatedAt
+}
+
+enum UserServiceTenantStatus {
+  Active
+  Archived
+  Disabled
+  Pending
+  Suspended
+}
+
+input UserServiceTenantStatusGqlInput {
+  id: String!
+  status: UserServiceTenantStatus!
+}
+
+enum UserServiceTenantType {
+  Base
+  Enterprise
+  Pro
+}
+
+input UserServiceTenantTypeGqlInput {
+  id: String!
+  type: UserServiceTenantType!
+}
+
+input UserServiceUpdateTenantGqlInput {
+  banner: String
+  description: String
+  domain: String
+  favicon: String
+  id: String!
+  logo: String
+  miniAppUrl: String
+  name: String!
+  oaId: String
+  registerEnabled: Boolean
+  title: String
+  zaloAppId: String!
+  zaloAppSecret: String!
+}
+
+"""
+User
+"""
+type UserServiceUserGqlOutput {
+  avatarUrl: String
+  birthDate: String
+  createdAt: String
+  email: String
+  firstName: String
+  fullName: String
+  gender: UserServiceGender
+  id: String!
+  lastActive: String
+  lastName: String
+  organizationId: String
+  phoneNumber: String
+  status: UserServiceUserStatus!
+  tenantId: String
+  type: UserServiceUserType!
+  updatedAt: String
+  zaloId: String
+  zaloOAId: String
+}
+
+enum UserServiceUserSortField {
+  CreatedAt
+  Email
+  FirstName
+  LastName
+  Status
+  UpdatedAt
+}
+
+enum UserServiceUserStatus {
+  Active
+  Inactive
+  Pending
+  Suspended
+}
+
+enum UserServiceUserType {
+  Admin
+  Agency
+  OrganizationAdmin
+  TenantAdmin
+  User
+  Zalo
+}
+
+type UserServiceUsersGlqOutput {
+  """
+  Array of found items
+  """
+  data: [UserServiceUserGqlOutput!]!
+
+  """
+  Total number of items
+  """
+  total: Int!
+}

@@ -1,0 +1,229 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type Mutation {
+  subscriptionServiceCreatePackage(
+    input: SubscriptionServiceCreatePackageGqlInput!
+  ): SubscriptionServicePackageGqlOutput!
+  subscriptionServiceCreateUserSubscription(
+    input: SubscriptionServiceCreateUserSubscriptionGqlInput!
+  ): SubscriptionServiceCreateUserSubscriptionGqlOutput!
+  subscriptionServiceUpdatePackage(
+    input: SubscriptionServiceUpdatePackageGqlInput!
+    packageId: String!
+  ): SubscriptionServicePackageGqlOutput!
+}
+
+enum PackageBillingCycleType {
+  OneTime
+  Recurring
+}
+
+enum PackageDurationUnitType {
+  Day
+  Month
+  Week
+  Year
+}
+
+input Pagination {
+  """
+  Maximum number of items to return (1-100)
+  """
+  limit: Int = 10
+
+  """
+  Number of items to skip (offset)
+  """
+  skip: Int = 0
+
+  """
+  Multiple sort fields for complex sorting
+  """
+  sort: [SortField!]
+}
+
+enum PaymentServiceCurrencyEnum {
+  Usd
+  Vnd
+}
+
+enum PaymentServiceVendor {
+  ApplePay
+  CreditCard
+  GooglePay
+  MoMo
+  Paypal
+  VNPay
+}
+
+type Query {
+  subscriptionServiceAllPackages(
+    currency: PaymentServiceCurrencyEnum!
+    pagination: Pagination!
+  ): [SubscriptionServicePackageGqlOutput!]!
+  subscriptionServiceAllPackagesForAdmin(
+    pagination: Pagination!
+  ): [SubscriptionServicePackageGqlOutput!]!
+  subscriptionServiceCurrentUserSubscription: SubscriptionServiceGetUserSubscriptionGqlOutput!
+  subscriptionServicePackage(
+    currency: PaymentServiceCurrencyEnum!
+    packageId: String!
+  ): SubscriptionServicePackageGqlOutput!
+  subscriptionServicePackageForAdmin(packageId: String!): SubscriptionServicePackageGqlOutput!
+}
+
+"""
+Sort direction for ordering query results
+"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input SortField {
+  """
+  Sort direction for this field
+  """
+  direction: SortDirection! = ASC
+
+  """
+  Field name to sort by
+  """
+  field: String!
+}
+
+"""
+Subscription package input
+"""
+input SubscriptionServiceCreatePackageGqlInput {
+  description: String
+  isActive: Boolean! = true
+  isTrial: Boolean! = false
+  metadata: JSON
+  name: String!
+  paymentMethods: [PaymentServiceVendor!]
+  pricings: [SubscriptionServicePricingGqlInput!]!
+  upgradeablePackages: [String!]! = []
+}
+
+input SubscriptionServiceCreateUserSubscriptionGqlInput {
+  metadata: JSON
+  packageId: String!
+  pricingId: String!
+  vendor: PaymentServiceVendor!
+}
+
+"""
+Subscription User Create Subscription
+"""
+type SubscriptionServiceCreateUserSubscriptionGqlOutput {
+  isPaymentRequired: Boolean
+  redirectUrl: String
+  userSubscriptionId: String!
+}
+
+"""
+Subscription User Subscription
+"""
+type SubscriptionServiceGetUserSubscriptionGqlOutput {
+  autoRenew: Boolean
+  cancellationReason: String
+  cancelledAt: DateTime
+  createdAt: DateTime
+  currencyPaid: PaymentServiceCurrencyEnum
+  duration: Float
+  durationUnit: String
+  endDate: DateTime
+  id: String!
+  nextBillingDate: DateTime
+  packageName: String
+  price: Float
+  pricePaid: Float
+  pricing: SubscriptionServicePackagePriceGqlOutput
+  pricingName: String
+  startDate: DateTime
+  trialEndDate: DateTime
+  updatedAt: DateTime
+}
+
+"""
+Subscription Package
+"""
+type SubscriptionServicePackageGqlOutput {
+  createdAt: DateTime
+  description: String
+  id: String!
+  isActive: Boolean
+  isTrial: Boolean
+  metadata: JSON
+  name: String
+  paymentMethods: [PaymentServiceVendor!]
+  pricings: [SubscriptionServicePackagePriceGqlOutput!]
+  tenantId: String
+  updatedAt: DateTime
+  upgradeablePackages: [String!]
+}
+
+"""
+Subscription Package Price
+"""
+type SubscriptionServicePackagePriceGqlOutput {
+  amount: Float
+  appleProductId: String
+  billingCycle: String
+  createdAt: DateTime
+  currency: PaymentServiceCurrencyEnum
+  duration: Float
+  durationUnit: String
+  googleProductId: String
+  isActive: Boolean
+  name: String
+  notes: String
+  pricingId: String
+  trialPeriodDays: Float
+  updatedAt: DateTime
+}
+
+"""
+Package pricing input
+"""
+input SubscriptionServicePricingGqlInput {
+  amount: Float!
+  appleProductId: String
+  billingCycle: PackageBillingCycleType!
+  currency: PaymentServiceCurrencyEnum!
+  duration: Float!
+  durationUnit: PackageDurationUnitType!
+  googleProductId: String
+  isActive: Boolean
+  name: String!
+  notes: String
+}
+
+"""
+Update subscription package input
+"""
+input SubscriptionServiceUpdatePackageGqlInput {
+  description: String
+  isActive: Boolean
+  isTrial: Boolean
+  metadata: JSON
+  name: String
+  paymentMethods: [PaymentServiceVendor!]
+  pricings: [SubscriptionServicePricingGqlInput!]
+  upgradeablePackages: [String!]
+}

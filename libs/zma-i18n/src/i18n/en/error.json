@@ -1,0 +1,20 @@
+{
+  "USER_NOT_FOUND": "user_not_found",
+  "TENANT_NOT_FOUND": "tenant_not_found",
+  "CART_IS_EMPTY": "cart_is_empty",
+  "ORDER_NOT_FOUND": "order_not_found",
+  "INSUFFICIENT_STOCK": "insufficient_stock",
+  "PRODUCT_NOT_FOUND": "product_not_found",
+  "USER_IS_NOT_ADMIN_OF_TENANT": "user_is_not_admin_of_tenant",
+  "ORDER_HISTORY_NOT_FOUND": "order_history_not_found",
+  "USER_ALREADY_EXISTS": "user_already_exists",
+  "CREATE_USER_FAILED": "create_user_failed",
+  "INVALID_CREDENTIALS": "invalid_credentials",
+  "INVALID_ZALO_ACCESS_TOKEN": "invalid_zalo_access_token",
+  "EMAIL_ALREADY_EXISTS": "email_already_exists",
+  "INVALID_REFRESH_TOKEN": "invalid_refresh_token",
+  "INVALID_RESET_TOKEN": "invalid_reset_token",
+  "RESET_TOKEN_EXPIRED": "reset_token_expired",
+  "ORGANIZATION_NOT_FOUND": "orgnization {id} not found {test}",
+  "UPDATE_USER_EMAIL_NOT_ALLOWED": "update_user_email_not_allowed"
+}

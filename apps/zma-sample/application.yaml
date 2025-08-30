@@ -1,0 +1,5 @@
+database:
+  mongo:
+    uri: mongodb://${username}:${password}@${host}/zma-user?directConnection=true&authSource=admin
+nats:
+  uri: ${hosts}

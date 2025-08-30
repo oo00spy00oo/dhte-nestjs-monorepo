@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package SubscriptionService;
+
+service SubscriptionService {
+  rpc subscriptionServiceGetSubscriptionByIdAndTenantId (GetByIdAndTenantIdInput) returns (Subscription) {}
+}
+
+message GetByIdAndTenantIdInput {
+  string requestId = 1;
+  GetByIdAndTenantId data = 2;
+}
+
+message GetByIdAndTenantId {
+  string id = 1;
+  string tenantId = 2;
+}
+
+message Subscription {
+  string id = 1;
+  double amount = 2;
+  string currency = 3;
+  string packageName = 4;
+  string pricingName = 5;
+  int32 duration = 6;
+  string durationUnit = 7;
+  repeated string paymentMethods = 8;
+}

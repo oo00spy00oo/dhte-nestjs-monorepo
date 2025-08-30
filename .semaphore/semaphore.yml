@@ -1,0 +1,421 @@
+version: v1.0
+name: ZMA Optimized Pipeline
+agent:
+  machine:
+    type: s1-unilab-03
+    os_image: ''
+queue:
+  name: 'zma-pipeline-queue'
+  scope: 'project'
+execution_time_limit:
+  hours: 5
+global_job_config:
+  env_vars:
+    - name: DOCKER_REGISTRY_HOST
+      value: registry.passiontech.dev
+    - name: GIT_PROJECT_NAME
+      value: 'zma-nestjs-monorepo'
+    - name: SONAR_URL
+      value: 'https://sonarqube.passiontech.dev'
+    - name: SONAR_CACHE_DIR
+      value: '/root/.sonar/cache'
+    - name: SEMAPHORE_GIT_DEPTH
+      value: '50'
+blocks:
+  - name: Checkout & Setup
+    dependencies: []
+    task:
+      jobs:
+        - name: Git Checkout
+          commands:
+            - checkout
+            - git fetch origin
+            - |
+              # Determine base and head SHA for NX affected detection
+              if [ -n "$SEMAPHORE_GIT_PR_NUMBER" ]; then
+                TARGET_BRANCH="origin/$SEMAPHORE_GIT_BRANCH"
+                if git rev-parse "$TARGET_BRANCH" >/dev/null 2>&1; then
+                  BASE_SHA=$(git merge-base "$TARGET_BRANCH" "$SEMAPHORE_GIT_PR_SHA")
+                else
+                  BASE_SHA=$(git merge-base origin/main "$SEMAPHORE_GIT_PR_SHA")
+                fi
+                HEAD_SHA=$SEMAPHORE_GIT_PR_SHA
+              else
+                BASE_SHA=$(git rev-parse $SEMAPHORE_GIT_SHA^)
+                HEAD_SHA=$SEMAPHORE_GIT_SHA
+              fi
+              echo "BASE_SHA=$BASE_SHA" >> $SEMAPHORE_GIT_SHA.env
+              echo "HEAD_SHA=$HEAD_SHA" >> $SEMAPHORE_GIT_SHA.env
+              echo "CI_GIT_SHORT_SHA=$(git rev-parse --short HEAD)" >> $SEMAPHORE_GIT_SHA.env
+            - artifact push workflow $SEMAPHORE_GIT_SHA.env
+  - name: Install Dependencies
+    dependencies:
+      - Checkout & Setup
+    task:
+      prologue:
+        commands:
+          - cd $GIT_PROJECT_NAME
+          - cache restore
+          - artifact pull workflow $SEMAPHORE_GIT_SHA.env --force
+          - source $SEMAPHORE_GIT_SHA.env
+      jobs:
+        - name: Install
+          commands:
+            - git clean -dfx
+            - pnpm install --frozen-lockfile
+      epilogue:
+        on_pass:
+          commands:
+            - cache store
+  - name: Affected Projects Detection
+    dependencies:
+      - Install Dependencies
+    task:
+      prologue:
+        commands:
+          - cd $GIT_PROJECT_NAME
+          - artifact pull workflow $SEMAPHORE_GIT_SHA.env --force
+          - source $SEMAPHORE_GIT_SHA.env
+      jobs:
+        - name: Detect Changes
+          commands:
+            - pnpm nx show projects --affected --type=app --base="$BASE_SHA" --head="$HEAD_SHA"
+            - |
+              # Get all affected projects excluding zma-sample
+              ALL_AFFECTED=$(pnpm nx show projects --affected --type=app --base="$BASE_SHA" --head="$HEAD_SHA")
+              AFFECTED_PROJECTS=$(echo "$ALL_AFFECTED" | grep -v "zma-sample" || echo "")
+
+              echo "AFFECTED_PROJECTS='$AFFECTED_PROJECTS'" >> affected-projects.env
+              echo "Affected projects: $AFFECTED_PROJECTS"
+
+              if [ -z "$AFFECTED_PROJECTS" ]; then
+                echo "No affected projects found"
+                echo "SKIP_BUILD=true" >> affected-projects.env
+              else
+                echo "SKIP_BUILD=false" >> affected-projects.env
+              fi
+            - artifact push workflow affected-projects.env
+  - name: Code Quality & Testing
+    dependencies:
+      - Affected Projects Detection
+    task:
+      prologue:
+        commands:
+          - cd $GIT_PROJECT_NAME
+          - artifact pull workflow $SEMAPHORE_GIT_SHA.env --force
+          - artifact pull workflow affected-projects.env --force
+          - source $SEMAPHORE_GIT_SHA.env
+          - source affected-projects.env
+      jobs:
+        - name: Lint
+          commands:
+            - |
+              if [ "$SKIP_BUILD" = "true" ]; then
+                echo "No affected projects, skipping lint"
+                exit 0
+              fi
+            - pnpm nx affected -t lint --base="$BASE_SHA" --head="$HEAD_SHA" --parallel=6
+            # - name: Test
+            #   commands:
+            #     - |
+            #       if [ "$SKIP_BUILD" = "true" ]; then
+            #         echo "No affected projects, skipping tests"
+            #         exit 0
+            #       fi
+            #     - pnpm nx affected -t test --base="$BASE_SHA" --head="$HEAD_SHA" --parallel=3 --coverage
+            # - name: Type Check
+            #   commands:
+            #     - |
+            #       if [ "$SKIP_BUILD" = "true" ]; then
+            #         echo "No affected projects, skipping type check"
+            #         exit 0
+            #       fi
+            #     - pnpm nx affected -t type-check --base="$BASE_SHA" --head="$HEAD_SHA" --parallel=3
+  - name: Build
+    dependencies:
+      - Code Quality & Testing
+    task:
+      prologue:
+        commands:
+          - cd $GIT_PROJECT_NAME
+          - artifact pull workflow $SEMAPHORE_GIT_SHA.env --force
+          - artifact pull workflow affected-projects.env --force
+          - source $SEMAPHORE_GIT_SHA.env
+          - source affected-projects.env
+      jobs:
+        - name: Build Projects
+          commands:
+            - |
+              if [ "$SKIP_BUILD" = "true" ]; then
+                echo "No affected projects, skipping build"
+                exit 0
+              fi
+            - pnpm nx affected -t build --base="$BASE_SHA" --head="$HEAD_SHA" --parallel=6
+  - name: Package & Deployment
+    dependencies:
+      - Build
+    skip:
+      when: "pull_request =~ '.*' or (branch != 'main' and tag !~ '.*')"
+    task:
+      prologue:
+        commands:
+          - cd $GIT_PROJECT_NAME
+          - artifact pull workflow $SEMAPHORE_GIT_SHA.env --force
+          - artifact pull workflow affected-projects.env --force
+          - source $SEMAPHORE_GIT_SHA.env
+          - source affected-projects.env
+          - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USER" --password-stdin "$DOCKER_REGISTRY_HOST"
+      secrets:
+        - name: Artifact Registry
+        - name: ZMA Hive
+      env_vars:
+        - name: HIVE_TARGET
+          value: passion-tech/zma/development
+      jobs:
+        - name: Buildah Build & Push
+          commands:
+            - git clean -dfx -e dist/ -e node_modules/
+            - |
+              if [ "$SKIP_BUILD" = "true" ]; then
+                echo "No affected projects, skipping Docker build"
+                exit 0
+              fi
+
+              # Create a function to build and push images
+              build_and_push() {
+                PROJECT=$1
+                CI_GIT_SHORT_SHA=$(git rev-parse --short HEAD)
+
+                echo "Building image for [$PROJECT]"
+                CURRENT_IMAGE="$DOCKER_REGISTRY_HOST/$PROJECT:$CI_GIT_SHORT_SHA"
+                LATEST_IMAGE="$DOCKER_REGISTRY_HOST/$PROJECT:latest"
+                echo "Image [$CURRENT_IMAGE]"
+
+                # Check if project has a specific Dockerfile
+                SERVICE_DOCKERFILE="apps/$PROJECT/Dockerfile"
+                if [ -f "$SERVICE_DOCKERFILE" ]; then
+                  echo "Using project-specific Dockerfile: $SERVICE_DOCKERFILE"
+                  DOCKERFILE_PATH="$SERVICE_DOCKERFILE"
+                else
+                  echo "Using common Dockerfile"
+                  DOCKERFILE_PATH="ci/Dockerfile"
+                fi
+
+                # Build with multi-stage caching and optimized flags
+                buildah bud \
+                  --layers \
+                  --cache-from="$LATEST_IMAGE" \
+                  --build-arg SERVICE_NAME="$PROJECT" \
+                  --jobs=0 \
+                  --ulimit nofile=65536:65536 \
+                  -f "$DOCKERFILE_PATH" \
+                  -t "$CURRENT_IMAGE" \
+                  -t "$LATEST_IMAGE" \
+                  .
+
+                # Push both tags in parallel
+                buildah push "$CURRENT_IMAGE" &
+                buildah push "$LATEST_IMAGE" &
+                wait
+              }
+
+              # Export the function so it can be used by parallel processes
+              export -f build_and_push
+
+              # Run builds in parallel with max 9 jobs
+              echo "$AFFECTED_PROJECTS" | tr ' ' '\n' | xargs -n 1 -P 9 -I {} bash -c 'build_and_push "{}"'
+        - name: GraphQL Schema
+          commands:
+            - |
+              if [ "$SKIP_BUILD" = "true" ]; then
+                echo "No affected projects, skipping schema publish"
+                exit 0
+              fi
+
+              # Create a function to publish GraphQL schema
+              publish_schema() {
+                PROJECT=$1
+                echo "Publishing GraphQL schema for: $PROJECT"
+                if [ -f "graphqls/$PROJECT/schema.gql" ]; then
+                  pnpm hive schema:publish "graphqls/$PROJECT/schema.gql" \
+                    --registry.accessToken "$HIVE_TOKEN" \
+                    --target "$HIVE_TARGET" \
+                    --service "$PROJECT" \
+                    --url "http://$PROJECT:3000/graphql"
+                else
+                  echo "No schema file found for $PROJECT, skipping"
+                fi
+              }
+
+              # Export the function so it can be used by parallel processes
+              export -f publish_schema
+
+              # Run schema publishing in parallel with max 9 jobs
+              echo "$AFFECTED_PROJECTS" | tr ' ' '\n' | xargs -n 1 -P 9 -I {} bash -c 'publish_schema "{}"'
+  - name: Security Scanning
+    dependencies:
+      - Package & Deployment
+    skip:
+      when: "pull_request =~ '.*' or (branch != 'main' and tag !~ '.*')"
+    task:
+      prologue:
+        commands:
+          - cd $GIT_PROJECT_NAME
+          - artifact pull workflow $SEMAPHORE_GIT_SHA.env --force
+          - artifact pull workflow affected-projects.env --force
+          - source $SEMAPHORE_GIT_SHA.env
+          - source affected-projects.env
+          - mkdir -p /data/{trivy-output,secretscanner-output,yara-hunter-output}
+          - cache restore trivy-$CACHE_KEY
+      env_vars:
+        - name: TELEGRAM_CHAT_ID
+          value: '-1002344134363'
+        - name: TELEGRAM_BOT_TOKEN
+          value: '7547936007:AAEsJj25_hYYPPyILcmPOzTfjUrpVASvOt8' # pragma: allowlist secret
+        - name: TELEGRAM_TRIVY_THREAD_ID
+          value: '413'
+        - name: TELEGRAM_SECRET_THREAD_ID
+          value: '354'
+        - name: TELEGRAM_MALWARE_THREAD_ID
+          value: '353'
+      jobs:
+        - name: Trivy Scan
+          commands:
+            - mkdir -p ~/.cache/trivy
+            - |
+              if [ "$SKIP_BUILD" = "true" ]; then
+                echo "No affected projects, skipping Trivy scan"
+                exit 0
+              fi
+
+              # Create a function to scan with Trivy
+              scan_trivy() {
+                PROJECT=$1
+                CI_GIT_SHORT_SHA=$(git rev-parse --short HEAD)
+
+                echo "Trivy scanning: $PROJECT"
+                CURRENT_IMAGE="$DOCKER_REGISTRY_HOST/$PROJECT:$CI_GIT_SHORT_SHA"
+                trivy image --cache-dir ~/.cache/trivy --exit-code 1 \
+                  --severity CRITICAL \
+                  --format template \
+                  --template "@/data/trivy/contrib/html.tpl" \
+                  -o "/data/trivy-output/${PROJECT}-${CI_GIT_SHORT_SHA}-trivy.html" \
+                  "$CURRENT_IMAGE"
+                trivy image --cache-dir ~/.cache/trivy --exit-code 0 \
+                  --severity HIGH \
+                  --format template \
+                  --template "@/data/trivy/contrib/html.tpl" \
+                  -o "/data/trivy-output/${PROJECT}-${CI_GIT_SHORT_SHA}-trivy.html" \
+                  "$CURRENT_IMAGE"
+
+
+                # Send notification if configured
+                if [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+                  curl -F "chat_id=$TELEGRAM_CHAT_ID" \
+                    -F "message_thread_id=$TELEGRAM_TRIVY_THREAD_ID" \
+                    -F "document=@/data/trivy-output/${PROJECT}-${CI_GIT_SHORT_SHA}-trivy.html" \
+                    "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument"
+                fi
+              }
+
+              # Export the function so it can be used by parallel processes
+              export -f scan_trivy
+
+              # Run Trivy scans in parallel with max 9 jobs
+              echo "$AFFECTED_PROJECTS" | tr ' ' '\n' | xargs -n 1 -P 9 -I {} bash -c 'scan_trivy "{}"'
+            - cache store trivy-$CACHE_KEY ~/.cache/trivy
+        - name: Secret Scan
+          commands:
+            - |
+              if [ "$SKIP_BUILD" = "true" ]; then
+                echo "No affected projects, skipping secret scan"
+                exit 0
+              fi
+
+              # Create a function to scan secrets
+              scan_secrets() {
+                PROJECT=$1
+                CI_GIT_SHORT_SHA=$(git rev-parse --short HEAD)
+
+                echo "Secret scanning: $PROJECT"
+                docker run --rm --name=deepfence-secretscanner-$PROJECT \
+                  -e DEEPFENCE_PRODUCT=ThreatMapper \
+                  -e DEEPFENCE_LICENSE=979110de-5e2d-473e-8c73-15a36a1eb726 \
+                  -v /var/run/docker.sock:/var/run/docker.sock \
+                  quay.io/deepfenceio/deepfence_secret_scanner_ce:2.5.7 \
+                  --image-name "$DOCKER_REGISTRY_HOST/${PROJECT}:${CI_GIT_SHORT_SHA}" \
+                  --output=json > "/data/secretscanner-output/${PROJECT}-${CI_GIT_SHORT_SHA}-secretscanner.json"
+
+                # Send notification if configured
+                if [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+                  curl -F "chat_id=$TELEGRAM_CHAT_ID" \
+                    -F "message_thread_id=$TELEGRAM_SECRET_THREAD_ID" \
+                    -F "document=@/data/secretscanner-output/${PROJECT}-${CI_GIT_SHORT_SHA}-secretscanner.json" \
+                    "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument"
+                fi
+              }
+
+              # Export the function so it can be used by parallel processes
+              export -f scan_secrets
+
+              # Run secret scans in parallel with max 9 jobs
+              echo "$AFFECTED_PROJECTS" | tr ' ' '\n' | xargs -n 1 -P 9 -I {} bash -c 'scan_secrets "{}"'
+        - name: Malware Scan
+          commands:
+            - |
+              if [ "$SKIP_BUILD" = "true" ]; then
+                echo "No affected projects, skipping malware scan"
+                exit 0
+              fi
+
+              # Create a function to scan malware
+              scan_malware() {
+                PROJECT=$1
+                CI_GIT_SHORT_SHA=$(git rev-parse --short HEAD)
+
+                echo "Malware scanning: $PROJECT"
+                docker run --rm --name=yara-hunter-$PROJECT \
+                  -e DEEPFENCE_PRODUCT=ThreatMapper \
+                  -e DEEPFENCE_LICENSE=979110de-5e2d-473e-8c73-15a36a1eb726 \
+                  -v /var/run/docker.sock:/var/run/docker.sock \
+                  quay.io/deepfenceio/deepfence_malware_scanner_ce:2.5.7 \
+                  --image-name "$DOCKER_REGISTRY_HOST/${PROJECT}:${CI_GIT_SHORT_SHA}" \
+                  --output=json > "/data/yara-hunter-output/${PROJECT}-${CI_GIT_SHORT_SHA}-yara-hunter.json"
+
+                # Send notification if configured
+                if [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+                  curl -F "chat_id=$TELEGRAM_CHAT_ID" \
+                    -F "message_thread_id=$TELEGRAM_MALWARE_THREAD_ID" \
+                    -F "document=@/data/yara-hunter-output/${PROJECT}-${CI_GIT_SHORT_SHA}-yara-hunter.json" \
+                    "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument"
+                fi
+              }
+
+              # Export the function so it can be used by parallel processes
+              export -f scan_malware
+
+              # Run malware scans in parallel with max 9 jobs
+              echo "$AFFECTED_PROJECTS" | tr ' ' '\n' | xargs -n 1 -P 9 -I {} bash -c 'scan_malware "{}"'
+  - name: Code Quality Analysis
+    dependencies:
+      - Security Scanning
+    skip:
+      when: "pull_request =~ '.*' or (branch != 'main' and tag !~ '.*')"
+    task:
+      prologue:
+        commands:
+          - cd $GIT_PROJECT_NAME
+      secrets:
+        - name: Sonar Token
+      jobs:
+        - name: SonarQube Analysis
+          commands:
+            - |
+              docker run \
+                  --rm \
+                  -v ${SONAR_CACHE_DIR}:/opt/sonar-scanner/.sonar/cache:rw \
+                  -v $(pwd):/usr/src \
+                  -e SONAR_HOST_URL="${SONAR_URL}" \
+                  -e SONAR_TOKEN="${SONAR_TOKEN}" \
+                  sonarsource/sonar-scanner-cli \
+                  -Dsonar.scm.revision="${SEMAPHORE_GIT_SHA}"

@@ -1,0 +1,289 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type Mutation {
+  pointServiceActivatePointExpiryRule(id: String!): Boolean!
+  pointServiceCreatePointExpiryRule(
+    input: PointServiceCreatePointExpiryRuleProfileGqlInput!
+  ): Boolean!
+  pointServiceDeactivatePointExpiryRule(id: String!): Boolean!
+  pointServiceUpdatePointExpiryRule(
+    input: PointServiceUpdatePointExpiryRuleProfileGqlInput!
+  ): Boolean!
+}
+
+input Pagination {
+  """
+  Maximum number of items to return (1-100)
+  """
+  limit: Int = 10
+
+  """
+  Number of items to skip (offset)
+  """
+  skip: Int = 0
+
+  """
+  Multiple sort fields for complex sorting
+  """
+  sort: [SortField!]
+}
+
+type PointBalance {
+  _id: ID
+  availablePoints: Int!
+  createdAt: DateTime
+  expiredPoints: Int!
+  lastUpdated: DateTime
+  memberId: String
+  pendingPoints: Int!
+  pointsBreakdown: JSON!
+  redeemedPoints: Int!
+  tenantId: String!
+  totalPoints: Int!
+  updatedAt: DateTime
+  userId: String!
+}
+
+type PointExpiryRule {
+  _id: ID
+  applicableTiers: [String!]!
+  createdAt: DateTime
+  daysValid: Int!
+  description: String!
+  expiryType: String!
+  fixedDate: DateTime
+  isActive: Boolean!
+  loyaltyProgramId: String!
+  name: String!
+  tenantId: String!
+  updatedAt: DateTime
+}
+
+"""
+The type of point expiry rule
+"""
+enum PointExpiryRuleType {
+  DAYS_AFTER_EARN
+  END_OF_QUARTER
+  END_OF_YEAR
+  FIXED_DATE
+  NEVER
+}
+
+input PointServiceCreatePointExpiryRuleProfileGqlInput {
+  applicableTiers: [String!]
+  daysValid: Int
+  description: String
+  expiryType: PointExpiryRuleType!
+  fixedDate: DateTime
+  isActive: Boolean
+  loyaltyProgramId: String!
+  name: String!
+  pointSourceType: PointSourceType!
+}
+
+input PointServiceUpdatePointExpiryRuleProfileGqlInput {
+  applicableTiers: [String!]
+  daysValid: Int
+  description: String
+  expiryType: PointExpiryRuleType!
+  fixedDate: DateTime
+  id: String!
+  isActive: Boolean
+  loyaltyProgramId: String!
+  name: String!
+  pointSourceType: PointSourceType!
+}
+
+"""
+The type of point source
+"""
+enum PointSourceType {
+  ALL
+  BIRTHDAY
+  CAMPAIGN
+  MANUAL
+  PURCHASE
+  REFERRAL
+  REGISTRATION
+}
+
+type PointTransaction {
+  _id: ID
+  amount: Int!
+  createdAt: DateTime
+  description: String
+  expiryDate: DateTime
+  isActive: Boolean
+  isExpired: Boolean
+  performedBy: String
+  source: PointTransactionSource!
+  sourceReference: String
+  tenantId: String!
+  transactionDate: DateTime!
+  transactionType: PointTransactionType!
+  updatedAt: DateTime
+  userId: String!
+}
+
+"""
+Sources of point transactions
+"""
+enum PointTransactionSource {
+  ACHIEVEMENT
+  ADMIN_ADJUSTMENT
+  BIRTHDAY
+  CAMPAIGN
+  CORRECTION
+  ENGAGEMENT
+  EVENT
+  EXPIRATION
+  LOGIN
+  OTHER
+  PROMOTION
+  PURCHASE
+  REDEMPTION
+  REFERRAL
+  REFUND
+  REGISTRATION
+  REVIEW
+  SYSTEM
+  TIER_UPGRADE
+}
+
+"""
+Types of point transactions
+"""
+enum PointTransactionType {
+  ADJUST
+  EARN
+  EXPIRE
+  REDEEM
+  TRANSFER
+}
+
+type ProductDiscountDetail {
+  discountAmount: Float!
+  discountedPrice: Float!
+  originalPrice: Float!
+  productId: String!
+}
+
+type Query {
+  pointServiceAllPointTransactions(pagination: Pagination!): [PointTransaction!]!
+  pointServicePointBalanceById(id: String!): PointBalance!
+  pointServicePointExpiryRuleById(id: String!): PointExpiryRule!
+  pointServicePointExpiryRules: [PointExpiryRule!]!
+  pointServicePointExpiryRulesByLoyaltyProgramId(loyaltyProgramId: String!): [PointExpiryRule!]!
+}
+
+type RedeemedVoucher {
+  code: String!
+  discountAmount: Float!
+  isRedeemed: Boolean!
+  message: String
+  voucherId: String!
+}
+
+"""
+Sort direction for ordering query results
+"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input SortField {
+  """
+  Sort direction for this field
+  """
+  direction: SortDirection! = ASC
+
+  """
+  Field name to sort by
+  """
+  field: String!
+}
+
+type VoucherApplicationResult {
+  applicableProductIds: [String!]
+  discountAmount: Float!
+  errorMessage: String
+  isApplicable: Boolean!
+  productDiscounts: [ProductDiscountDetail!]
+  reservation: VoucherReservation
+}
+
+type VoucherDetail {
+  applicationResult: VoucherApplicationResult!
+  code: String!
+  description: String
+  discountType: VoucherDiscountType!
+  discountValue: Float!
+  maximumDiscount: Float
+  name: String!
+  voucherId: String!
+}
+
+"""
+The type of discount offered by the voucher
+"""
+enum VoucherDiscountType {
+  BOGO
+  FIXED_AMOUNT
+  FREE_ITEM
+  FREE_SHIPPING
+  PERCENTAGE
+}
+
+type VoucherReservation {
+  expiryDate: DateTime!
+  reservationId: String!
+}
+
+"""
+Voucher
+"""
+type VoucherServiceVoucherGqlOutput {
+  applicableCategoryIds: [String!]!
+  applicableProductIds: [String!]!
+  campaignId: String
+  code: String!
+  createdAt: DateTime
+  description: String!
+  discountType: VoucherDiscountType!
+  discountValue: Float!
+  endDate: DateTime
+  excludedProductIds: [String!]!
+  id: String!
+  imageUrl: String
+  isActive: Boolean!
+  isDeleted: Boolean!
+  isExpired: Boolean!
+  isRedeemed: Boolean!
+  issueDate: DateTime!
+  maximumDiscount: Float
+  minimumPurchase: Float!
+  name: String!
+  redeemedDate: DateTime
+  redeemedOrderId: String
+  startDate: DateTime!
+  tenantId: String!
+  updatedAt: DateTime
+  userId: String!
+  voucherTypeId: String!
+}

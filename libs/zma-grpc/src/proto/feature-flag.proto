@@ -1,0 +1,23 @@
+
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+package FeatureFlagService;
+
+service FeatureFlagService {
+  rpc featureFlagServiceGetEnableFeatures (GetEnableFeaturesInput) returns (FeatureFlagArray) {}
+}
+
+message GetEnableFeaturesInput {
+  string requestId = 1;
+  string tenantId = 2;
+  map<string, string> data = 3;
+}
+
+message FeatureFlagArray {
+  repeated FeatureFlagServiceFeatureFlag data = 1;
+}
+
+message FeatureFlagServiceFeatureFlag {
+  string featureCode = 1;
+}

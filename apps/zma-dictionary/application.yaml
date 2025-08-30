@@ -1,0 +1,29 @@
+database:
+  mongo:
+    uri: mongodb://${username}:${password}@${host}/zma-dictionary?directConnection=true&authSource=admin
+meilisearch:
+  url: https://meilisearch-nonprod.passiontech.dev/
+  apiKey: ${apiKey}
+grpc:
+  url: localhost:5009
+r2:
+  dictionaryImagesBucket: larva-dictionary-images
+  dictionaryAudiosBucket: larva-dictionary-audios
+  commonAssetsBucket: larva-common-assets
+  region: auto
+  accountId: b52e6d1169f89b16bff8f2a3909bc2d5 #pragma: allowlist secret
+  dictionaryImagesBaseUrl: https://pub-cc47df0c384841efaa116a0cf99be3c7.r2.dev #pragma: allowlist secret
+  dictionaryAudiosBaseUrl: https://pub-52b56c904d814475960907546d7587ab.r2.dev #pragma: allowlist secret
+  commonAssetsBaseUrl: https://pub-2ce0a20e043b42e8a0528b30b9d6d85b.r2.dev #pragma: allowlist secret
+analyze:
+  speech:
+    url: https://analyze-speech.passiontech.dev/graphql
+clamav:
+  host: localhost
+  port: 3310
+  timeout: 60000
+sampleAiVideoUrl: https://pub-1e38b9094c0e4453ae5cc43051dad9ff.r2.dev/2025/08/11/11/019898ef-cbcf-71ce-8334-5d0a8167bd51.mp4
+kafka:
+  service:
+    brokers:
+      - localhost:9092

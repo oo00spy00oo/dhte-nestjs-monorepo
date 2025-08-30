@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package OrganizationService;
+
+service OrganizationService {
+  rpc organizationServiceFindByUserId (FindByUserIdInput) returns (OrganizationArray) {}
+  rpc organizationServiceFindById (FindByIdInput) returns (Organization) {}
+  rpc organizationServiceCreate (CreateInput) returns (Organization) {}
+  rpc organizationServiceUpdate (UpdateInput) returns (Organization) {}
+}
+
+message FindByUserIdInput {
+  string requestId = 1;
+  FindByUserId data = 2;
+}
+
+message FindByUserId {
+  string userId = 1;
+}
+
+message FindByIdInput {
+  string requestId = 1;
+  FindById data = 2;
+}
+
+message FindById {
+  string id = 1;
+}
+
+message CreateInput {
+  string requestId = 1;
+  Create data = 2;
+}
+
+message Create {
+  string name = 1;
+  string userId = 2;
+}
+
+message UpdateInput {
+  string requestId = 1;
+  Update data = 2;
+}
+
+message Update {
+  string id = 1;
+  string name = 2;
+}
+
+message Organization {
+  string _id = 1;
+  string name = 2;
+  string status = 3;
+  string createdBy = 4;
+  string createdAt = 5;
+  string updatedAt = 6;
+  string deletedAt = 7;
+}
+
+message OrganizationArray {
+  repeated Organization data = 1;
+}

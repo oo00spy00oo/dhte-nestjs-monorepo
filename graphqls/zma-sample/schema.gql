@@ -1,0 +1,83 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""
+Company
+"""
+type Company {
+  address: String
+  description: String
+  id: String!
+  locations: [String!]
+  logoUrl: String
+  lunchBreak: String
+  name: String!
+  totalEmployees: Float!
+  websiteUrl: String
+  workingHour: String
+}
+
+input CompanyInput {
+  address: String
+  description: String!
+  locations: [String!]
+  logoUrl: String
+  lunchBreak: String
+  name: String
+  totalEmployees: Float!
+  websiteUrl: String
+  workingHour: String
+}
+
+enum FeatureFlagOperatorEnum {
+  Includes
+  NotIncludes
+}
+
+input FeatureFlagServiceConditionGqlInput {
+  key: String!
+  operator: FeatureFlagOperatorEnum!
+  values: [String!]!
+}
+
+input FeatureFlagServiceCreateFeatureFlagGqlInput {
+  description: String
+  featureCode: String!
+  rules: [FeatureFlagServiceRuleGqlInput!]!
+}
+
+input FeatureFlagServiceRuleGqlInput {
+  conditions: [FeatureFlagServiceConditionGqlInput!]!
+  enabled: Boolean!
+  priority: Float!
+}
+
+type Mutation {
+  createCompany(input: CompanyInput!): Boolean!
+  createFeatureFlag(
+    input: FeatureFlagServiceCreateFeatureFlagGqlInput!
+    tenantId: String!
+  ): Boolean!
+  deleteCompanies(ids: [String!]!): Boolean!
+  enableCompanies(ids: [String!]!): Boolean!
+  updateCompany(id: String!, input: CompanyInput!): Boolean!
+}
+
+input Pagination {
+  limit: Int = 10
+  skip: Int = 0
+}
+
+type Query {
+  allCompanies(pagination: Pagination!): [Company!]!
+  companies(ids: [String!]!): [Company!]!
+  company(id: String!): Company!
+  disabledCompanies(pagination: Pagination!): [Company!]!
+  enabledCompanies(pagination: Pagination!): [Company!]!
+  privacyPolicy: String!
+  searchCompanies(input: String!, pagination: Pagination!): [Company!]!
+  termAndCondition: String!
+}

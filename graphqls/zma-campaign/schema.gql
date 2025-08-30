@@ -1,0 +1,364 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+type BenefitConfig {
+  discountType: String
+  discountValue: Float
+  pointsMultiplier: Float
+  pointsToEarn: Float
+  tierUpgrade: String
+  voucherTypeId: String
+}
+
+input BenefitConfigInput {
+  discountType: CampaignDiscountType
+  discountValue: Float
+  pointsMultiplier: Float
+  pointsToEarn: Float
+  tierUpgrade: String
+  voucherTypeId: String
+}
+
+"""
+The action type of the campaign
+"""
+enum CampaignActionType {
+  ADD_POINTS
+  APPLY_DISCOUNT
+  ISSUE_VOUCHER
+  MIXED
+}
+
+"""
+The discount type of the campaign
+"""
+enum CampaignDiscountType {
+  FIXED
+  PERCENTAGE
+}
+
+"""
+The recurring pattern of the campaign
+"""
+enum CampaignRecurringPattern {
+  DAILY
+  MONTHLY
+  WEEKLY
+  YEARLY
+}
+
+"""
+Campaign
+"""
+type CampaignServiceCampaignGqlOutput {
+  _id: ID!
+  bannerUrl: String
+  benefitConfig: BenefitConfig
+  campaignType: CampaignType!
+  createdAt: DateTime!
+  currentParticipants: Float
+  description: String!
+  eligibilityRules: EligibilityRules
+  endDate: DateTime!
+  isDeleted: Boolean!
+  isEnabled: Boolean!
+  isRecurring: Boolean!
+  isStackable: Boolean!
+  locations: [String!]!
+  name: String!
+  priority: Float!
+  recurringPattern: CampaignRecurringPattern
+  startDate: DateTime!
+  status: CampaignStatus!
+  targetAudience: String
+  targetParticipants: Float
+  tenantId: String!
+  updatedAt: DateTime!
+  usageLimitPerUser: Float
+  voucherLimit: Float
+  vouchersIssued: Float
+}
+
+input CampaignServiceCampaignTriggerGqlInput {
+  action: CampaignTriggerActionInput!
+  campaignId: String!
+  conditions: CampaignTriggerConditionsInput
+  eventType: CampaignTriggerEventType!
+  sourceService: ServiceName!
+  tenantId: String!
+}
+
+type CampaignServiceCampaignTriggerGqlOuput {
+  _id: ID!
+  action: CampaignTriggerAction!
+  campaignId: String!
+  conditions: CampaignTriggerConditions
+  createdAt: DateTime!
+  eventType: CampaignTriggerEventType!
+  sourceService: String!
+  tenantId: String!
+  updatedAt: DateTime!
+}
+
+input CampaignServiceCreateCampaignGqlInput {
+  bannerFile: String
+  benefitConfig: BenefitConfigInput
+  campaignType: CampaignType!
+  description: String!
+  eligibilityRules: EligibilityRulesInput
+  endDate: DateTime!
+  isDeleted: Boolean = false
+  isEnabled: Boolean = true
+  isRecurring: Boolean = false
+  isStackable: Boolean = false
+  locations: [String!] = []
+  name: String!
+  priority: Float = 0
+  recurringPattern: CampaignRecurringPattern
+  startDate: DateTime!
+  status: CampaignStatus! = DRAFT
+  targetAudience: String
+  targetParticipants: Float = 0
+  tenantId: String!
+  usageLimitPerUser: Float
+  voucherLimit: Float = 0
+  vouchersIssued: Float = 0
+}
+
+input CampaignServiceUpdateCampaignGqlInput {
+  bannerFile: String
+  benefitConfig: BenefitConfigInput
+  campaignType: CampaignType!
+  description: String!
+  eligibilityRules: EligibilityRulesInput
+  endDate: DateTime!
+  id: String!
+  isDeleted: Boolean = false
+  isEnabled: Boolean = true
+  isRecurring: Boolean = false
+  isStackable: Boolean = false
+  locations: [String!] = []
+  name: String!
+  priority: Float = 0
+  recurringPattern: CampaignRecurringPattern
+  startDate: DateTime!
+  status: CampaignStatus! = DRAFT
+  targetAudience: String
+  targetParticipants: Float = 0
+  tenantId: String!
+  usageLimitPerUser: Float
+  voucherLimit: Float = 0
+  vouchersIssued: Float = 0
+}
+
+input CampaignServiceUpdateCampaignTriggerGqlInput {
+  action: CampaignTriggerActionInput!
+  campaignId: String!
+  conditions: CampaignTriggerConditionsInput
+  eventType: CampaignTriggerEventType!
+  id: String!
+  sourceService: ServiceName!
+  tenantId: String!
+}
+
+"""
+The status of the campaign
+"""
+enum CampaignStatus {
+  ACTIVE
+  DRAFT
+  ENDED
+  SCHEDULED
+}
+
+type CampaignTriggerAction {
+  actions: [CampaignTriggerActionItem!]
+  type: String!
+  value: Float!
+  voucherTypeId: String
+}
+
+input CampaignTriggerActionInput {
+  actions: [CampaignTriggerActionItemInput!]
+  type: CampaignActionType!
+  value: Float
+  voucherTypeId: String
+}
+
+type CampaignTriggerActionItem {
+  type: String!
+  value: Float!
+  voucherTypeId: String
+}
+
+input CampaignTriggerActionItemInput {
+  type: CampaignActionType!
+  value: Float!
+  voucherTypeId: String
+}
+
+type CampaignTriggerConditions {
+  categoryIds: [String!]
+  pointsThreshold: Float
+  productIds: [String!]
+  purchaseAmount: Float
+}
+
+input CampaignTriggerConditionsInput {
+  categoryIds: [String!]
+  pointsThreshold: Float
+  productIds: [String!]
+  purchaseAmount: Float
+}
+
+"""
+The trigger event type of the campaign
+"""
+enum CampaignTriggerEventType {
+  BIRTHDAY
+  POINTS_THRESHOLD
+  PURCHASE
+  REGISTRATION
+  TIER_CHANGE
+}
+
+"""
+The type of the campaign
+"""
+enum CampaignType {
+  DISCOUNT
+  MIXED
+  POINTS
+  TIER_UPGRADE
+  VOUCHER
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type EligibilityRules {
+  excludedProducts: [String!]
+  firstPurchaseOnly: Boolean
+  membershipTiers: [String!]
+  minimumSpend: Float
+  productCategories: [String!]
+}
+
+input EligibilityRulesInput {
+  excludedProducts: [String!]
+  firstPurchaseOnly: Boolean
+  membershipTiers: [String!]
+  minimumSpend: Float
+  productCategories: [String!]
+}
+
+type Mutation {
+  campaignServiceCreateCampaign(input: CampaignServiceCreateCampaignGqlInput!): Boolean!
+  campaignServiceCreateCampaignTrigger(input: CampaignServiceCampaignTriggerGqlInput!): Boolean!
+  campaignServiceDeleteCampaign(id: String!): Boolean!
+  campaignServiceDeleteCampaignTrigger(id: String!): Boolean!
+  campaignServiceDisableCampaign(id: String!): Boolean!
+  campaignServiceDisableCampaignTrigger(id: String!): Boolean!
+  campaignServiceEnableCampaign(id: String!): Boolean!
+  campaignServiceEnableCampaignTrigger(id: String!): Boolean!
+  campaignServiceUpdateCampaign(
+    id: String!
+    input: CampaignServiceUpdateCampaignGqlInput!
+  ): Boolean!
+  campaignServiceUpdateCampaignTrigger(
+    input: CampaignServiceUpdateCampaignTriggerGqlInput!
+  ): Boolean!
+}
+
+input Pagination {
+  """
+  Maximum number of items to return (1-100)
+  """
+  limit: Int = 10
+
+  """
+  Number of items to skip (offset)
+  """
+  skip: Int = 0
+
+  """
+  Multiple sort fields for complex sorting
+  """
+  sort: [SortField!]
+}
+
+type Query {
+  campaignServiceAllCampaignTriggers(
+    pagination: Pagination!
+  ): [CampaignServiceCampaignTriggerGqlOuput!]!
+  campaignServiceAllCampaigns(pagination: Pagination!): [CampaignServiceCampaignGqlOutput!]!
+  campaignServiceCampaignById(id: String!): CampaignServiceCampaignGqlOutput!
+  campaignServiceCampaignTriggerById(id: String!): CampaignServiceCampaignTriggerGqlOuput!
+  campaignServiceCampaignsByIds(ids: [String!]!): [CampaignServiceCampaignGqlOutput!]!
+  campaignServiceDisabledCampaigns(pagination: Pagination!): [CampaignServiceCampaignGqlOutput!]!
+  campaignServiceEnabledCampaignTriggers(
+    pagination: Pagination!
+  ): [CampaignServiceCampaignTriggerGqlOuput!]!
+  campaignServiceEnabledCampaigns(pagination: Pagination!): [CampaignServiceCampaignGqlOutput!]!
+  campaignServiceSearchCampaigns(
+    input: String!
+    pagination: Pagination!
+  ): [CampaignServiceCampaignGqlOutput!]!
+}
+
+"""
+Available ZMA microservices for inter-service communication
+"""
+enum ServiceName {
+  AUTH
+  BOOKING
+  CAMPAIGN
+  CART
+  CHECKIN
+  CLOCKIN
+  CONTENT
+  DICTIONARY
+  EVENT
+  FEATURE_FLAG
+  FNS
+  INVENTORY
+  LARVA_COURSE
+  LOYALTY
+  MEMBERSHIP
+  ORDER
+  ORGANIZATION
+  PAYMENT
+  POINT
+  PRODUCT
+  SHIPPING
+  STORAGE
+  SUBSCRIPTION
+  TICKET
+  USER
+  VOUCHER
+}
+
+"""
+Sort direction for ordering query results
+"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input SortField {
+  """
+  Sort direction for this field
+  """
+  direction: SortDirection! = ASC
+
+  """
+  Field name to sort by
+  """
+  field: String!
+}

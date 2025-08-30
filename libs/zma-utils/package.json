@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "@paralleldrive/cuid2": "^2.2.2",
+    "dayjs": "^1.11.13",
+    "isomorphic-dompurify": "^2.26.0",
+    "lodash": "^4.17.21",
+    "uuidv7": "^1.0.2",
+    "@zma-nestjs-monorepo/zma-types": "0.0.1",
+    "currency.js": "^2.0.4"
+  },
+  "main": "./index.cjs",
+  "name": "@zma-nestjs-monorepo/zma-utils",
+  "private": true,
+  "type": "commonjs",
+  "types": "./index.d.ts",
+  "version": "0.0.1"
+}

@@ -1,0 +1,111 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package PointService;
+
+service PointService {
+  rpc pointServiceCreatePointBalanceProfile (CreatePointBalanceProfileInput) returns (PointBalanceProfile) {}
+  rpc pointServiceAddPointsForProfile (AddPointsForProfileInput) returns (AddPointsForProfileOutput) {}
+  rpc pointServiceGetPointBalanceByUserId (GetPointBalanceByUserIdInput) returns (PointBalanceProfile) {}
+  rpc pointServiceCountPointTransactionsByUserId (CountPointTransactionsByUserIdInput) returns (CountPointTransactionsByUserIdOutput) {}
+}
+
+enum PointTransactionType {
+  EARN = 0;
+  REDEEM = 1;
+  EXPIRE = 2;
+  ADJUST = 3;
+  TRANSFER = 4;
+}
+
+enum PointTransactionSource {
+  REGISTRATION = 0;
+  PURCHASE = 1;
+  CAMPAIGN = 2;
+  REFERRAL = 3;
+  BIRTHDAY = 4;
+  LOGIN = 5;
+  REVIEW = 6;
+  EVENT = 7;
+  PROMOTION = 8;
+  ENGAGEMENT = 9;
+  ACHIEVEMENT = 10;
+  REDEMPTION = 11;
+  TIER_UPGRADE = 12;
+  ADMIN_ADJUSTMENT = 13;
+  REFUND = 14;
+  EXPIRATION = 15;
+  SYSTEM = 16;
+  CORRECTION = 17;
+  OTHER = 18;
+}
+
+message AddPointsForProfileInputData {
+  string userId = 1;
+  string tenantId = 2;
+  string loyaltyProgramId = 3;
+  int32 pointAmount = 4;
+  PointTransactionType transactionType = 5;
+  PointTransactionSource source = 6;
+  optional string sourceReference = 7;
+  google.protobuf.Timestamp transactionDate = 8;
+}
+
+message AddPointsForProfileInput {
+  AddPointsForProfileInputData data = 1;
+  string requestId = 2;
+}
+
+message AddPointsForProfileOutput {
+  bool success = 1;
+}
+
+message CreatePointBalanceProfileInputData {
+  string userId = 1;
+  string tenantId = 2;
+  string memberId = 3;
+  string loyaltyProgramId = 4;
+}
+
+message CreatePointBalanceProfileInput {
+  CreatePointBalanceProfileInputData data = 1;
+  string requestId = 2;
+}
+
+message PointBalanceProfile {
+  string id = 1;
+  string userId = 2;
+  string tenantId = 3;
+  string memberId = 4;
+  string loyaltyProgramId = 5;
+  int32 pointBalance = 6;
+  google.protobuf.Timestamp createdAt = 7;
+  google.protobuf.Timestamp updatedAt = 8;
+}
+
+message GetPointBalanceByUserIdInputData {
+  string userId = 1;
+  string tenantId = 2;
+}
+
+message GetPointBalanceByUserIdInput {
+  GetPointBalanceByUserIdInputData data = 1;
+  string requestId = 2;
+}
+
+message CountPointTransactionsByUserIdInputData {
+  string userId = 1;
+  string tenantId = 2;
+  PointTransactionType transactionType = 3;
+  string sourceReference = 4;
+}
+
+message CountPointTransactionsByUserIdInput {
+  CountPointTransactionsByUserIdInputData data = 1;
+  string requestId = 2;
+}
+
+message CountPointTransactionsByUserIdOutput {
+  int32 count = 1;
+}

@@ -1,0 +1,194 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+enum CheckinMethodEnum {
+  Gps
+  Image
+  QrCode
+  Wifi
+}
+
+input CheckinMethodGqlInput {
+  gpsConfig: GPSConfigGqlInput
+  imageConfig: ImageConfigGqlInput
+  methodType: CheckinMethodEnum!
+  wifiConfig: WiFiConfigGqlInput
+}
+
+type CheckinMethodGqlOutput {
+  gpsConfig: GPSConfigGqlOutput
+  imageConfig: ImageConfigGqlOutput
+  methodType: CheckinMethodEnum!
+  wifiConfig: WiFiConfigGqlOutput
+}
+
+input ClockinServiceClockinGqlInput {
+  date: DateTime!
+  shiftId: String!
+}
+
+type ClockinServiceClockinGqlOutput {
+  acceptedBy: String!
+  checkinId: String!
+  createdAt: DateTime!
+  id: String!
+  isAccepted: Boolean!
+  isDeleted: Boolean!
+  shiftId: String!
+  staffId: String!
+  status: ClockinStatusEnum!
+  tenantId: String!
+  updatedAt: DateTime!
+}
+
+input ClockinServiceGpsClockinGqlInput {
+  latitude: Float!
+  longitude: Float!
+}
+
+input ClockinServiceImageClockinGqlInput {
+  imageFile: String!
+}
+
+input ClockinServiceShiftGqlInput {
+  checkinMethod: CheckinMethodGqlInput!
+  endTime: DateTime!
+  location: String!
+  name: String!
+  note: String
+  staffIds: [String!]!
+  startTime: DateTime!
+}
+
+type ClockinServiceShiftGqlOutput {
+  checkinMethod: CheckinMethodGqlOutput!
+  createdAt: DateTime!
+  endTime: DateTime!
+  id: String!
+  isEnabled: Boolean!
+  location: String!
+  name: String!
+  note: String
+  staffIds: [String!]!
+  startTime: DateTime!
+  tenantId: String!
+  updatedAt: DateTime!
+}
+
+input ClockinServiceWifiClockinGqlInput {
+  bssid: String!
+  ssid: String!
+}
+
+enum ClockinStatusEnum {
+  Late
+  OnTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input GPSConfigGqlInput {
+  allowedLatitude: Float!
+  allowedLongitude: Float!
+  allowedRadius: Float!
+  note: String
+}
+
+type GPSConfigGqlOutput {
+  allowedLatitude: Float!
+  allowedLongitude: Float!
+  allowedRadius: Float!
+  note: String
+}
+
+input ImageConfigGqlInput {
+  note: String
+}
+
+type ImageConfigGqlOutput {
+  note: String
+}
+
+type Mutation {
+  clockinServiceAcceptClockin(id: String!): Boolean!
+  clockinServiceAddStaff(id: String!, staffIds: [String!]!): Boolean!
+  clockinServiceCreateShift(input: ClockinServiceShiftGqlInput!): Boolean!
+  clockinServiceDeleteShifts(ids: [String!]!): Boolean!
+  clockinServiceDisableShifts(ids: [String!]!): Boolean!
+  clockinServiceEnableShifts(ids: [String!]!): Boolean!
+  clockinServiceGpsClockin(input: ClockinServiceGpsClockinGqlInput!, shiftId: String!): Boolean!
+  clockinServiceImageClockin(input: ClockinServiceImageClockinGqlInput!, shiftId: String!): Boolean!
+  clockinServiceRemoveStaff(id: String!, staffIds: [String!]!): Boolean!
+  clockinServiceUpdateShift(id: String!, input: ClockinServiceShiftGqlInput!): Boolean!
+  clockinServiceWifiClockin(input: ClockinServiceWifiClockinGqlInput!, shiftId: String!): Boolean!
+}
+
+input Pagination {
+  """
+  Maximum number of items to return (1-100)
+  """
+  limit: Int = 10
+
+  """
+  Number of items to skip (offset)
+  """
+  skip: Int = 0
+
+  """
+  Multiple sort fields for complex sorting
+  """
+  sort: [SortField!]
+}
+
+type Query {
+  clockinServiceAllClockin(
+    input: ClockinServiceClockinGqlInput!
+    pagination: Pagination!
+  ): [ClockinServiceClockinGqlOutput!]!
+  clockinServiceAllShifts(pagination: Pagination!): [ClockinServiceShiftGqlOutput!]!
+  clockinServiceClockinById(id: String!): ClockinServiceClockinGqlOutput!
+  clockinServiceMyClockin(
+    input: ClockinServiceClockinGqlInput!
+    pagination: Pagination!
+  ): [ClockinServiceClockinGqlOutput!]!
+  clockinServiceMyShifts: [ClockinServiceShiftGqlOutput!]!
+  clockinServiceShiftById(id: String!): ClockinServiceShiftGqlOutput!
+}
+
+"""
+Sort direction for ordering query results
+"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input SortField {
+  """
+  Sort direction for this field
+  """
+  direction: SortDirection! = ASC
+
+  """
+  Field name to sort by
+  """
+  field: String!
+}
+
+input WiFiConfigGqlInput {
+  allowedBSSIDs: [String!]!
+  allowedSSIDs: [String!]!
+  note: String
+}
+
+type WiFiConfigGqlOutput {
+  allowedBSSIDs: [String!]!
+  allowedSSIDs: [String!]!
+  note: String
+}

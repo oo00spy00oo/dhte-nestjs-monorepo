@@ -1,0 +1,20 @@
+{
+  "name": "zma-config",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/zma-config/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/zma-config",
+        "main": "libs/zma-config/src/index.ts",
+        "tsConfig": "libs/zma-config/tsconfig.lib.json",
+        "assets": ["libs/zma-config/*.md"],
+        "format": ["cjs"]
+      }
+    }
+  }
+}

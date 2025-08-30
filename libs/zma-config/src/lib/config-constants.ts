@@ -1,0 +1,94 @@
+export const CONFIG_CONSTANTS = {
+  LOGGER_CONTEXT: 'ZMA',
+  YAML_CONFIG_FILENAME: 'application.yaml',
+  DEVELOPMENT_ENV: 'development',
+} as const;
+
+export const CONFIG_PATHS = {
+  DATABASE_MONGO_URI: 'database.mongo.uri',
+  NATS_URI: 'nats.uri',
+  ELASTICSEARCH_NODE: 'elasticsearch.node',
+  ELASTICSEARCH_API_KEY: 'elasticsearch.apiKey', // pragma: allowlist secret
+  MEILISEARCH_API_KEY: 'meilisearch.apiKey', // pragma: allowlist secret
+} as const;
+
+export const ENV_PATHS = {
+  DATABASE_MONGO_URI: 'DATABASE_MONGO_URI',
+  NATS_URI: 'NATS_URI',
+  ELASTICSEARCH_NODE: 'ELASTICSEARCH_NODE',
+  ELASTICSEARCH_API_KEY: 'ELASTICSEARCH_API_KEY', // pragma: allowlist secret
+  MEILISEARCH_API_KEY: 'MEILISEARCH_API_KEY', // pragma: allowlist secret
+} as const;
+
+export const ENV_VARS = {
+  NODE_ENV: 'NODE_ENV',
+  CONFIG_SERVER_URL: 'CONFIG_SERVER_URL',
+  SERVICE_NAME: 'SERVICE_NAME',
+  CONFIG_SOURCE: 'CONFIG_SOURCE',
+  DATABASE_MONGO_HOST: 'DATABASE_MONGO_HOST',
+  DATABASE_MONGO_USERNAME: 'DATABASE_MONGO_USERNAME',
+  DATABASE_MONGO_PASSWORD: 'DATABASE_MONGO_PASSWORD', // pragma: allowlist secret
+  DATABASE_MONGO_URI: 'DATABASE_MONGO_URI',
+  NATS_SERVERS: 'NATS_SERVERS',
+  NATS_URI: 'NATS_URI',
+  ELASTICSEARCH_NODE: 'ELASTICSEARCH_NODE',
+  ELASTICSEARCH_API_KEY: 'ELASTICSEARCH_API_KEY', // pragma: allowlist secret
+  MEILISEARCH_API_KEY: 'MEILISEARCH_API_KEY', // pragma: allowlist secret
+} as const;
+
+export const PLACEHOLDER_PATTERNS = {
+  HOST: '${host}',
+  HOSTS: '${hosts}',
+  USERNAME: '${username}',
+  PASSWORD: '${password}',
+  API_KEY: '${apiKey}',
+} as const;
+
+export const SERVICE_CONFIG_DEFINITIONS = {
+  MONGODB: {
+    configPath: CONFIG_PATHS.DATABASE_MONGO_URI,
+    envVarPath: ENV_PATHS.DATABASE_MONGO_URI,
+    requiredEnvVars: [
+      ENV_VARS.DATABASE_MONGO_HOST,
+      ENV_VARS.DATABASE_MONGO_USERNAME,
+      ENV_VARS.DATABASE_MONGO_PASSWORD,
+    ],
+    replacements: {
+      [PLACEHOLDER_PATTERNS.HOST]: ENV_VARS.DATABASE_MONGO_HOST,
+      [PLACEHOLDER_PATTERNS.USERNAME]: ENV_VARS.DATABASE_MONGO_USERNAME,
+      [PLACEHOLDER_PATTERNS.PASSWORD]: ENV_VARS.DATABASE_MONGO_PASSWORD,
+    },
+  },
+  NATS: {
+    configPath: CONFIG_PATHS.NATS_URI,
+    envVarPath: ENV_PATHS.NATS_URI,
+    requiredEnvVars: [ENV_VARS.NATS_SERVERS],
+    replacements: {
+      [PLACEHOLDER_PATTERNS.HOSTS]: ENV_VARS.NATS_SERVERS,
+    },
+  },
+  ELASTICSEARCH_NODE: {
+    configPath: CONFIG_PATHS.ELASTICSEARCH_NODE,
+    envVarPath: ENV_PATHS.ELASTICSEARCH_NODE,
+    requiredEnvVars: [ENV_VARS.ELASTICSEARCH_NODE],
+    replacements: {
+      [PLACEHOLDER_PATTERNS.HOSTS]: ENV_VARS.ELASTICSEARCH_NODE,
+    },
+  },
+  ELASTICSEARCH_API_KEY: {
+    configPath: CONFIG_PATHS.ELASTICSEARCH_API_KEY,
+    envVarPath: ENV_PATHS.ELASTICSEARCH_API_KEY,
+    requiredEnvVars: [ENV_VARS.ELASTICSEARCH_API_KEY],
+    replacements: {
+      [PLACEHOLDER_PATTERNS.API_KEY]: ENV_VARS.ELASTICSEARCH_API_KEY,
+    },
+  },
+  MEILISEARCH: {
+    configPath: CONFIG_PATHS.MEILISEARCH_API_KEY,
+    envVarPath: ENV_PATHS.MEILISEARCH_API_KEY,
+    requiredEnvVars: [ENV_VARS.MEILISEARCH_API_KEY],
+    replacements: {
+      [PLACEHOLDER_PATTERNS.API_KEY]: ENV_VARS.MEILISEARCH_API_KEY,
+    },
+  },
+} as const;

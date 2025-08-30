@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+
+package InventoryService;
+
+service InventoryService {
+  rpc inventoryServiceReserveProduct (ReserveProductInput) returns (BooleanOutput) {}
+  rpc inventoryServiceReleaseProduct (ReleaseProductInput) returns (BooleanOutput) {}
+  rpc inventoryServiceConfirmProduct (ConfirmProductInput) returns (BooleanOutput) {}
+  rpc inventoryServiceGetStockByProductIdAndSku (ProductIdAndSkuInput) returns (StockOutput) {}
+}
+
+message BooleanOutput {
+  bool status = 1;
+}
+
+message ReserveProductInput {
+  string requestId = 1;
+  string tenantId = 2;
+  ReserveProduct data = 3;
+}
+
+message ReserveProduct {
+  string productId = 1;
+  string sku = 2;
+  int32 quantity = 3;
+}
+
+message ReleaseProductInput {
+  string requestId = 1;
+  string tenantId = 2;
+  ReleaseProduct data = 3;
+}
+
+message ReleaseProduct {
+  string productId = 1;
+  string sku = 2;
+  int32 quantity = 3;
+}
+
+message ConfirmProductInput {
+  string requestId = 1;
+  string tenantId = 2;
+  ConfirmProduct data = 3;
+}
+
+message ConfirmProduct {
+  string productId = 1;
+  string sku = 2;
+  int32 quantity = 3;
+}
+
+message ProductIdAndSkuInput {
+  string requestId = 1;
+  string tenantId = 2;
+  ProductIdData data = 3;
+}
+
+message ProductIdData {
+  string productId = 1;
+  string sku = 2;
+}
+
+message StockOutput {
+  string _id = 1;
+  string tenantId = 2;
+  string productName = 3;
+  string productId = 4;
+  string sku = 5;
+  int32 totalQuantity = 6;
+  int32 reservedQuantity = 7;
+  int32 availableQuantity = 8;
+  int32 soldQuantity = 9;
+  bool isDeleted = 10;
+  string deletedAt = 11;
+  string createdAt = 12;
+  string updatedAt = 13;
+}
