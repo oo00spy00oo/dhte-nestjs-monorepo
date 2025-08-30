@@ -1,0 +1,36 @@
+services:
+  nginx:
+    image: nginx:1.28.0
+    container_name: dhte-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./certbot/www:/var/www/html:ro
+      - ./certbot/conf:/etc/letsencrypt:ro    # ⬅️ DÒNG QUAN TRỌNG
+    networks:
+      - dhte-network
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot/www:/var/www/html
+      - ./certbot/conf:/etc/letsencrypt
+    entrypoint: ""
+    command: >
+      certbot certonly --webroot -w /var/www/html
+      --email huychac123us@gmail.com
+      --agree-tos
+      --no-eff-email
+      -d dev-streaming.dhte.vn
+    networks:
+      - dhte-network
+
+networks:
+  dhte-network:
+    external: true
+
