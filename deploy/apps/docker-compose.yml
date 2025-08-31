@@ -9,8 +9,8 @@ services:
     container_name: dhte-larva-course
     restart: unless-stopped
     ports:
-      - '3001:3001' # HTTP GraphQL
-      - '4001:4001' # TCP Microservice
+      - '3001:3000' # HTTP GraphQL
+      - '4001:4000' # TCP Microservice
     env_file:
       - ../../apps/larva-course/.env
     networks:
@@ -28,8 +28,8 @@ services:
     container_name: dhte-zma-auth
     restart: unless-stopped
     ports:
-      - '3002:3002' # HTTP GraphQL
-      - '4002:4002' # TCP Microservice
+      - '3002:3000' # HTTP GraphQL
+      - '4002:4000' # TCP Microservice
     env_file:
       - ../../apps/zma-auth/.env
     networks:
@@ -47,10 +47,9 @@ services:
     container_name: dhte-zma-dictionary
     restart: unless-stopped
     ports:
-      - '3003:3003' # HTTP
-      - '4003:4003' # TCP microservice
-      - '40000-40100:40000-40100/udp'
-      - '40000-40100:40000-40100/tcp'
+      - '3003:3000' # HTTP
+      - '4003:4000' # TCP microservice
+      - '5003:5000' # TCP microservice
     env_file:
       - ../../apps/zma-dictionary/.env
     networks:
@@ -68,8 +67,8 @@ services:
     container_name: dhte-zma-fns
     restart: unless-stopped
     ports:
-      - '3004:3004' # HTTP GraphQL
-      - '4004:4004' # TCP Microservice
+      - '3004:3000' # HTTP GraphQL
+      - '4004:4000' # TCP Microservice
     env_file:
       - ../../apps/zma-fns/.env
     networks:
@@ -87,8 +86,9 @@ services:
     container_name: dhte-zma-storage
     restart: unless-stopped
     ports:
-      - '3005:3005' # HTTP GraphQL
-      - '4005:4005' # TCP Microservice
+      - '3005:3000' # HTTP GraphQL
+      - '4005:4000' # TCP Microservice
+      - '5005:5000' # TCP Microservice
     env_file:
       - ../../apps/zma-storage/.env
     networks:
@@ -106,8 +106,8 @@ services:
     container_name: dhte-zma-upload
     restart: unless-stopped
     ports:
-      - '3006:3006' # HTTP GraphQL
-      - '4006:4006' # TCP Microservice
+      - '3006:3000' # HTTP GraphQL
+      - '4006:4000' # TCP Microservice
     env_file:
       - ../../apps/zma-upload/.env
     networks:
@@ -125,8 +125,9 @@ services:
     container_name: dhte-zma-user
     restart: unless-stopped
     ports:
-      - '3007:3007' # HTTP GraphQL
-      - '4007:4007' # TCP Microservice
+      - '3007:3000' # HTTP GraphQL
+      - '4007:4000' # TCP Microservice
+      - '5007:5000' # TCP Microservice
     env_file:
       - ../../apps/zma-user/.env
     networks:

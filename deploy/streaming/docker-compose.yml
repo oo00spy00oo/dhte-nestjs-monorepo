@@ -9,8 +9,8 @@ services:
     container_name: dhte-zma-meeting
     restart: unless-stopped
     ports:
-      - '3008:3008' # HTTP GraphQL
-      - '4008:4008' # TCP Microservice
+      - '3008:30080' # HTTP GraphQL
+      - '4008:40080' # TCP Microservice
     env_file:
       - ../../apps/zma-meeting/.env
     networks:
