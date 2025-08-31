@@ -2,7 +2,7 @@ database:
   mongo:
     uri: mongodb://${username}:${password}@${host}/zma-fns?directConnection=true&authSource=admin
 grpc:
-  url: localhost:5020
+  url: localhost:5004
   service:
     user:
-      url: localhost:5001
+      url: localhost:5007
