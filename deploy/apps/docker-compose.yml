@@ -9,13 +9,13 @@ services:
     container_name: dhte-larva-course
     restart: unless-stopped
     ports:
-      - "3001:3001" # HTTP GraphQL
-      - "4001:4001" # TCP Microservice
+      - '3001:3001' # HTTP GraphQL
+      - '4001:4001' # TCP Microservice
     env_file:
-      - apps/larva-course/.env
+      - ../../apps/larva-course/.env
     networks:
       - dhte-network
-    command: ["dumb-init", "node", "dist/apps/larva-course/main.js"]
+    command: ['dumb-init', 'node', 'dist/apps/larva-course/main.js']
     # healthcheck:
   #   test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
   #   interval: 30s
@@ -28,13 +28,13 @@ services:
     container_name: dhte-zma-auth
     restart: unless-stopped
     ports:
-      - "3002:3002" # HTTP GraphQL
-      - "4002:4002" # TCP Microservice
+      - '3002:3002' # HTTP GraphQL
+      - '4002:4002' # TCP Microservice
     env_file:
-      - apps/zma-auth/.env
+      - ../../apps/zma-auth/.env
     networks:
       - dhte-network
-    command: ["dumb-init", "node", "dist/apps/zma-auth/main.js"]
+    command: ['dumb-init', 'node', 'dist/apps/zma-auth/main.js']
     # healthcheck:
   #   test: ["CMD", "curl", "-f", "http://localhost:3002/health"]
   #   interval: 30s
@@ -47,15 +47,15 @@ services:
     container_name: dhte-zma-dictionary
     restart: unless-stopped
     ports:
-      - "3003:3003"                      # HTTP
-      - "4003:4003"                      # TCP microservice
-      - "40000-40100:40000-40100/udp"
-      - "40000-40100:40000-40100/tcp"
+      - '3003:3003' # HTTP
+      - '4003:4003' # TCP microservice
+      - '40000-40100:40000-40100/udp'
+      - '40000-40100:40000-40100/tcp'
     env_file:
-      - apps/zma-dictionary/.env
+      - ../../apps/zma-dictionary/.env
     networks:
       - dhte-network
-    command: ["dumb-init", "node", "dist/apps/zma-dictionary/main.js"]
+    command: ['dumb-init', 'node', 'dist/apps/zma-dictionary/main.js']
     # healthcheck:
   #   test: ["CMD", "curl", "-f", "http://localhost:3003/health"]
   #   interval: 30s
@@ -68,13 +68,13 @@ services:
     container_name: dhte-zma-fns
     restart: unless-stopped
     ports:
-      - "3004:3004" # HTTP GraphQL
-      - "4004:4004" # TCP Microservice
+      - '3004:3004' # HTTP GraphQL
+      - '4004:4004' # TCP Microservice
     env_file:
-      - apps/zma-fns/.env
+      - ../../apps/zma-fns/.env
     networks:
       - dhte-network
-    command: ["dumb-init", "node", "dist/apps/zma-fns/main.js"]
+    command: ['dumb-init', 'node', 'dist/apps/zma-fns/main.js']
     # healthcheck:
   #   test: ["CMD", "curl", "-f", "http://localhost:3004/health"]
   #   interval: 30s
@@ -87,13 +87,13 @@ services:
     container_name: dhte-zma-storage
     restart: unless-stopped
     ports:
-      - "3005:3005" # HTTP GraphQL
-      - "4005:4005" # TCP Microservice
+      - '3005:3005' # HTTP GraphQL
+      - '4005:4005' # TCP Microservice
     env_file:
-      - apps/zma-storage/.env
+      - ../../apps/zma-storage/.env
     networks:
       - dhte-network
-    command: ["dumb-init", "node", "dist/apps/zma-storage/main.js"]
+    command: ['dumb-init', 'node', 'dist/apps/zma-storage/main.js']
     # healthcheck:
   #   test: ["CMD", "curl", "-f", "http://localhost:3005/health"]
   #   interval: 30s
@@ -106,13 +106,13 @@ services:
     container_name: dhte-zma-upload
     restart: unless-stopped
     ports:
-      - "3006:3006" # HTTP GraphQL
-      - "4006:4006" # TCP Microservice
+      - '3006:3006' # HTTP GraphQL
+      - '4006:4006' # TCP Microservice
     env_file:
-      - apps/zma-upload/.env
+      - ../../apps/zma-upload/.env
     networks:
       - dhte-network
-    command: ["dumb-init", "node", "dist/apps/zma-upload/main.js"]
+    command: ['dumb-init', 'node', 'dist/apps/zma-upload/main.js']
     # healthcheck:
   #   test: ["CMD", "curl", "-f", "http://localhost:3006/health"]
   #   interval: 30s
@@ -125,13 +125,13 @@ services:
     container_name: dhte-zma-user
     restart: unless-stopped
     ports:
-      - "3007:3007" # HTTP GraphQL
-      - "4007:4007" # TCP Microservice
+      - '3007:3007' # HTTP GraphQL
+      - '4007:4007' # TCP Microservice
     env_file:
-      - apps/zma-user/.env
+      - ../../apps/zma-user/.env
     networks:
       - dhte-network
-    command: ["dumb-init", "node", "dist/apps/zma-user/main.js"]
+    command: ['dumb-init', 'node', 'dist/apps/zma-user/main.js']
     # healthcheck:
   #   test: ["CMD", "curl", "-f", "http://localhost:3007/health"]
   #   interval: 30s
