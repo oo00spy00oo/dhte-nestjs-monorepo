@@ -9,13 +9,13 @@ services:
     container_name: dhte-zma-meeting
     restart: unless-stopped
     ports:
-      - "3008:3008" # HTTP GraphQL
-      - "4008:4008" # TCP Microservice
+      - '3008:3008' # HTTP GraphQL
+      - '4008:4008' # TCP Microservice
     env_file:
-      - apps/zma-meeting/.env
+      - ../../apps/zma-meeting/.env
     networks:
       - dhte-network
-    command: ["dumb-init", "node", "dist/apps/zma-meeting/main.js"]
+    command: ['dumb-init', 'node', 'dist/apps/zma-meeting/main.js']
     # healthcheck:
   #   test: ["CMD", "curl", "-f", "http://localhost:3008/health"]
   #   interval: 30s
