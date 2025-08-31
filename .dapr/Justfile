@@ -1,2 +1,0 @@
-zma-transportation-booking:
-  dapr run --app-id zma-transportation-booking --app-port 3000 --dapr-http-port 3500 --dapr-grpc-port 50001 --resources-path .dapr/components/zma-transportation-booking pnpm nx serve zma-transportation-booking
