@@ -11,4 +11,4 @@ database:
   mongo:
     uri: mongodb://${username}:${password}@${host}/zma-storage?directConnection=true&authSource=admin
 grpc:
-  url: localhost:5005
+  url: localhost:5000

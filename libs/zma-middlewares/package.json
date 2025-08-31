@@ -6,10 +6,7 @@
     "@nestjs/microservices": "^11.1.6",
     "@zma-nestjs-monorepo/zma-types": "0.0.1",
     "lodash": "^4.17.21",
-    "nestjs-i18n": "^10.5.1",
-    "@nestjs/core": "^11.1.6",
-    "@zma-nestjs-monorepo/zma-dapr": "0.0.1",
-    "rxjs": "^7.8.2"
+    "nestjs-i18n": "^10.5.1"
   },
   "main": "./index.cjs",
   "name": "@zma-nestjs-monorepo/zma-middlewares",
