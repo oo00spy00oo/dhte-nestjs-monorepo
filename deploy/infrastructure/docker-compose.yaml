@@ -1,0 +1,108 @@
+services:
+  
+  # ========================================
+  # Infrastructure Services
+  # ========================================
+  mongodb:
+    image: mongo:8
+    container_name: dhte-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - dhte-network
+
+  # clamav:
+  #   image: clamav/clamav:latest
+  #   container_name: dhte-clamav
+  #   platform: linux/amd64
+  #   restart: unless-stopped
+  #   ports:
+  #     - '3310:3310'
+  #   volumes:
+  #     - clamav_data:/var/lib/clamav
+  #   environment:
+  #     - CLAMAV_NO_FRESHCLAM=false
+  #   networks:
+  #     - dhte-network
+
+  redis:
+    image: redis:alpine
+    container_name: dhte-redis
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    networks:
+      - dhte-network
+
+  kafka:
+    image: apache/kafka-native:4.1.0-rc3
+    container_name: dhte-kafka
+    ports:
+      - 9092:9092
+    networks:
+      - dhte-network
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://dhte-kafka:9092
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@dhte-kafka:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_NUM_PARTITIONS: 3
+    volumes:
+      - kafka_data:/var/lib/kafka/data
+
+  # redpanda:
+  #   image: redpandadata/redpanda:v25.2.2
+  #   container_name: dhte-redpanda
+  #   restart: unless-stopped
+  #   ports:
+  #     - '9092:9092'  # Kafka API
+  #     - '19092:19092' # Kafka API for host
+  #     - '8081:8081'   # Schema Registry
+  #     - '8082:8082'   # REST Proxy
+  #   environment:
+  #     REDPANDA_RPC_SERVER_LISTEN_ADDR: 0.0.0.0
+  #     REDPANDA_KAFKA_ADDRESS: 0.0.0.0:9092
+  #   command:
+  #     - redpanda
+  #     - start
+  #     - --smp=1
+  #     - --memory=1G
+  #     - --reserve-memory=0M
+  #     - --overprovisioned
+  #     - --node-id=0
+  #     - --check=false
+  #     - --set redpanda.enable_transactions=true
+  #     - --set redpanda.enable_idempotence=true
+  #     - --kafka-addr PLAINTEXT://0.0.0.0:9092,OUTSIDE://0.0.0.0:19092
+  #     - --advertise-kafka-addr PLAINTEXT://redpanda:9092,OUTSIDE://localhost:19092
+  #   volumes:
+  #     - redpanda_data:/var/lib/redpanda/data
+  #   networks:
+  #     - dhte-network
+
+volumes:
+  mongodb_data:
+    name: dhte-mongodb-data
+  # clamav_data:
+  #   name: dhte-clamav-data
+  kafka_data:
+    name: dhte-kafka-data
+  # redpanda_data:
+  #   name: dhte-redpanda-data
+
+networks:
+  dhte-network:
+    name: dhte-network

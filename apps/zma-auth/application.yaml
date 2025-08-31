@@ -1,7 +1,7 @@
 grpc:
   service:
     user:
-      url: localhost:5007
+      url: dhte-zma-user:5007
 maxLoginAttempts: 5
 passwordPolicy:
   minLength: 8
@@ -17,4 +17,4 @@ appDomain: http://domain.com
 kafka:
   service:
     brokers:
-      - localhost:9092
+      - dhte-kafka:9092

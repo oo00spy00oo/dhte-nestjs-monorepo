@@ -171,7 +171,6 @@
   "name": "@zma-nestjs-monorepo/source",
   "private": true,
   "scripts": {
-    "prepare": "pre-commit install",
     "lint-staged": "lint-staged --concurrent true --relative",
     "changeset-check": "wireit"
   },

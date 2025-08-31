@@ -1,7 +1,7 @@
 grpc:
   service:
     storage:
-      url: localhost:5005
+      url: dhte-zma-storage:5005
 cdn:
   host: https://dev-cdn.passiontech.xyz
 buckets:
@@ -21,12 +21,12 @@ buckets:
     name: gaas-permanent-demo
     provider: R2
 redis:
-  host: localhost
+  host: dhte-redis
   port: 6379
 clamav:
   enabled: false
   deleteInfectedFiles: false
-  host: localhost
+  host: dhte-clamav
   port: 3310
   timeout: 60000
 ffmpeg:

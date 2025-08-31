@@ -10,3 +10,9 @@ services:
       - HIVE_CDN_ENDPOINT=https://cdn.graphql-hive.com/artifacts/v1/152cae6b-f21c-4f71-8172-e3c1804ae15e
       - HIVE_CDN_KEY=hv2ZmU4MjVjYzktMjNhOS00YzEwLTg2MTctMDQ2ZTBjZTQ5YjVlOmM3ZTk1NzkzN2YzYWQzYmMyYjk4ZWZiYWU2ODQ2MDI2ZDkxODFkMQ==
       - HIVE_TOKEN=983c9d7ac95f3b2d8a2cc0b208ba60d1
+    networks:
+      - dhte-network
+
+networks:
+  dhte-network:
+    external: true

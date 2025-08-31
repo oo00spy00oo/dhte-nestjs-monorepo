@@ -9,6 +9,6 @@ virusScanner:
   url: https://scand.passiontech.dev
 database:
   mongo:
-    uri: mongodb://${username}:${password}@${host}/zma-storage?directConnection=true&authSource=admin
+    uri: mongodb://${username}:${password}@${host}/zma-storage?authSource=admin
 grpc:
   url: localhost:5000
