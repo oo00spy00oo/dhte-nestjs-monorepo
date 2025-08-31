@@ -8,9 +8,9 @@ onboarding:
 grpc:
   service:
     dictionary:
-      url: localhost:5009
+      url: localhost:5003
     fns:
-      url: localhost:5020
+      url: localhost:5004
 analyze:
   speech:
     url: https://analyze-speech.passiontech.dev/graphql

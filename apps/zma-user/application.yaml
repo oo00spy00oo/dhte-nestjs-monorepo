@@ -6,7 +6,7 @@ kafka:
     brokers:
       - 89.233.105.251:9092
 grpc:
-  url: localhost:5001
+  url: localhost:5000
   service:
     organization:
       url: localhost:5010
