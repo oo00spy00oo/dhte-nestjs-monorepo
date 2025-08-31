@@ -1,0 +1,51 @@
+sandbox:
+  enabled: true
+cors:
+  # Set to true to allow any origin
+  allow_any_origin: true
+  # Allowed request methods
+  methods:
+    - GET
+    - POST
+    - OPTIONS
+homepage:
+  enabled: false
+include_subgraph_errors:
+  all: true
+headers:
+  all: # Header rules for all subgraphs
+    request:
+      - propagate:
+          named: Authorization
+      - insert:
+          name: 'X-Tenant-ID'
+          value: '019671d6-4f4d-7b47-9717-422c336faaaa'
+supergraph:
+  # The path for GraphQL execution
+  # (Defaults to /)
+  listen: '0.0.0.0:4000'
+  path: /graphql
+  # Do not enable introspection in production!
+  introspection: true
+  query_planning:
+    cache:
+      in_memory:
+        limit: 512
+plugins:
+  # Consider disable usage in case cost token
+  hive.usage: {}
+  hive.persisted_documents:
+    enabled: false
+health_check:
+  listen: '0.0.0.0:8088'
+  enabled: true
+override_subgraph_url:
+  zma-auth: 'http://zma-auth-dev.zma-dev.svc.cluster.local:3000/graphql'
+  larva-course: 'http://larva-course-dev.zma-dev.svc.cluster.local:3000/graphql'
+  zma-dictionary: 'http://zma-dictionary-dev.zma-dev.svc.cluster.local:3000/graphql'
+  zma-meeting: 'http://zma-meeting-dev.zma-dev.svc.cluster.local:3000/graphql'
+  zma-rbac: 'http://zma-rbac-dev.zma-dev.svc.cluster.local:3000/graphql'
+  zma-storage: 'http://zma-storage-dev.zma-dev.svc.cluster.local:3000/graphql'
+  zma-upload: 'http://zma-upload-dev.zma-dev.svc.cluster.local:3000/graphql'
+  zma-fns: 'http://zma-fns-dev.zma-dev.svc.cluster.local:3000/graphql'
+  zma-user: 'http://zma-user-dev.zma-dev.svc.cluster.local:3000/graphql'
