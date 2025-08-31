@@ -4,7 +4,7 @@ services:
     volumes:
       - ./router.yaml:/dist/config/router.yaml
     ports:
-      - '4000:4000'
+      - '4040:4000'
     restart: unless-stopped
     environment:
       - HIVE_CDN_ENDPOINT=https://cdn.graphql-hive.com/artifacts/v1/152cae6b-f21c-4f71-8172-e3c1804ae15e
