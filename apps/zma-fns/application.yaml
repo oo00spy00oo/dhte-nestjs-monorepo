@@ -1,8 +1,8 @@
 database:
   mongo:
-    uri: mongodb://${username}:${password}@${host}/zma-fns?directConnection=true&authSource=admin
+    uri: mongodb://${username}:${password}@${host}/zma-fns?authSource=admin
 grpc:
-  url: localhost:5000
+  url: 0.0.0.0:5000
   service:
     user:
-      url: localhost:5007
+      url: dhte-zma-user:5000

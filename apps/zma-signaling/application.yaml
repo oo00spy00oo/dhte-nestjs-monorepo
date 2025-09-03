@@ -1,5 +1,5 @@
 redis:
-  url: redis://localhost:6379
+  url: redis://dhte-redis:6379
 mediasoup:
   rtc:
     minPort: 40000

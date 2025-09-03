@@ -1,4 +1,4 @@
-import { SharedBullConfigurationFactory, BullRootModuleOptions } from '@nestjs/bullmq';
+import { BullRootModuleOptions, SharedBullConfigurationFactory } from '@nestjs/bullmq';
 import { Injectable } from '@nestjs/common';
 import { AppConfigService } from '@zma-nestjs-monorepo/zma-config';
 

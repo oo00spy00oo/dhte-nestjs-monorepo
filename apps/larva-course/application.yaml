@@ -1,6 +1,6 @@
 database:
   mongo:
-    uri: mongodb://${username}:${password}@${host}/larva-course?directConnection=true&authSource=admin
+    uri: mongodb://${username}:${password}@${host}/larva-course?authSource=admin
 onboarding:
   english:
     surveyId: 01987e36-9bc3-7edf-9e17-c3d4ef8b641b #pragma: allowlist secret
@@ -8,9 +8,9 @@ onboarding:
 grpc:
   service:
     dictionary:
-      url: localhost:5003
+      url: dhte-zma-dictionary:5000
     fns:
-      url: localhost:5004
+      url: dhte-zma-fns:5000
 analyze:
   speech:
     url: https://analyze-speech.passiontech.dev/graphql
@@ -27,7 +27,7 @@ maxCollectionItem: 100
 kafka:
   service:
     brokers:
-      - localhost:9092
+      - dhte-kafka:9092
 sampleAiVideoUrl: https://pub-1e38b9094c0e4453ae5cc43051dad9ff.r2.dev/2025/08/11/11/019898ef-cbcf-71ce-8334-5d0a8167bd51.mp4
 dapr:
   host: http://localhost

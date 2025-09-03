@@ -4,7 +4,7 @@ services:
   # ========================================
   larva-course:
     build:
-      context: .
+      context: ../../
       dockerfile: Dockerfile
     container_name: dhte-larva-course
     restart: unless-stopped
@@ -23,7 +23,7 @@ services:
   #   retries: 3
   zma-auth:
     build:
-      context: .
+      context: ../../
       dockerfile: Dockerfile
     container_name: dhte-zma-auth
     restart: unless-stopped
@@ -42,7 +42,7 @@ services:
   #   retries: 3
   zma-dictionary:
     build:
-      context: .
+      context: ../../
       dockerfile: Dockerfile
     container_name: dhte-zma-dictionary
     restart: unless-stopped
@@ -62,13 +62,14 @@ services:
   #   retries: 3
   zma-fns:
     build:
-      context: .
+      context: ../../
       dockerfile: Dockerfile
     container_name: dhte-zma-fns
     restart: unless-stopped
     ports:
       - '3004:3000' # HTTP GraphQL
       - '4004:4000' # TCP Microservice
+      - '5004:5000' # TCP Microservice
     env_file:
       - ../../apps/zma-fns/.env
     networks:
@@ -81,7 +82,7 @@ services:
   #   retries: 3
   zma-storage:
     build:
-      context: .
+      context: ../../
       dockerfile: Dockerfile
     container_name: dhte-zma-storage
     restart: unless-stopped
@@ -101,7 +102,7 @@ services:
   #   retries: 3
   zma-upload:
     build:
-      context: .
+      context: ../../
       dockerfile: Dockerfile
     container_name: dhte-zma-upload
     restart: unless-stopped
@@ -120,7 +121,7 @@ services:
   #   retries: 3
   zma-user:
     build:
-      context: .
+      context: ../../
       dockerfile: Dockerfile
     container_name: dhte-zma-user
     restart: unless-stopped
@@ -138,6 +139,26 @@ services:
   #   interval: 30s
   #   timeout: 10s
   #   retries: 3
+  zma-notification:
+    build:
+      context: ../../
+      dockerfile: Dockerfile
+    container_name: dhte-zma-notification
+    restart: unless-stopped
+    ports:
+      - '3009:3000' # HTTP GraphQL
+      - '4009:4000' # TCP Microservice
+    env_file:
+      - ../../apps/zma-notification/.env
+    networks:
+      - dhte-network
+    command: ['dumb-init', 'node', 'dist/apps/zma-notification/main.js']
+    # healthcheck:
+  #   test: ["CMD", "curl", "-f", "http://localhost:3009/health"]
+  #   interval: 30s
+  #   timeout: 10s
+  #   retries: 3
+
 networks:
   dhte-network:
     external: true

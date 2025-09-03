@@ -1,0 +1,24 @@
+database:
+  mongo:
+    uri: mongodb://${username}:${password}@${host}/zma-notification?authSource=admin
+grpc:
+  service:
+    user:
+      url: dhte-zma-user:5000
+kafka:
+  service:
+    brokers:
+      - dhte-kafka:9092
+events:
+  - name: UserCreatedEvent
+    providers:
+      - provider: novu
+        kind: email
+        workflowId: user-created
+      - provider: zalo
+        kind: sms
+  - name: InAppEvent
+    providers:
+      - provider: novu
+        kind: in-app
+        workflowId: in-app
