@@ -69,6 +69,7 @@ services:
     ports:
       - '3004:3000' # HTTP GraphQL
       - '4004:4000' # TCP Microservice
+      - '5004:5000' # TCP Microservice
     env_file:
       - ../../apps/zma-fns/.env
     networks:

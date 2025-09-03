@@ -1,7 +1,7 @@
 grpc:
   service:
     user:
-      url: dhte-zma-user:5007
+      url: dhte-zma-user:5000
 maxLoginAttempts: 5
 passwordPolicy:
   minLength: 8

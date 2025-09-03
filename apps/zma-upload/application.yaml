@@ -1,7 +1,7 @@
 grpc:
   service:
     storage:
-      url: dhte-zma-storage:5005
+      url: dhte-zma-storage:5000
 cdn:
   host: https://dev-cdn.passiontech.xyz
 buckets:

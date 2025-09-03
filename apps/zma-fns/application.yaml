@@ -5,4 +5,4 @@ grpc:
   url: localhost:5000
   service:
     user:
-      url: dhte-zma-user:5007
+      url: dhte-zma-user:5000
