@@ -9,18 +9,12 @@ const hiveToken = process.env.HIVE_TOKEN;
 
 const EXCLUDE_SERVICES = [
   'zma-sample',
-  'zma-tracking',
-  'zma-employee',
-  'zma-maintenance',
-  'zma-ticket',
-  'zma-ipn',
-  'zma-webhook',
 ];
 
 // Using to retry failed services
 const RETRY_SERVICES = [];
 
-const SCHEMA_URL = 'https://graphql-schema.passiontech.xyz';
+const SCHEMA_URL = 'http://localhost:4040';
 
 const DELAY_BETWEEN_FETCHES = 1000; // 1 second
 const DELAY_BETWEEN_PUBLISHES = 3000; // 3 seconds
