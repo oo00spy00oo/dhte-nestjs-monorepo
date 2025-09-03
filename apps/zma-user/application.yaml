@@ -6,7 +6,7 @@ kafka:
     brokers:
       - dhte-kafka:9092
 grpc:
-  url: localhost:5000
+  url: 0.0.0.0:5000
   service:
     organization:
       url: localhost:5010

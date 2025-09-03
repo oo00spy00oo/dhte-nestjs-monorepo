@@ -5,7 +5,7 @@ meilisearch:
   url: https://meilisearch-nonprod.passiontech.dev/
   apiKey: ${apiKey}
 grpc:
-  url: localhost:5000
+  url: 0.0.0.0:5000
 r2:
   dictionaryImagesBucket: larva-dictionary-images
   dictionaryAudiosBucket: larva-dictionary-audios
