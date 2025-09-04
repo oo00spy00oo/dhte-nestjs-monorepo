@@ -31,16 +31,6 @@ export class WsGateWayUserOutput {
   userName: string;
 }
 
-class WsGateWayUserInRoomOutput {
-  @IsString()
-  @IsNotEmpty()
-  id: string;
-
-  @IsString()
-  @IsNotEmpty()
-  name: string;
-}
-
 export class WsGateWayUsersInRoomOutput {
   @IsOptional()
   @IsString()
@@ -48,8 +38,8 @@ export class WsGateWayUsersInRoomOutput {
 
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => WsGateWayUserInRoomOutput)
-  users: WsGateWayUserInRoomOutput[];
+  @Type(() => WsGateWayUserOutput)
+  users: WsGateWayUserOutput[];
 }
 
 export class WsGateWayNewProducerOutput {
@@ -60,16 +50,6 @@ export class WsGateWayNewProducerOutput {
   @IsString()
   @IsNotEmpty()
   userId: string;
-}
-
-export class WsGateWayNewUserOutput {
-  @IsString()
-  @IsNotEmpty()
-  socketId: string;
-
-  @IsString()
-  @IsNotEmpty()
-  userName: string;
 }
 
 export class WsGateWayHandleCreateTransportOutput {
