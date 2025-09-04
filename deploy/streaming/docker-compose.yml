@@ -4,7 +4,7 @@ services:
   # ========================================
   zma-meeting:
     build:
-      context: .
+      context: ../../
       dockerfile: Dockerfile
     container_name: dhte-zma-meeting
     restart: unless-stopped
@@ -22,5 +22,6 @@ services:
   #   timeout: 10s
   #   retries: 3
 networks:
-  dhte-streaming-network:
+  dhte-network:
     external: true
+ 
