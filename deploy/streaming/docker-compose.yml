@@ -21,6 +21,27 @@ services:
   #   interval: 30s
   #   timeout: 10s
   #   retries: 3
+  zma-signaling:
+    build:
+      context: ../../
+      dockerfile: Dockerfile.signaling
+    container_name: dhte-zma-signaling
+    restart: unless-stopped
+    ports:
+      - '3008:3000' # HTTP GraphQL
+      - '4008:4000' # TCP Microservice
+      - "40000-40500:40000-40500/udp"
+      - "40000-40500:40000-40500/tcp"
+    env_file:
+      - ../../apps/zma-signaling/.env
+    networks:
+      - dhte-network
+    command: ['dumb-init', 'node', 'dist/apps/zma-signaling/main.js']
+    # healthcheck:
+  #   test: ["CMD", "curl", "-f", "http://localhost:3008/health"]
+  #   interval: 30s
+  #   timeout: 10s
+  #   retries: 3
 networks:
   dhte-network:
     external: true

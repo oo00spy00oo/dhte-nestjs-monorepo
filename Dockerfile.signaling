@@ -1,0 +1,76 @@
+# Multi-stage build for NestJS zma-signaling service
+# Build stage
+FROM docker.io/node:24-alpine AS builder
+
+# Install system dependencies
+RUN apk --no-cache add \
+    procps \
+    dumb-init \
+    curl \
+    python3 \
+    py3-pip \
+    make \
+    g++ \
+    linux-headers \
+    && npm install -g pnpm@latest
+
+WORKDIR /app
+
+# Copy package files
+COPY package.json pnpm-lock.yaml ./
+COPY nx.json tsconfig.base.json ./
+
+# Copy source code
+COPY apps/ apps/
+COPY libs/ libs/
+COPY graphqls/ graphqls/
+
+# Set env for native compilation
+ENV PYTHON=/usr/bin/python3
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+
+# Install deps
+RUN pnpm install --unsafe-perm
+
+# Build mediasoup worker explicitly
+RUN cd node_modules/.pnpm/mediasoup@*/node_modules/mediasoup && npm run worker:build
+
+# Build only zma-signaling
+RUN pnpm nx build zma-signaling --verbose
+
+# Production stage
+FROM docker.io/node:24-alpine AS production
+
+RUN apk --no-cache add \
+    procps \
+    dumb-init \
+    curl
+
+WORKDIR /app
+
+# Copy only build output + deps
+COPY --from=builder /app/dist/apps/zma-signaling ./dist/apps/zma-signaling
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/pnpm-lock.yaml ./
+
+# Copy i18n if needed
+COPY --from=builder /app/libs/zma-i18n/src/i18n ./dist/i18n
+
+# Copy app config
+COPY --from=builder /app/apps/zma-signaling/application.yaml ./dist/apps/zma-signaling/
+
+# Set env
+ENV NODE_ENV=development \
+    HOST=0.0.0.0 \
+    PIDUSAGE_USE_PS=true
+
+# Non-root user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nestjs -u 1001
+RUN chown -R nestjs:nodejs /app
+USER nestjs
+
+
+# Start zma-signaling
+CMD ["node", "dist/apps/zma-signaling/main.js"]
