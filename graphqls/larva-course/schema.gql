@@ -56,23 +56,15 @@ type LarvaCourseServiceAnalyzeSentenceDetailOutput {
   status: String
 }
 
-"""
-Analyze Speaking Input
-"""
+"""Analyze Speaking Input"""
 input LarvaCourseServiceAnalyzeSpeakingGqlInput {
-  """
-  Lesson Speaking ID
-  """
+  """Lesson Speaking ID"""
   lessonSpeakingId: String!
 
-  """
-  Record
-  """
+  """Record"""
   record: String
 
-  """
-  Speech To Text
-  """
+  """Speech To Text"""
   speechToText: String!
 }
 
@@ -100,9 +92,7 @@ input LarvaCourseServiceChangeNameCollectionGqlInput {
   name: String!
 }
 
-"""
-The status of the course
-"""
+"""The status of the course"""
 enum LarvaCourseServiceCourseStatus {
   Active
   Deleted
@@ -111,9 +101,7 @@ enum LarvaCourseServiceCourseStatus {
   Published
 }
 
-"""
-Lesson
-"""
+"""Lesson"""
 input LarvaCourseServiceCreateLessonGqlInput {
   description: String
   image: String
@@ -121,42 +109,28 @@ input LarvaCourseServiceCreateLessonGqlInput {
   name: String!
   order: Float!
 
-  """
-  Array of sentence IDs
-  """
+  """Array of sentence IDs"""
   sentences: [String!]
   topicId: String!
 
-  """
-  Words
-  """
+  """Words"""
   words: [LessonWordInput!]
 }
 
-"""
-Create Sentence
-"""
+"""Create Sentence"""
 input LarvaCourseServiceCreateSentenceGqlInput {
-  """
-  Sentence Content
-  """
+  """Sentence Content"""
   content: String!
 
-  """
-  Pronunciation Text
-  """
+  """Pronunciation Text"""
   pronunciationText: String!
   status: LarvaCourseServiceCourseStatus! = Active
 
-  """
-  Translations
-  """
+  """Translations"""
   translations: [LarvaCourseServiceSentenceTranslationGqlInput!]!
 }
 
-"""
-Topic
-"""
+"""Topic"""
 input LarvaCourseServiceCreateTopicGqlInput {
   categoryCode: String!
   description: String!
@@ -202,9 +176,7 @@ type LarvaCourseServiceGeneralUserCollectionGqlOutput {
   words: [LarvaCourseServiceFavoriteWordGqlOutput!]
 }
 
-"""
-Get Nearly Lessons
-"""
+"""Get Nearly Lessons"""
 input LarvaCourseServiceGetNearlyLessonsGqlInput {
   total: Float!
 }
@@ -226,9 +198,7 @@ type LarvaCourseServiceHistoryLessonSpeakingGqlOutput {
   mark: Float
 }
 
-"""
-The status of the history lesson
-"""
+"""The status of the history lesson"""
 enum LarvaCourseServiceHistoryLessonStatus {
   Completed
   InProgress
@@ -243,9 +213,7 @@ type LarvaCourseServiceHistorySpeakingGqlOutput {
   tenantId: String
 }
 
-"""
-The language of the sentence
-"""
+"""The language of the sentence"""
 enum LarvaCourseServiceLanguage {
   En
   Vi
@@ -299,20 +267,14 @@ type LarvaCourseServiceLessonSpeakingGqlOutput {
 }
 
 type LarvaCourseServiceLessonsGqlOutput {
-  """
-  Array of found items
-  """
+  """Array of found items"""
   data: [LarvaCourseServiceLessonGqlOutput!]!
 
-  """
-  Total number of items
-  """
+  """Total number of items"""
   total: Int!
 }
 
-"""
-The level of difficulty
-"""
+"""The level of difficulty"""
 enum LarvaCourseServiceLevel {
   A1
   A2
@@ -322,68 +284,48 @@ enum LarvaCourseServiceLevel {
   C2
 }
 
-"""
-Search Collection of User
-"""
+"""Search Collection of User"""
 input LarvaCourseServiceSearchCollectionOfUserGqlInput {
-  """
-  Name
-  """
+  """Name"""
   name: String
 }
 
-"""
-Lesson
-"""
+"""Lesson"""
 input LarvaCourseServiceSearchLessonGqlInput {
   level: LarvaCourseServiceLevel
   name: String
   topicId: String
 }
 
-"""
-Lesson sentence
-"""
+"""Lesson sentence"""
 input LarvaCourseServiceSearchLessonSentenceGqlInput {
   content: String!
 }
 
-"""
-Lesson sentence
-"""
+"""Lesson sentence"""
 type LarvaCourseServiceSearchLessonSentenceGqlOutput {
   lessonSpeakingId: String
   sentence: LarvaCourseServiceSentenceGqlOutput
 }
 
-"""
-Lesson word
-"""
+"""Lesson word"""
 input LarvaCourseServiceSearchLessonWordGqlInput {
   word: String!
 }
 
-"""
-Lesson word
-"""
+"""Lesson word"""
 type LarvaCourseServiceSearchLessonWordGqlOutput {
   lessonSpeakingId: String
   word: LessonWordGqlOutput
 }
 
-"""
-Search Sentence
-"""
+"""Search Sentence"""
 input LarvaCourseServiceSearchSentenceGqlInput {
-  """
-  Sentence Content
-  """
+  """Sentence Content"""
   content: String
 }
 
-"""
-Topic
-"""
+"""Topic"""
 input LarvaCourseServiceSearchTopicGqlInput {
   categoryCode: String
   level: String
@@ -417,18 +359,12 @@ type LarvaCourseServiceSentenceOfCollectionGqlOutput {
   words: [LarvaCourseServiceSentenceWordOutput!]
 }
 
-"""
-Create Sentence Word
-"""
+"""Create Sentence Word"""
 input LarvaCourseServiceSentenceTranslationGqlInput {
-  """
-  Language
-  """
+  """Language"""
   language: LarvaCourseServiceLanguage!
 
-  """
-  Translation
-  """
+  """Translation"""
   translation: String!
 }
 
@@ -451,14 +387,10 @@ type LarvaCourseServiceSentenceWordOutput {
 }
 
 type LarvaCourseServiceSentencesGqlOutput {
-  """
-  Array of found items
-  """
+  """Array of found items"""
   data: [LarvaCourseServiceSentenceGqlOutput!]!
 
-  """
-  Total number of items
-  """
+  """Total number of items"""
   total: Int!
 }
 
@@ -510,20 +442,14 @@ type LarvaCourseServiceTopicOrderGqlOutput {
 }
 
 type LarvaCourseServiceTopicsGqlOutput {
-  """
-  Array of found items
-  """
+  """Array of found items"""
   data: [LarvaCourseServiceTopicGqlOutput!]!
 
-  """
-  Total number of items
-  """
+  """Total number of items"""
   total: Int!
 }
 
-"""
-Lesson
-"""
+"""Lesson"""
 input LarvaCourseServiceUpdateLessonGqlInput {
   description: String
   image: String
@@ -531,44 +457,30 @@ input LarvaCourseServiceUpdateLessonGqlInput {
   name: String
   order: Float
 
-  """
-  Array of sentence IDs
-  """
+  """Array of sentence IDs"""
   sentences: [String!]
   status: LarvaCourseServiceCourseStatus
 
-  """
-  Words
-  """
+  """Words"""
   words: [LessonWordInput!]
 }
 
-"""
-Update Sentence
-"""
+"""Update Sentence"""
 input LarvaCourseServiceUpdateSentenceGqlInput {
-  """
-  Sentence Content
-  """
+  """Sentence Content"""
   content: String
 
-  """
-  Pronunciation Text
-  """
+  """Pronunciation Text"""
   pronunciationText: String
   status: LarvaCourseServiceCourseStatus
 
-  """
-  Translations
-  """
+  """Translations"""
   translations: [LarvaCourseServiceSentenceTranslationGqlInput!]
   videos: [LarvaCourseSentenceVideoGqlInput!]
   words: [LarvaCourseWordOfSentencesGqlInput!]
 }
 
-"""
-Topic
-"""
+"""Topic"""
 input LarvaCourseServiceUpdateTopicGqlInput {
   description: String
   image: String
@@ -618,18 +530,12 @@ type LessonWordImageGqlOutput {
   url: String
 }
 
-"""
-Word Input
-"""
+"""Word Input"""
 input LessonWordInput {
-  """
-  Part of Speech
-  """
+  """Part of Speech"""
   partOfSpeech: String!
 
-  """
-  Word
-  """
+  """Word"""
   word: String!
 }
 
@@ -667,118 +573,54 @@ type LessonWordVideoGqlOutput {
 }
 
 type Mutation {
-  larvaCourseServiceAddItemsToUserCollection(
-    id: String!
-    input: LarvaCourseServiceChangeItemsOfCollectionGqlInput!
-  ): Boolean!
-  larvaCourseServiceAnalyzeSpeakingSentence(
-    input: LarvaCourseServiceAnalyzeSpeakingGqlInput!
-  ): LarvaCourseServiceAnalyzeGqlOutput!
-  larvaCourseServiceAnalyzeSpeakingWord(
-    input: LarvaCourseServiceAnalyzeSpeakingGqlInput!
-  ): LarvaCourseServiceAnalyzeGqlOutput!
-  larvaCourseServiceChangeNameUserCollection(
-    id: String!
-    input: LarvaCourseServiceChangeNameCollectionGqlInput!
-  ): Boolean!
+  larvaCourseServiceAddItemsToUserCollection(id: String!, input: LarvaCourseServiceChangeItemsOfCollectionGqlInput!): Boolean!
+  larvaCourseServiceAnalyzeSpeakingSentence(input: LarvaCourseServiceAnalyzeSpeakingGqlInput!): LarvaCourseServiceAnalyzeGqlOutput!
+  larvaCourseServiceAnalyzeSpeakingWord(input: LarvaCourseServiceAnalyzeSpeakingGqlInput!): LarvaCourseServiceAnalyzeGqlOutput!
+  larvaCourseServiceChangeNameUserCollection(id: String!, input: LarvaCourseServiceChangeNameCollectionGqlInput!): Boolean!
   larvaCourseServiceCreateLessonSpeaking(input: LarvaCourseServiceCreateLessonGqlInput!): Boolean!
   larvaCourseServiceCreateSentence(input: LarvaCourseServiceCreateSentenceGqlInput!): Boolean!
   larvaCourseServiceCreateTopic(input: LarvaCourseServiceCreateTopicGqlInput!): Boolean!
-  larvaCourseServiceCreateUserCollection(
-    input: LarvaCourseServiceCreateUserCollectionGqlInput!
-  ): Boolean!
+  larvaCourseServiceCreateUserCollection(input: LarvaCourseServiceCreateUserCollectionGqlInput!): Boolean!
   larvaCourseServiceDeleteUserCollection(id: String!): Boolean!
   larvaCourseServicePublishSentences(ids: [String!]!): Boolean!
-  larvaCourseServiceRemoveItemsFromUserCollection(
-    id: String!
-    input: LarvaCourseServiceChangeItemsOfCollectionGqlInput!
-  ): Boolean!
-  larvaCourseServiceUpdateLessonSpeaking(
-    id: String!
-    input: LarvaCourseServiceUpdateLessonGqlInput!
-  ): Boolean!
-  larvaCourseServiceUpdateSentence(
-    id: String!
-    input: LarvaCourseServiceUpdateSentenceGqlInput!
-  ): Boolean!
-  larvaCourseServiceUpdateTopic(
-    id: String!
-    input: LarvaCourseServiceUpdateTopicGqlInput!
-  ): Boolean!
+  larvaCourseServiceRemoveItemsFromUserCollection(id: String!, input: LarvaCourseServiceChangeItemsOfCollectionGqlInput!): Boolean!
+  larvaCourseServiceUpdateLessonSpeaking(id: String!, input: LarvaCourseServiceUpdateLessonGqlInput!): Boolean!
+  larvaCourseServiceUpdateSentence(id: String!, input: LarvaCourseServiceUpdateSentenceGqlInput!): Boolean!
+  larvaCourseServiceUpdateTopic(id: String!, input: LarvaCourseServiceUpdateTopicGqlInput!): Boolean!
 }
 
 input Pagination {
-  """
-  Maximum number of items to return (1-100)
-  """
+  """Maximum number of items to return (1-100)"""
   limit: Int = 10
 
-  """
-  Number of items to skip (offset)
-  """
+  """Number of items to skip (offset)"""
   skip: Int = 0
 
-  """
-  Multiple sort fields for complex sorting
-  """
+  """Multiple sort fields for complex sorting"""
   sort: [SortField!]
 }
 
 type Query {
   larvaCourseServiceAllSentences(pagination: Pagination!): [LarvaCourseServiceSentenceGqlOutput!]!
   larvaCourseServiceCollection(id: String!): LarvaCourseServiceDetailUserCollectionGqlOutput!
-  larvaCourseServiceCollections(
-    ids: [String!]!
-    pagination: Pagination!
-  ): [LarvaCourseServiceGeneralUserCollectionGqlOutput!]!
-  larvaCourseServiceCollectionsOfUser(
-    pagination: Pagination!
-  ): [LarvaCourseServiceGeneralUserCollectionGqlOutput!]!
-  larvaCourseServiceGetLessonSentences(
-    input: LarvaCourseServiceSearchLessonSentenceGqlInput!
-    pagination: Pagination!
-  ): [LarvaCourseServiceSearchLessonSentenceGqlOutput!]!
+  larvaCourseServiceCollections(ids: [String!]!, pagination: Pagination!): [LarvaCourseServiceGeneralUserCollectionGqlOutput!]!
+  larvaCourseServiceCollectionsOfUser(pagination: Pagination!): [LarvaCourseServiceGeneralUserCollectionGqlOutput!]!
+  larvaCourseServiceGetLessonSentences(input: LarvaCourseServiceSearchLessonSentenceGqlInput!, pagination: Pagination!): [LarvaCourseServiceSearchLessonSentenceGqlOutput!]!
   larvaCourseServiceGetLessonSpeakingSummary(id: String!): LarvaCourseServiceHistoryLessonGqlOutput!
-  larvaCourseServiceGetLessonWords(
-    input: LarvaCourseServiceSearchLessonWordGqlInput!
-    pagination: Pagination!
-  ): [LarvaCourseServiceSearchLessonWordGqlOutput!]!
-  larvaCourseServiceGetNearlyLessons(
-    input: LarvaCourseServiceGetNearlyLessonsGqlInput!
-  ): [LarvaCourseServiceLessonGqlOutput!]!
+  larvaCourseServiceGetLessonWords(input: LarvaCourseServiceSearchLessonWordGqlInput!, pagination: Pagination!): [LarvaCourseServiceSearchLessonWordGqlOutput!]!
+  larvaCourseServiceGetNearlyLessons(input: LarvaCourseServiceGetNearlyLessonsGqlInput!): [LarvaCourseServiceLessonGqlOutput!]!
   larvaCourseServiceLessonById(id: String!): LarvaCourseServiceLessonGqlOutput!
   larvaCourseServiceLessonSpeakingById(id: String!): LarvaCourseServiceLessonGqlOutput!
-  larvaCourseServiceLessonsByIds(
-    ids: [String!]!
-    pagination: Pagination!
-  ): [LarvaCourseServiceLessonGqlOutput!]!
-  larvaCourseServiceSearchCollectionsOfUser(
-    input: LarvaCourseServiceSearchCollectionOfUserGqlInput!
-    pagination: Pagination!
-  ): [LarvaCourseServiceGeneralUserCollectionGqlOutput!]!
-  larvaCourseServiceSearchLessonsSpeaking(
-    input: LarvaCourseServiceSearchLessonGqlInput!
-    pagination: Pagination!
-  ): LarvaCourseServiceLessonsGqlOutput!
-  larvaCourseServiceSearchSentences(
-    input: LarvaCourseServiceSearchSentenceGqlInput!
-    pagination: Pagination!
-  ): LarvaCourseServiceSentencesGqlOutput!
-  larvaCourseServiceSearchTopics(
-    input: LarvaCourseServiceSearchTopicGqlInput!
-    pagination: Pagination!
-  ): LarvaCourseServiceTopicsGqlOutput!
+  larvaCourseServiceLessonsByIds(ids: [String!]!, pagination: Pagination!): [LarvaCourseServiceLessonGqlOutput!]!
+  larvaCourseServiceSearchCollectionsOfUser(input: LarvaCourseServiceSearchCollectionOfUserGqlInput!, pagination: Pagination!): [LarvaCourseServiceGeneralUserCollectionGqlOutput!]!
+  larvaCourseServiceSearchLessonsSpeaking(input: LarvaCourseServiceSearchLessonGqlInput!, pagination: Pagination!): LarvaCourseServiceLessonsGqlOutput!
+  larvaCourseServiceSearchSentences(input: LarvaCourseServiceSearchSentenceGqlInput!, pagination: Pagination!): LarvaCourseServiceSentencesGqlOutput!
+  larvaCourseServiceSearchTopics(input: LarvaCourseServiceSearchTopicGqlInput!, pagination: Pagination!): LarvaCourseServiceTopicsGqlOutput!
   larvaCourseServiceSentence(id: String!): LarvaCourseServiceSentenceGqlOutput!
-  larvaCourseServiceSentences(
-    ids: [String!]!
-    pagination: Pagination!
-  ): [LarvaCourseServiceSentenceGqlOutput!]!
+  larvaCourseServiceSentences(ids: [String!]!, pagination: Pagination!): [LarvaCourseServiceSentenceGqlOutput!]!
   larvaCourseServiceSubjects: [LarvaCourseServiceSubjectsGqlOutput!]!
   larvaCourseServiceTopicById(id: String!): LarvaCourseServiceTopicGqlOutput!
-  larvaCourseServiceTopicsByIds(
-    ids: [String!]!
-    pagination: Pagination!
-  ): [LarvaCourseServiceTopicGqlOutput!]!
+  larvaCourseServiceTopicsByIds(ids: [String!]!, pagination: Pagination!): [LarvaCourseServiceTopicGqlOutput!]!
 }
 
 input SentenceInput {
@@ -786,23 +628,17 @@ input SentenceInput {
   sentenceId: String!
 }
 
-"""
-Sort direction for ordering query results
-"""
+"""Sort direction for ordering query results"""
 enum SortDirection {
   ASC
   DESC
 }
 
 input SortField {
-  """
-  Sort direction for this field
-  """
+  """Sort direction for this field"""
   direction: SortDirection! = ASC
 
-  """
-  Field name to sort by
-  """
+  """Field name to sort by"""
   field: String!
 }
 

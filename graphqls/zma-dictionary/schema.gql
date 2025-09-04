@@ -160,9 +160,7 @@ input DictionaryServiceCrawlWordsGqlInput {
   words: [DictionaryServiceCrawlWordGqlInput!]!
 }
 
-"""
-Dictionary
-"""
+"""Dictionary"""
 input DictionaryServiceCreateDictionaryGqlInput {
   etymology: String
   images: [DictionaryImageInput!]
@@ -176,9 +174,7 @@ input DictionaryServiceCreateDictionaryGqlInput {
   wordTranslations: [DictionaryWordTranslationInput!]
 }
 
-"""
-Dictionary
-"""
+"""Dictionary"""
 type DictionaryServiceDictionaryGqlOutput {
   createdAt: DateTime
   deletedAt: DateTime
@@ -199,9 +195,7 @@ type DictionaryServiceDictionaryGqlOutput {
   wordTranslations: [DictionaryWordTranslationOutput!]
 }
 
-"""
-The status of the dictionary entry
-"""
+"""The status of the dictionary entry"""
 enum DictionaryServiceDictionaryStatus {
   Active
   Deleted
@@ -272,68 +266,42 @@ enum LanguageEnum {
 
 type Mutation {
   dictionaryServiceCrawlWord(input: DictionaryServiceCrawlWordGqlInput!): Boolean!
-  dictionaryServiceCrawlWords(
-    input: DictionaryServiceCrawlWordsGqlInput!
-  ): [DictionaryServiceCrawlWordOutput!]!
+  dictionaryServiceCrawlWords(input: DictionaryServiceCrawlWordsGqlInput!): [DictionaryServiceCrawlWordOutput!]!
   dictionaryServiceCreateDictionary(input: DictionaryServiceCreateDictionaryGqlInput!): Boolean!
   dictionaryServiceDeleteDictionaries(ids: [String!]!): Boolean!
   dictionaryServiceEnableDictionaries(ids: [String!]!): Boolean!
-  dictionaryServiceUpdateDictionary(
-    id: String!
-    input: DictionaryServiceUpdateDictionaryGqlInput!
-  ): Boolean!
+  dictionaryServiceUpdateDictionary(id: String!, input: DictionaryServiceUpdateDictionaryGqlInput!): Boolean!
 }
 
 input Pagination {
-  """
-  Maximum number of items to return (1-100)
-  """
+  """Maximum number of items to return (1-100)"""
   limit: Int = 10
 
-  """
-  Number of items to skip (offset)
-  """
+  """Number of items to skip (offset)"""
   skip: Int = 0
 
-  """
-  Multiple sort fields for complex sorting
-  """
+  """Multiple sort fields for complex sorting"""
   sort: [SortField!]
 }
 
 type Query {
   dictionaryServiceAllDictionaries(input: Pagination!): [DictionaryServiceDictionaryGqlOutput!]!
-  dictionaryServiceDictionaries(
-    ids: [String!]!
-    pagination: Pagination!
-  ): [DictionaryServiceDictionaryGqlOutput!]!
+  dictionaryServiceDictionaries(ids: [String!]!, pagination: Pagination!): [DictionaryServiceDictionaryGqlOutput!]!
   dictionaryServiceDictionary(id: String!): DictionaryServiceDictionaryGqlOutput!
-  dictionaryServiceSearchDictionaries(
-    input: DictionaryServiceSearchDictionariesInput!
-    pagination: Pagination!
-  ): [DictionaryServiceDictionaryGqlOutput!]!
-  dictionaryServiceSearchDictionariesByWordAndPos(
-    input: DictionaryServiceSearchManyByWordAndPosInput!
-    pagination: Pagination!
-  ): [DictionaryServiceDictionaryGqlOutput!]!
+  dictionaryServiceSearchDictionaries(input: DictionaryServiceSearchDictionariesInput!, pagination: Pagination!): [DictionaryServiceDictionaryGqlOutput!]!
+  dictionaryServiceSearchDictionariesByWordAndPos(input: DictionaryServiceSearchManyByWordAndPosInput!, pagination: Pagination!): [DictionaryServiceDictionaryGqlOutput!]!
 }
 
-"""
-Sort direction for ordering query results
-"""
+"""Sort direction for ordering query results"""
 enum SortDirection {
   ASC
   DESC
 }
 
 input SortField {
-  """
-  Sort direction for this field
-  """
+  """Sort direction for this field"""
   direction: SortDirection! = ASC
 
-  """
-  Field name to sort by
-  """
+  """Field name to sort by"""
   field: String!
 }

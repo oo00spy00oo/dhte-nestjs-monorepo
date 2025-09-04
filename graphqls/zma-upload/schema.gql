@@ -5,9 +5,7 @@
 directive @upper on FIELD_DEFINITION
 
 type Mutation {
-  uploadServiceCompleteUpload(
-    input: UploadServiceCompleteGqlInput!
-  ): UploadServiceCompleteGqlOutput!
+  uploadServiceCompleteUpload(input: UploadServiceCompleteGqlInput!): UploadServiceCompleteGqlOutput!
   uploadServiceRequestUpload(input: UploadServiceRequestGqlInput!): UploadServiceRequestGqlOutput!
 }
 
@@ -15,9 +13,7 @@ type Query {
   uploadTest: String!
 }
 
-"""
-Available ZMA microservices for inter-service communication
-"""
+"""Available ZMA microservices for inter-service communication"""
 enum ServiceName {
   AUTH
   BOOKING

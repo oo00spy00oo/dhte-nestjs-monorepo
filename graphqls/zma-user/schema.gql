@@ -11,9 +11,7 @@ scalar DateTime
 
 type Mutation {
   userServiceCreateAgency(input: UserServiceCreateBasicUserGqlInput!): UserServiceUserGqlOutput!
-  userServiceCreateOrganizationAdmin(
-    input: UserServiceCreateUserGqlInput!
-  ): UserServiceUserGqlOutput!
+  userServiceCreateOrganizationAdmin(input: UserServiceCreateUserGqlInput!): UserServiceUserGqlOutput!
   userServiceCreateTenant(input: UserServiceCreateTenantGqlInput!): UserServiceTenantGqlOutput!
   userServiceCreateTenantAdmin(input: UserServiceCreateUserGqlInput!): UserServiceUserGqlOutput!
   userServiceDeleteUser: Boolean!
@@ -26,65 +24,42 @@ type Mutation {
 }
 
 input Pagination {
-  """
-  Maximum number of items to return (1-100)
-  """
+  """Maximum number of items to return (1-100)"""
   limit: Int = 10
 
-  """
-  Number of items to skip (offset)
-  """
+  """Number of items to skip (offset)"""
   skip: Int = 0
 
-  """
-  Multiple sort fields for complex sorting
-  """
+  """Multiple sort fields for complex sorting"""
   sort: [SortField!]
 }
 
 type Query {
-  userServiceAdminAllTenant(
-    input: Pagination!
-    organizationId: String!
-  ): [UserServiceTenantGqlOutput!]!
+  userServiceAdminAllTenant(input: Pagination!, organizationId: String!): [UserServiceTenantGqlOutput!]!
   userServiceAllTenant(input: UserServiceGetTenantsGqlInput!): [UserServiceTenantGqlOutput!]!
   userServiceAllUserOfTenant(input: Pagination!): [UserServiceUserGqlOutput!]!
-  userServiceAllZaloUserOfTenant(
-    input: UserServiceGetZaloUsersGqlInput!
-  ): [UserServiceUserGqlOutput!]!
+  userServiceAllZaloUserOfTenant(input: UserServiceGetZaloUsersGqlInput!): [UserServiceUserGqlOutput!]!
   userServiceGetUserById: UserServiceUserGqlOutput!
   userServiceGetUserByIdForAdmin(id: String!): UserServiceUserGqlOutput!
   userServiceTenantByDomain(domain: String!): UserServiceTenantGqlOutput
   userServiceTenantById: UserServiceTenantGqlOutput!
   userServiceTenantIdFromDomain(domain: String!): String
   userServiceTenantOfUser: UserServiceTenantGqlOutput!
-  userServiceUsersByType(
-    input: UserServiceFindUsersByTypeInput
-    pagination: Pagination!
-  ): UserServiceUsersGlqOutput!
-  userServiceUsersOfTenantForAdmin(
-    input: UserServiceFindUsersForAdminInput
-    pagination: Pagination!
-  ): UserServiceUsersGlqOutput!
+  userServiceUsersByType(input: UserServiceFindUsersByTypeInput, pagination: Pagination!): UserServiceUsersGlqOutput!
+  userServiceUsersOfTenantForAdmin(input: UserServiceFindUsersForAdminInput, pagination: Pagination!): UserServiceUsersGlqOutput!
 }
 
-"""
-Sort direction for ordering query results
-"""
+"""Sort direction for ordering query results"""
 enum SortDirection {
   ASC
   DESC
 }
 
 input SortField {
-  """
-  Sort direction for this field
-  """
+  """Sort direction for this field"""
   direction: SortDirection! = ASC
 
-  """
-  Field name to sort by
-  """
+  """Field name to sort by"""
   field: String!
 }
 
@@ -153,20 +128,14 @@ enum UserServiceGender {
 }
 
 input UserServiceGetTenantsGqlInput {
-  """
-  Maximum number of items to return (1-100)
-  """
+  """Maximum number of items to return (1-100)"""
   limit: Int = 10
   name: String
 
-  """
-  Number of items to skip (offset)
-  """
+  """Number of items to skip (offset)"""
   skip: Int = 0
 
-  """
-  Multiple sort fields for complex sorting
-  """
+  """Multiple sort fields for complex sorting"""
   sort: [SortField!]
   sortBy: UserServiceTenantSortField
   sortDirection: SortDirection
@@ -174,20 +143,14 @@ input UserServiceGetTenantsGqlInput {
 }
 
 input UserServiceGetZaloUsersGqlInput {
-  """
-  Maximum number of items to return (1-100)
-  """
+  """Maximum number of items to return (1-100)"""
   limit: Int = 10
   search: String
 
-  """
-  Number of items to skip (offset)
-  """
+  """Number of items to skip (offset)"""
   skip: Int = 0
 
-  """
-  Multiple sort fields for complex sorting
-  """
+  """Multiple sort fields for complex sorting"""
   sort: [SortField!]
   sortBy: UserServiceUserSortField
   sortDirection: SortDirection
@@ -280,9 +243,7 @@ input UserServiceUpdateTenantGqlInput {
   zaloAppSecret: String!
 }
 
-"""
-User
-"""
+"""User"""
 type UserServiceUserGqlOutput {
   avatarUrl: String
   birthDate: String
@@ -330,13 +291,9 @@ enum UserServiceUserType {
 }
 
 type UserServiceUsersGlqOutput {
-  """
-  Array of found items
-  """
+  """Array of found items"""
   data: [UserServiceUserGqlOutput!]!
 
-  """
-  Total number of items
-  """
+  """Total number of items"""
   total: Int!
 }
