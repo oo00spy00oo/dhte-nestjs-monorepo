@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { ZmaOpenAiModule } from '@zma-nestjs-monorepo/zma-utils';
 
 import { appConfiguration } from '../../configuration';
 import { AnalyzeAiServicesModule } from '../../services/ai-services/analyze/analyze.ai-service.module';
@@ -15,7 +16,7 @@ import { SignalingUseCase } from './signaling.use-case';
 import { SignalingWebSocketGateWay } from './signaling.websocket.gateway';
 
 @Module({
-  imports: [RedisModule, MediasoupModule, AnalyzeAiServicesModule],
+  imports: [RedisModule, MediasoupModule, AnalyzeAiServicesModule, ZmaOpenAiModule],
   providers: [
     SignalingWebSocketGateWay,
     SignalingUseCase,

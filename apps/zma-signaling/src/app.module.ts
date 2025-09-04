@@ -9,7 +9,6 @@ import {
 import { GqlAuthGuard, GuardModule } from '@zma-nestjs-monorepo/zma-decorators';
 import { ZmaI18nModule } from '@zma-nestjs-monorepo/zma-i18n';
 import { AppExceptionFilter } from '@zma-nestjs-monorepo/zma-middlewares';
-import { ZmaOpenAiModule } from '@zma-nestjs-monorepo/zma-utils';
 import { WinstonModule } from 'nest-winston';
 
 import { HealthModule } from './controllers/health/health.module';
@@ -35,7 +34,6 @@ import { SignalingUseCaseModule } from './use-cases/signaling/signaling.use-case
     HealthModule,
     GuardModule,
     ZmaI18nModule,
-    ZmaOpenAiModule,
     SignalingUseCaseModule,
   ],
   controllers: [],
