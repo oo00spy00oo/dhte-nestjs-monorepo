@@ -325,11 +325,14 @@ export class RoomManagerService {
     const adminSocketId = await this.getRoomAdmin(roomCode);
 
     const message: WsGateWayUsersInRoomOutput = {
-      users: connectedSocketIds.map((id) => ({
-        id,
-        name: this.socketManager.getSocketData(id)?.meta?.userName || 'Ẩn danh',
-      })),
-      adminSocketId,
+      users: connectedSocketIds.map((id) => {
+        const socketData = this.socketManager.getSocketData(id);
+        return {
+          userId: socketData?.meta.userId ?? '',
+          userName: socketData?.meta.userName ?? 'Ẩn danh',
+        };
+      }),
+      adminSocketId
     };
 
     server.to(roomCode).emit(WSGateWayOutgoingEvent.UsersInRoom, message);

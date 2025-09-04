@@ -25,9 +25,8 @@ import {
   WsGateWayConnectTransportOutput,
   WsGateWayConsumeOutput,
   WsGateWayHandleCreateTransportOutput,
-  WsGateWayNewUserOutput,
   WsGateWayProduceOutput,
-  WsGateWayUserOutput,
+  WsGateWayUserOutput
 } from '../../core/outputs';
 import { WSGateWayOutgoingEvent } from '../../core/types';
 
@@ -640,7 +639,8 @@ export class SignalingUseCase {
 
       // Notify user and handle join flow
       socket.emit(WSGateWayOutgoingEvent.YouAreAdmin);
-      await this.handleJoin({ socket, data: { roomCode, userName }, userId });
+      // await this.handleJoin({ socket, data: { roomCode, userName }, userId });
+      socket.emit(WSGateWayOutgoingEvent.ApprovedToJoin);
 
       // Send pending users list
       const updatedRoomData = await this.roomManager.getRoomFromRedis(roomCode);
@@ -860,9 +860,10 @@ export class SignalingUseCase {
         server: this.server,
       });
 
+      const socketData = this.socketManager.getSocketData(socket.id);
       // Notify existing users of new participant
-      const newUserMsg: WsGateWayNewUserOutput = {
-        socketId: socket.id,
+      const newUserMsg: WsGateWayUserOutput = {
+        userId: socketData?.meta.userId ?? '',
         userName,
       };
       socket.to(roomCode).emit(WSGateWayOutgoingEvent.NewUser, newUserMsg);
