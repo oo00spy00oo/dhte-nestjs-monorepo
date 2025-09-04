@@ -1,13 +1,13 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { WsException } from '@nestjs/websockets';
-import { MeetingServiceParticipantStatus } from '@zma-nestjs-monorepo/zma-types';
+import { AiServiceTranslateLanguageEnum, MeetingServiceParticipantStatus } from '@zma-nestjs-monorepo/zma-types';
 import { MeetingServiceRoomModel } from '@zma-nestjs-monorepo/zma-types/models/meeting';
 import { Server, Socket } from 'socket.io';
 
 import { appConfiguration } from '../../../configuration';
 import { RealTimeRoom, WsGatewayRoomMapValue } from '../../../core/models';
 import { WsGateWayUsersInRoomOutput } from '../../../core/outputs';
-import { AiServiceTranslateLanguageEnum, WSGateWayOutgoingEvent } from '../../../core/types';
+import { WSGateWayOutgoingEvent } from '../../../core/types';
 import { RedisService } from '../../../services/redis/redis.service';
 import { MutexUtil } from '../../../utils';
 

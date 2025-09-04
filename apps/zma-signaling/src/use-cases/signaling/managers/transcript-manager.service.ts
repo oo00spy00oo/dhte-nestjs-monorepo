@@ -1,11 +1,12 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { AiServiceTranslateLanguageEnum } from '@zma-nestjs-monorepo/zma-types';
 import { OpenAiService } from '@zma-nestjs-monorepo/zma-utils';
 import { Server, Socket } from 'socket.io';
 
 import { WsGateWayHandleMessageInput, WsGateWayTranscriptInput } from '../../../core/inputs';
 import { RealTimeRoom } from '../../../core/models';
 import { WsGateWayTranscriptEnOutput } from '../../../core/outputs';
-import { AiServiceTranslateLanguageEnum, WSGateWayOutgoingEvent } from '../../../core/types';
+import { WSGateWayOutgoingEvent } from '../../../core/types';
 import { MutexUtil } from '../../../utils';
 
 import { RoomManagerService } from './room-manager.service';
@@ -158,7 +159,7 @@ export class TranscriptManagerService {
     socket,
   }: {
     targetLang: AiServiceTranslateLanguageEnum;
-    sourceLang: string;
+    sourceLang: AiServiceTranslateLanguageEnum;
     socket: Socket;
   }): Promise<void> {
     try {

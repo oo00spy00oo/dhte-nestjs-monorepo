@@ -1,11 +1,9 @@
-import { MeetingServiceParticipantStatus } from '@zma-nestjs-monorepo/zma-types';
+import { AiServiceTranslateLanguageEnum, MeetingServiceParticipantStatus } from '@zma-nestjs-monorepo/zma-types';
 import { MeetingServiceRoomModel } from '@zma-nestjs-monorepo/zma-types/models/meeting';
 import { IsNotEmpty, IsString } from 'class-validator';
 import { types } from 'mediasoup';
 import { DtlsParameters } from 'mediasoup/node/lib/WebRtcTransportTypes';
 import { Socket } from 'socket.io';
-
-import { AiServiceTranslateLanguageEnum } from '../types';
 
 export class WSGateWayRequestJoinInput {
   @IsString()
