@@ -1,4 +1,3 @@
-// libs/zma-ai/src/lib/openai.service.ts
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AiServiceTranslateLanguageEnum } from '@zma-nestjs-monorepo/zma-types';
@@ -15,7 +14,7 @@ export class OpenAiService {
     });
   }
 
-  async translate({
+  async translateText({
     targetLanguage,
     text,
   }: {
