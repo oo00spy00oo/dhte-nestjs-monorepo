@@ -82,9 +82,7 @@ type UserServiceSocialProviders {
   google: UserServiceSocialProvider
 }
 
-"""
-User
-"""
+"""User"""
 type UserServiceUserGqlOutput {
   avatarUrl: String
   birthDate: String

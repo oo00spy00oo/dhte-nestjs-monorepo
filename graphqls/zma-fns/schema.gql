@@ -68,14 +68,10 @@ type FnsServiceFormGqlOutput {
 }
 
 type FnsServiceFormsGqlOutput {
-  """
-  Array of found items
-  """
+  """Array of found items"""
   data: [FnsServiceFormGqlOutput!]!
 
-  """
-  Total number of items
-  """
+  """Total number of items"""
   total: Int!
 }
 
@@ -123,14 +119,10 @@ type FnsServiceSurveyQuestionGqlOutput {
 }
 
 type FnsServiceSurveysGqlOutput {
-  """
-  Array of found items
-  """
+  """Array of found items"""
   data: [FnsServiceSurveyGqlOutput!]!
 
-  """
-  Total number of items
-  """
+  """Total number of items"""
   total: Int!
 }
 
@@ -168,56 +160,32 @@ type FnsServiceUserResponseGqlOutput {
 }
 
 type FnsServiceUserResponsesGqlOutput {
-  """
-  Array of found items
-  """
+  """Array of found items"""
   data: [FnsServiceUserResponseGqlOutput!]!
 
-  """
-  Total number of items
-  """
+  """Total number of items"""
   total: Int!
 }
 
 type Mutation {
   fnsServiceCreateFormForAdmin(input: FnsServiceCreateFormGqlInput!): FnsServiceFormGqlOutput!
   fnsServiceCreateSurveyForAdmin(input: FnsServiceCreateSurveyGqlInput!): FnsServiceSurveyGqlOutput!
-  fnsServiceCreateUserResponseToForm(
-    input: FnsServiceCreateUserResponseFormGqlInput!
-  ): FnsServiceUserResponseGqlOutput!
-  fnsServiceCreateUserResponseToFormForAnonymous(
-    input: FnsServiceCreateUserResponseFormGqlInput!
-  ): FnsServiceUserResponseGqlOutput!
-  fnsServiceCreateUserResponseToSurvey(
-    input: FnsServiceCreateUserResponseSurveyGqlInput!
-  ): FnsServiceUserResponseGqlOutput!
-  fnsServiceCreateUserResponseToSurveyForAnonymous(
-    input: FnsServiceCreateUserResponseSurveyGqlInput!
-  ): FnsServiceUserResponseGqlOutput!
-  fnsServiceUpdateFormForAdmin(
-    id: String!
-    input: FnsServiceUpdateFormGqlInput!
-  ): FnsServiceFormGqlOutput!
-  fnsServiceUpdateSurveyForAdmin(
-    id: String!
-    input: FnsServiceUpdateSurveyGqlInput!
-  ): FnsServiceSurveyGqlOutput!
+  fnsServiceCreateUserResponseToForm(input: FnsServiceCreateUserResponseFormGqlInput!): FnsServiceUserResponseGqlOutput!
+  fnsServiceCreateUserResponseToFormForAnonymous(input: FnsServiceCreateUserResponseFormGqlInput!): FnsServiceUserResponseGqlOutput!
+  fnsServiceCreateUserResponseToSurvey(input: FnsServiceCreateUserResponseSurveyGqlInput!): FnsServiceUserResponseGqlOutput!
+  fnsServiceCreateUserResponseToSurveyForAnonymous(input: FnsServiceCreateUserResponseSurveyGqlInput!): FnsServiceUserResponseGqlOutput!
+  fnsServiceUpdateFormForAdmin(id: String!, input: FnsServiceUpdateFormGqlInput!): FnsServiceFormGqlOutput!
+  fnsServiceUpdateSurveyForAdmin(id: String!, input: FnsServiceUpdateSurveyGqlInput!): FnsServiceSurveyGqlOutput!
 }
 
 input Pagination {
-  """
-  Maximum number of items to return (1-100)
-  """
+  """Maximum number of items to return (1-100)"""
   limit: Int = 10
 
-  """
-  Number of items to skip (offset)
-  """
+  """Number of items to skip (offset)"""
   skip: Int = 0
 
-  """
-  Multiple sort fields for complex sorting
-  """
+  """Multiple sort fields for complex sorting"""
   sort: [SortField!]
 }
 
@@ -230,39 +198,25 @@ type Query {
   fnsServiceGetSurveyByType(type: SurveyType!): FnsServiceSurveyGqlOutput!
   fnsServiceGetSurveysForAdmin(pagination: Pagination!): FnsServiceSurveysGqlOutput!
   fnsServiceGetUserResponseByIdForAdmin(id: String!): FnsServiceUserResponseGqlOutput!
-  fnsServiceGetUserResponsesToFormForAdmin(
-    input: FnsServiceFindUserResponsesToFormGqlInput!
-    pagination: Pagination!
-  ): FnsServiceUserResponsesGqlOutput!
-  fnsServiceGetUserResponsesToSurveyForAdmin(
-    input: FnsServiceFindUserResponsesToSurveyGqlInput!
-    pagination: Pagination!
-  ): FnsServiceUserResponsesGqlOutput!
+  fnsServiceGetUserResponsesToFormForAdmin(input: FnsServiceFindUserResponsesToFormGqlInput!, pagination: Pagination!): FnsServiceUserResponsesGqlOutput!
+  fnsServiceGetUserResponsesToSurveyForAdmin(input: FnsServiceFindUserResponsesToSurveyGqlInput!, pagination: Pagination!): FnsServiceUserResponsesGqlOutput!
 }
 
-"""
-Sort direction for ordering query results
-"""
+"""Sort direction for ordering query results"""
 enum SortDirection {
   ASC
   DESC
 }
 
 input SortField {
-  """
-  Sort direction for this field
-  """
+  """Sort direction for this field"""
   direction: SortDirection! = ASC
 
-  """
-  Field name to sort by
-  """
+  """Field name to sort by"""
   field: String!
 }
 
-"""
-Type of the survey question
-"""
+"""Type of the survey question"""
 enum SurveyQuestionType {
   CTA
   MultipleChoice
@@ -272,9 +226,7 @@ enum SurveyQuestionType {
   YesNo
 }
 
-"""
-Type of the survey
-"""
+"""Type of the survey"""
 enum SurveyType {
   CustomerEffortScore
   CustomerSatisfactionScore
@@ -285,9 +237,7 @@ enum SurveyType {
   UserInterview
 }
 
-"""
-UI Template for the survey question
-"""
+"""UI Template for the survey question"""
 enum SurveyUiTemplate {
   CTA
   Default

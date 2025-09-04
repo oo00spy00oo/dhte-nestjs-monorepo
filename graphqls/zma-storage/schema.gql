@@ -13,9 +13,7 @@ type Query {
   storageServiceGetFileMetadata(id: String!): StorageServiceFileMetadataGqlOutput!
 }
 
-"""
-Available ZMA microservices for inter-service communication
-"""
+"""Available ZMA microservices for inter-service communication"""
 enum ServiceName {
   AUTH
   BOOKING

@@ -7,14 +7,24 @@ const { buildClientSchema, printSchema, getIntrospectionQuery } = require('graph
 
 const hiveToken = process.env.HIVE_TOKEN;
 
-const EXCLUDE_SERVICES = [
-  'zma-sample',
-];
+const EXCLUDE_SERVICES = ['zma-sample', 'zma-signaling'];
 
 // Using to retry failed services
 const RETRY_SERVICES = [];
 
-const SCHEMA_URL = 'http://localhost:4040';
+// Map of schema URLs for each service
+const SCHEMA_URL_MAP = {
+  'larva-course': 'http://localhost:3001',
+  'zma-auth': 'http://localhost:3002',
+  'zma-dictionary': 'http://localhost:3003',
+  'zma-fns': 'http://localhost:3004',
+  'zma-storage': 'http://localhost:3005',
+  'zma-upload': 'http://localhost:3006',
+  'zma-user': 'http://localhost:3007',
+  'zma-meeting': 'http://localhost:3008',
+  'zma-notification': 'http://localhost:3009',
+  // Add more services and their URLs here
+};
 
 const DELAY_BETWEEN_FETCHES = 1000; // 1 second
 const DELAY_BETWEEN_PUBLISHES = 3000; // 3 seconds
@@ -46,7 +56,12 @@ function getServiceNames() {
  * Fetch introspection from service
  */
 async function fetchIntrospection(serviceName) {
-  const response = await fetch(`${SCHEMA_URL}/${serviceName}`, {
+  const schemaUrl = SCHEMA_URL_MAP[serviceName];
+  if (!schemaUrl) {
+    throw new Error(`No schema URL found for service: ${serviceName}`);
+  }
+
+  const response = await fetch(`${schemaUrl}/graphql`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query: getIntrospectionQuery() }),
@@ -74,9 +89,11 @@ ${printSchema(schema)}`;
 
   const dirPath = path.join(process.cwd(), 'graphqls', serviceName);
   await fs.mkdir(dirPath, { recursive: true });
+  console.log(`Directory created or already exists: ${dirPath}`);
 
   const schemaPath = path.join(dirPath, 'schema.gql');
   await fs.writeFile(schemaPath, sdl);
+  console.log(`Schema written to file: ${schemaPath}`);
 }
 
 /**
@@ -132,7 +149,7 @@ function publishToHive(serviceName) {
     `pnpm hive schema:publish "graphqls/${serviceName}/schema.gql"`,
     `--registry.accessToken "${hiveToken}"`,
     `--service "${serviceName}"`,
-    `--url "http://${serviceName}:3000/graphql"`,
+    `--url "${SCHEMA_URL_MAP[serviceName]}/graphql"`,
   ].join(' ');
 
   execSync(cmd, { stdio: 'inherit' });
