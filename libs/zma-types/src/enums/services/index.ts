@@ -6,8 +6,8 @@
  */
 
 // User and account management
-export * from './user.enum';
 export * from './tenant.enum';
+export * from './user.enum';
 
 // Organization structure
 export * from './branch.enum';
@@ -21,6 +21,9 @@ export * from './feature-flag.enum';
 export * from './notification-provider.enum';
 
 // Scheduling and attendance
+export * from './checkin-method.enum';
 export * from './meeting.enum';
 export * from './recurrence-type.enum';
-export * from './checkin-method.enum';
+
+// AI services
+export * from './ai-service.enum';

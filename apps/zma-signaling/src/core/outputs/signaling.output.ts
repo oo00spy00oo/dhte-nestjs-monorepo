@@ -1,3 +1,4 @@
+import { AiServiceTranslateLanguageEnum } from '@zma-nestjs-monorepo/zma-types';
 import { Type } from 'class-transformer';
 import {
   IsArray,
@@ -8,8 +9,6 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { types } from 'mediasoup';
-
-import { AiServiceTranslateLanguageEnum } from '../types';
 
 export class MediaSoupServiceGetListenIpsOutput {
   @IsString()

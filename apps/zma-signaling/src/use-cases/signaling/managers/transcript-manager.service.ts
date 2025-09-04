@@ -1,11 +1,12 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { AiServiceTranslateLanguageEnum } from '@zma-nestjs-monorepo/zma-types';
+import { OpenAiService } from '@zma-nestjs-monorepo/zma-utils';
 import { Server, Socket } from 'socket.io';
 
 import { WsGateWayHandleMessageInput, WsGateWayTranscriptInput } from '../../../core/inputs';
 import { RealTimeRoom } from '../../../core/models';
 import { WsGateWayTranscriptEnOutput } from '../../../core/outputs';
-import { AiServiceTranslateLanguageEnum, WSGateWayOutgoingEvent } from '../../../core/types';
-import { AnalyzeAiService } from '../../../services/ai-services/analyze/analyze.ai-service.service';
+import { WSGateWayOutgoingEvent } from '../../../core/types';
 import { MutexUtil } from '../../../utils';
 
 import { RoomManagerService } from './room-manager.service';
@@ -36,7 +37,7 @@ export class TranscriptManagerService {
   private transcriptMutex = new Map<string, Promise<void>>();
 
   constructor(
-    private readonly aiService: AnalyzeAiService,
+    private readonly aiService: OpenAiService,
     private readonly roomManager: RoomManagerService,
     private readonly socketManager: SocketManagerService,
   ) {}
@@ -158,7 +159,7 @@ export class TranscriptManagerService {
     socket,
   }: {
     targetLang: AiServiceTranslateLanguageEnum;
-    sourceLang: string;
+    sourceLang: AiServiceTranslateLanguageEnum;
     socket: Socket;
   }): Promise<void> {
     try {
@@ -416,9 +417,9 @@ export class TranscriptManagerService {
   }): Promise<void> {
     try {
       // Perform AI translation
-      const { message: translatedText } = await this.aiService.translateText({
-        message: vnText,
-        language: roomRtState.targetLang,
+      const translatedText = await this.aiService.translateText({
+        targetLanguage: roomRtState.targetLang,
+        text: vnText,
       });
 
       if (!translatedText) {

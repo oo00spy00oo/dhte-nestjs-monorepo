@@ -1,7 +1,5 @@
+import { AiServiceTranslateLanguageEnum } from '@zma-nestjs-monorepo/zma-types';
 import { types } from 'mediasoup';
-
-import { AiServiceTranslateLanguageEnum } from '../types';
-
 export class RealTimeRoom {
   bufferVN: string;
   endpointTimer?: NodeJS.Timeout;
