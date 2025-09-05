@@ -261,7 +261,7 @@ export class MediasoupManagerService {
       if (roomCode && server) {
         const broadcastMsg: WsGateWayNewProducerOutput = {
           producerId: producer.id,
-          userId: socket.id,
+          userId: socketData.meta?.userId,
         };
 
         socket.to(roomCode).emit(WSGateWayOutgoingEvent.NewProducer, broadcastMsg);
@@ -372,18 +372,20 @@ export class MediasoupManagerService {
     server: Server;
   }): void {
     try {
-      const myProducers = this.socketManager.getSocketData(socket.id)?.producers || [];
+      const socketData = this.socketManager.getSocketData(socket.id);
+      const myProducers = socketData?.producers || [];
 
       // Process each peer efficiently
       peers.forEach((peerId) => {
         if (peerId === socket.id) return; // Skip self
 
         // Send existing peer producers to new user
-        const peerProducers = this.socketManager.getSocketData(peerId)?.producers || [];
+        const peerSocketData = this.socketManager.getSocketData(peerId);
+        const peerProducers = peerSocketData?.producers || [];
         peerProducers.forEach((producer) => {
           const message: WsGateWayNewProducerOutput = {
             producerId: producer.id,
-            userId: peerId,
+            userId: peerSocketData.meta?.userId,
           };
           // Add slight delay to prevent overwhelming the client
           setTimeout(() => {
@@ -395,7 +397,7 @@ export class MediasoupManagerService {
         myProducers.forEach((producer) => {
           const message: WsGateWayNewProducerOutput = {
             producerId: producer.id,
-            userId: socket.id,
+            userId: socketData.meta?.userId,
           };
           server.to(peerId).emit(WSGateWayOutgoingEvent.NewProducer, message);
         });
