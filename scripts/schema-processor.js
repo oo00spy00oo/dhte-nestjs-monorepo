@@ -21,8 +21,8 @@ const SCHEMA_URL_MAP = {
   'zma-storage': 'http://localhost:3005',
   'zma-upload': 'http://localhost:3006',
   'zma-user': 'http://localhost:3007',
-  'zma-meeting': 'http://localhost:3008',
-  'zma-notification': 'http://localhost:3009',
+  'zma-notification': 'http://localhost:3008',
+  'zma-meeting': 'http://localhost:3009',
   // Add more services and their URLs here
 };
 
