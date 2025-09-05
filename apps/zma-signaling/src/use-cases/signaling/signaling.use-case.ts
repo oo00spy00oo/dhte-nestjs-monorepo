@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { WebSocketServer, WsException } from '@nestjs/websockets';
-import { AiServiceTranslateLanguageEnum, MeetingServiceParticipantStatus } from '@zma-nestjs-monorepo/zma-types';
+import { MeetingServiceParticipantStatus } from '@zma-nestjs-monorepo/zma-types';
 import { MeetingServiceRoomModel } from '@zma-nestjs-monorepo/zma-types/models/meeting';
 import { OpenAiService } from '@zma-nestjs-monorepo/zma-utils';
 import { types } from 'mediasoup';
@@ -59,8 +59,6 @@ export class SignalingUseCase {
    * Used for connection health checks.
    */
   async handlePing(socket: Socket): Promise<{ pong: boolean }> {
-    const translatedText = await this.aiService.translateText({ text: 'Hello, world!', targetLanguage: AiServiceTranslateLanguageEnum.VI });
-    this.logger.debug(`Translated text: ${translatedText}`);
     this.logger.debug(`Ping from ${socket.id}`);
     return { pong: true };
   }
