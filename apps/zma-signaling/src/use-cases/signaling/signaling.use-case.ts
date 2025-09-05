@@ -1,7 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { WebSocketServer, WsException } from '@nestjs/websockets';
-import { MeetingServiceParticipantStatus } from '@zma-nestjs-monorepo/zma-types';
+import { AiServiceTranslateLanguageEnum, MeetingServiceParticipantStatus } from '@zma-nestjs-monorepo/zma-types';
 import { MeetingServiceRoomModel } from '@zma-nestjs-monorepo/zma-types/models/meeting';
+import { OpenAiService } from '@zma-nestjs-monorepo/zma-utils';
 import { types } from 'mediasoup';
 import { Server, Socket } from 'socket.io';
 
@@ -43,6 +44,7 @@ export class SignalingUseCase {
   @WebSocketServer() server: Server;
 
   constructor(
+    private readonly aiService: OpenAiService,
     private readonly socketManager: SocketManagerService,
     private readonly roomManager: RoomManagerService,
     private readonly mediasoupManager: MediasoupManagerService,
@@ -56,7 +58,9 @@ export class SignalingUseCase {
    * Handles ping requests with simple response.
    * Used for connection health checks.
    */
-  handlePing(socket: Socket): { pong: boolean } {
+  async handlePing(socket: Socket): Promise<{ pong: boolean }> {
+    const translatedText = await this.aiService.translateText({ text: 'Hello, world!', targetLanguage: AiServiceTranslateLanguageEnum.VI });
+    this.logger.debug(`Translated text: ${translatedText}`);
     this.logger.debug(`Ping from ${socket.id}`);
     return { pong: true };
   }
@@ -261,7 +265,8 @@ export class SignalingUseCase {
       });
 
       // Notify user of approval
-      userSocket.emit(WSGateWayOutgoingEvent.ApprovedToJoin);
+      const approvedUser: WsGateWayUserOutput = { userId, userName: userSocket.data.userName };
+      userSocket.emit(WSGateWayOutgoingEvent.ApprovedToJoin, approvedUser);
 
       this.logger.log(`Admin approved user ${userId} for room ${roomCode}`);
     } catch (err) {
