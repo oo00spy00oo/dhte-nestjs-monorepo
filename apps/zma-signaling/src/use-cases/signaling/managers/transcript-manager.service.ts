@@ -28,7 +28,7 @@ export class TranscriptManagerService {
   private readonly logger = new Logger(TranscriptManagerService.name);
 
   // Optimized timing constants for better user experience
-  private readonly PAUSE_MS = 100; // Time to wait before finalizing sentence
+  private readonly PAUSE_MS = 50; // Time to wait before finalizing sentence
   private readonly CLEAR_AFTER_MS = 3500; // Time to keep subtitles visible
 
   /**
