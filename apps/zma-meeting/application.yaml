@@ -1,4 +1,4 @@
 redis:
-  url: redis://dhte-redis:6379
+  url: redis://94.100.26.6:6379
 meeting:
   roomTtl: 86400

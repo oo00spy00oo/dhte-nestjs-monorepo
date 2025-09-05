@@ -100,7 +100,8 @@ export class SignalingUseCase {
       // If user is approved (either was already approved or became approved), let them join directly
       if (currentStatus === MeetingServiceParticipantStatus.Approved) {
         this.logger.log(`User ${userName} has approved status, joining directly`);
-        socket.emit(WSGateWayOutgoingEvent.ApprovedToJoin);
+        const approvedUser: WsGateWayUserOutput = { userId, userName };
+        socket.emit(WSGateWayOutgoingEvent.ApprovedToJoin, approvedUser);
         return;
       }
 
@@ -641,7 +642,8 @@ export class SignalingUseCase {
       // Notify user and handle join flow
       socket.emit(WSGateWayOutgoingEvent.YouAreAdmin);
       // await this.handleJoin({ socket, data: { roomCode, userName }, userId });
-      socket.emit(WSGateWayOutgoingEvent.ApprovedToJoin);
+      const approvedUser: WsGateWayUserOutput = { userId, userName };
+      socket.emit(WSGateWayOutgoingEvent.ApprovedToJoin, approvedUser);
 
       // Send pending users list
       const updatedRoomData = await this.roomManager.getRoomFromRedis(roomCode);
