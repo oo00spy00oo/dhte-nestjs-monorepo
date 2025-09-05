@@ -146,8 +146,8 @@ services:
     container_name: dhte-zma-notification
     restart: unless-stopped
     ports:
-      - '3009:3000' # HTTP GraphQL
-      - '4009:4000' # TCP Microservice
+      - '3008:3000' # HTTP GraphQL
+      - '4008:4000' # TCP Microservice
     env_file:
       - ../../apps/zma-notification/.env
     networks:

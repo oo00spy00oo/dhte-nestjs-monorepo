@@ -47,4 +47,5 @@ override_subgraph_url:
   zma-storage: 'http://dhte-zma-storage:3000/graphql'
   zma-upload: 'http://dhte-zma-upload:3000/graphql'
   zma-user: 'http://dhte-zma-user:3000/graphql'
+  zma-notification: 'http://dhte-zma-notification:3000/graphql'
   zma-meeting: 'http://dhte-zma-meeting:3000/graphql'
