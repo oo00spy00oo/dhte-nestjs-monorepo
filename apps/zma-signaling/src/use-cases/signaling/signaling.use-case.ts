@@ -2,7 +2,6 @@ import { Injectable, Logger } from '@nestjs/common';
 import { WebSocketServer, WsException } from '@nestjs/websockets';
 import { MeetingServiceParticipantStatus } from '@zma-nestjs-monorepo/zma-types';
 import { MeetingServiceRoomModel } from '@zma-nestjs-monorepo/zma-types/models/meeting';
-import { OpenAiService } from '@zma-nestjs-monorepo/zma-utils';
 import { types } from 'mediasoup';
 import { Server, Socket } from 'socket.io';
 
@@ -44,7 +43,6 @@ export class SignalingUseCase {
   @WebSocketServer() server: Server;
 
   constructor(
-    private readonly aiService: OpenAiService,
     private readonly socketManager: SocketManagerService,
     private readonly roomManager: RoomManagerService,
     private readonly mediasoupManager: MediasoupManagerService,
